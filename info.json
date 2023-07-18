@@ -1,0 +1,11 @@
+{
+    "name": "my_first_mod",
+    "version": "0.0.2",
+    "title": "My First Mod",
+    "author": "Jurgy",
+    "factorio_version": "1.1",
+    "contact": "w/e",
+    "homepage": "http://github.com/jurgyy",
+    "description": "test mod",
+    "dependencies": ["base"]
+}
