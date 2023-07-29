@@ -1,3 +1,4 @@
+require("prototypes.excavator-animations")
 require("prototypes.excavator")
 require("prototypes.canalMarker")
 require("prototypes.emptyCanal")
