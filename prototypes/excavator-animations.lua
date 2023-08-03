@@ -14,7 +14,7 @@ gantry_animation_sequence =
    1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16,
   17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32,
   33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48,
-  49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63
+  49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64
 }
 far_screw_animation_sequence = 
 {
@@ -184,7 +184,7 @@ local function excavatorGrahpics()
               hr_version =
               {
                 priority = "high",
-                filename = "__my_first_mod__/graphics/sprites/hr/graphics-east-gearbox-far.png",
+                filename = "__my_first_mod__/graphics/sprites/hr/east/gearbox-far.png",
                 line_length = 8,
                 width = 1024,
                 height = 1024,
@@ -426,7 +426,7 @@ local function excavatorGrahpics()
             hr_version =
             {
               priority = "high",
-              filename = "__my_first_mod__/graphics/sprites/hr/graphics-east-screw-far.png",
+              filename = "__my_first_mod__/graphics/sprites/hr/east/screw-far.png",
               line_length = 8,
               width = 1024,
               height = 1024,
@@ -466,7 +466,7 @@ local function excavatorGrahpics()
             {
               animated_shift = true,
               priority = "high",
-              filename = "__my_first_mod__/graphics/sprites/hr/gearbox-east-far-top.png",
+              filename = "__my_first_mod__/graphics/sprites/hr/east/gearbox-far-top.png",
               line_length = 8,
               width = 1024,
               height = 1024,
@@ -491,13 +491,12 @@ local function excavatorGrahpics()
           north_animation = nil,
           east_animation =
           {
-            animated_shift = true,
             priority = "high",
             filename = "__my_first_mod__/graphics/sprites/graphics-east.png", -- TODO
             line_length = 8,
             width = 258,
             height = 258,
-            frame_count = 63,
+            frame_count = 64,
             animation_speed = electric_drill_animation_speed,
             frame_sequence = gantry_animation_sequence,
             direction_count = 1,
@@ -508,11 +507,52 @@ local function excavatorGrahpics()
             {
               animated_shift = true,
               priority = "high",
-              filename = "__my_first_mod__/graphics/sprites/hr/graphics-east-gantry.png",
+              filename = "__my_first_mod__/graphics/sprites/hr/east/packing.png",
+              line_length = 8,
+              width = 776,
+              height = 319,
+              frame_count = 64,
+              shift = util.by_pixel(-13.0, -71.25),
+              animation_speed = electric_drill_animation_speed,
+              frame_sequence = gantry_animation_sequence,
+              direction_count = 1,
+              repeat_count = 1,
+              scale = 0.5
+            }
+          },
+          south_animation = nil,
+          west_animation = nil,
+        },
+        -- Dust
+        {
+          animated_shift = true,
+          always_draw = true,
+          --render_layer = "higher-object-above",
+
+          north_animation = nil,
+          east_animation =
+          {
+            priority = "high",
+            filename = "__my_first_mod__/graphics/sprites/graphics-east.png", -- TODO
+            line_length = 8,
+            width = 258,
+            height = 258,
+            frame_count = 64,
+            animation_speed = electric_drill_animation_speed,
+            frame_sequence = gantry_animation_sequence,
+            direction_count = 1,
+            --shift = util.by_pixel(0, -4),
+            repeat_count = 1,
+            scale = 2,
+            hr_version =
+            {
+              animated_shift = true,
+              priority = "high",
+              filename = "__my_first_mod__/graphics/sprites/hr/east/dust.png",
               line_length = 8,
               width = 1024,
               height = 1024,
-              frame_count = 63,
+              frame_count = 64,
               animation_speed = electric_drill_animation_speed,
               frame_sequence = gantry_animation_sequence,
               direction_count = 1,
@@ -524,7 +564,7 @@ local function excavatorGrahpics()
           south_animation = nil,
           west_animation = nil,
         },
-        --Excavator gearbox near
+        -- Excavator gearbox near
         {
           always_draw = true,
           north_animation = nil,
@@ -545,7 +585,7 @@ local function excavatorGrahpics()
             hr_version =
             {
               priority = "high",
-              filename = "__my_first_mod__/graphics/sprites/hr/graphics-east-gearbox-near.png",
+              filename = "__my_first_mod__/graphics/sprites/hr/east/gearbox-near.png",
               line_length = 8,
               width = 1024,
               height = 1024,
@@ -570,7 +610,7 @@ local function excavatorGrahpics()
         --   east_animation =
         --   {
         --     priority = "high",
-        --     filename = "__my_first_mod__/graphics/sprites/shadows-east.png",
+        --     filename = "__my_first_mod__/graphics/sprites/shadows.png",
         --     line_length = 8,
         --     width = 258,
         --     height = 258,
@@ -583,7 +623,7 @@ local function excavatorGrahpics()
         --     hr_version =
         --     {
         --       priority = "high",
-        --       filename = "__my_first_mod__/graphics/sprites/hr/shadows-east.png",
+        --       filename = "__my_first_mod__/graphics/sprites/hr/shadows.png",
         --       line_length = 8,
         --       width = 1024,
         --       height = 1024,
