@@ -6,6 +6,7 @@
 
 1. Disable all lights
 2. Set World Surface Strength to 1.000
+3. Ensure animation start is 1 and end is 64
 
 #### Gantry
 
