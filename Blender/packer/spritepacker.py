@@ -84,16 +84,17 @@ def pack(directory: Path, output: Path, extension: str, scale=None):
     print(f"\tline_length = {cols},")
     print(f"\twidth = {single_width},")
     print(f"\theight = {single_height},")
-    print(f"\tframe_count = {n},")
 
-    shift_x = (orig_width - min_left - max_right) / 2 * (1 if (orig_width - max_right) < min_left else -1)
-    shift_y = (orig_height - min_upper - max_lower) / 2 * (1 if (orig_height - max_lower) < min_upper else -1)
+    shift_x = (orig_width - min_left - max_right) / -2
+    shift_y = (orig_height - min_upper - max_lower) / -2
 
     print("\t-- Include shift if you want to keep centering of the original image:")
     if scale is not None:
         print(f"\tshift = util.by_pixel({shift_x * scale}, {shift_y * scale}),")
     else:
         print(f"\tshift = util.by_pixel({shift_x}, {shift_y}), -- Multiply these two values by your animation scale")
+
+    print(f"\tframe_count = {n}, -- Depends on your frame_sequence")
 
 
 def parse_arguments():
