@@ -9,6 +9,12 @@ gearbox_animation_sequence =
 {
   2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 6, 7, 7, 8, 8, 9, 10, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 23, 24, 26, 28, 30, 32, 34, 37, 39, 42, 45, 48, 51, 54, 57, 61, 1, 5, 9, 13, 17, 22, 27, 31, 36, 41, 46, 51, 57, 62, 3, 9, 14, 19, 24, 30, 35, 40, 45, 50, 54, 59, 64, 4, 8, 12, 16, 20, 24, 27, 30, 33, 36, 39, 42, 44, 47, 49, 51, 53, 55, 57, 58, 60, 61, 63, 64, 1, 2, 3, 4, 5, 6, 7, 7, 8, 9, 9, 10, 10, 11, 11, 12, 12, 12, 13, 13, 13, 13, 14, 14, 14, 14, 14, 15, 15, 14, 14, 14, 14, 14, 13, 13, 13, 13, 12, 12, 12, 11, 11, 10, 10, 9, 9, 8, 7, 7, 6, 5, 4, 3, 2, 1, 64, 63, 61, 60, 58, 57, 55, 53, 51, 49, 47, 44, 42, 39, 36, 33, 30, 27, 24, 20, 16, 12, 8, 4, 64, 59, 54, 50, 45, 40, 35, 30, 24, 19, 14, 9, 3, 62, 57, 51, 46, 41, 36, 31, 27, 22, 17, 13, 9, 5, 1, 61, 57, 54, 51, 48, 45, 42, 39, 37, 34, 32, 30, 28, 26, 24, 23, 21, 20, 18, 17, 16, 15, 14, 13, 12, 11, 10, 10, 9, 8, 8, 7, 7, 6, 6, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3, 3, 2
 }
+-- sigmoid(rots=1)
+trough_animation_sequence = 
+{
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 6, 7, 7, 7, 8, 8, 9, 10, 10, 11, 12, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 29, 30, 31, 33, 34, 35, 36, 37, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 53, 54, 55, 55, 56, 57, 57, 58, 58, 58, 59, 59, 60, 60, 60, 61, 61, 61, 61, 62, 62, 62, 62, 62, 63, 63, 63, 63, 63, 63, 63, 63, 63, 63, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 63, 63, 63, 63, 63, 63, 63, 63, 63, 63, 62, 62, 62, 62, 62, 61, 61, 61, 61, 60, 60, 60, 59, 59, 58, 58, 58, 57, 57, 56, 55, 55, 54, 53, 53, 52, 51, 50, 49, 48, 47, 46, 45, 44, 43, 42, 41, 40, 39, 37, 36, 35, 34, 33, 31, 30, 29, 28, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 12, 11, 10, 10, 9, 8, 8, 7, 7, 7, 6, 6, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+}
+
 gantry_animation_sequence = 
 {
    1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16,
@@ -16,9 +22,13 @@ gantry_animation_sequence =
   33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48,
   49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64
 }
-far_screw_animation_sequence = 
+-- far_screw_animation_sequence = 
+-- {
+--   64, 59, 56, 53, 48, 40, 33, 28, 28, 33, 35, 40, 50, 55, 60, 64, 64
+-- }
+far_screw_animation_sequence =
 {
-  64, 59, 56, 53, 48, 40, 33, 28, 28, 33, 35, 40, 50, 55, 60, 64, 64
+  10, 10, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 10, 10
 }
 
 -------------------------------
@@ -186,17 +196,48 @@ local function excavatorGrahpics()
                 priority = "high",
                 filename = "__my_first_mod__/graphics/sprites/hr/east/gearbox-far.png",
                 line_length = 8,
-                width = 1024,
-                height = 1024,
+                width = 696,
+                height = 252,
                 frame_count = 255,
+                shift = util.by_pixel(-11.0, -111.0),
                 animation_speed = electric_drill_animation_speed / 2,
                 frame_sequence = gearbox_animation_sequence,
                 direction_count = 1,
-                --shift = util.by_pixel(0, -4),
                 repeat_count = 1,
                 scale = 0.5
               }
-            }
+            },
+            -- Trough
+            {
+              priority = "high",
+              filename = "__my_first_mod__/graphics/sprites/graphics-east.png", -- TODO
+              line_length = 8,
+              width = 112,
+              height = 272,
+              shift = util.by_pixel(142.5, 19.0),
+              frame_count = 255,
+              frame_sequence = trough_animation_sequence,
+              animation_speed = electric_drill_animation_speed / 2,
+              direction_count = 1,
+              repeat_count = 1,
+              scale = 2,
+              hr_version =
+              {
+                priority = "high",
+                filename = "__my_first_mod__/graphics/sprites/hr/east/trough.png",
+                line_length = 8,
+                width = 112,
+                height = 272,
+                shift = util.by_pixel(142.5, 19.0),
+                frame_count = 255,
+                frame_sequence = trough_animation_sequence,
+                animation_speed = electric_drill_animation_speed / 2,
+                direction_count = 1,
+                repeat_count = 1,
+                scale = 0.5
+              }
+            },
+
           --   ---
           --   {
           --     priority = "high",
@@ -416,8 +457,8 @@ local function excavatorGrahpics()
             line_length = 8,
             width = 258,
             height = 258,
-            frame_count = 64,
-            animation_speed = 1/75,
+            frame_count = 25,
+            animation_speed = 1 / (1275 / #far_screw_animation_sequence),
             frame_sequence = far_screw_animation_sequence,
             direction_count = 1,
             shift = util.by_pixel(0, -150),
@@ -428,13 +469,13 @@ local function excavatorGrahpics()
               priority = "high",
               filename = "__my_first_mod__/graphics/sprites/hr/east/screw-far.png",
               line_length = 8,
-              width = 1024,
-              height = 1024,
-              frame_count = 64,
-              animation_speed = 1/75,
+              width = 519,
+              height = 314,
+              shift = util.by_pixel(-10.75, -174.5),
+              frame_count = 25,
+              animation_speed = 1 / (1275 / #far_screw_animation_sequence),
               frame_sequence = far_screw_animation_sequence,
               direction_count = 1,
-              shift = util.by_pixel(0, -150),
               repeat_count = 1,
               scale = 0.5
             }
@@ -468,13 +509,13 @@ local function excavatorGrahpics()
               priority = "high",
               filename = "__my_first_mod__/graphics/sprites/hr/east/gearbox-far-top.png",
               line_length = 8,
-              width = 1024,
-              height = 1024,
+              width = 696,
+              height = 144,
               frame_count = 255,
+              shift = util.by_pixel(-11.0, -138.0),
               animation_speed = electric_drill_animation_speed / 2,
               frame_sequence = gearbox_animation_sequence,
               direction_count = 1,
-              --shift = util.by_pixel(0, -4),
               repeat_count = 1,
               scale = 0.5
             }
@@ -507,7 +548,7 @@ local function excavatorGrahpics()
             {
               animated_shift = true,
               priority = "high",
-              filename = "__my_first_mod__/graphics/sprites/hr/east/packing.png",
+              filename = "__my_first_mod__/graphics/sprites/hr/east/gantry.png",
               line_length = 8,
               width = 776,
               height = 319,
@@ -526,7 +567,8 @@ local function excavatorGrahpics()
         -- Dust
         {
           animated_shift = true,
-          always_draw = true,
+          always_draw = false,
+          fadeout = true,
           --render_layer = "higher-object-above",
 
           north_animation = nil,
@@ -546,18 +588,17 @@ local function excavatorGrahpics()
             scale = 2,
             hr_version =
             {
-              animated_shift = true,
               priority = "high",
               filename = "__my_first_mod__/graphics/sprites/hr/east/dust.png",
               line_length = 8,
-              width = 1024,
-              height = 1024,
+              width = 590,
+              height = 110,
+              shift = util.by_pixel(-31.0, -28.0),
               frame_count = 64,
               animation_speed = electric_drill_animation_speed,
               frame_sequence = gantry_animation_sequence,
               direction_count = 1,
               --shift = util.by_pixel(0, -4),
-              repeat_count = 1,
               scale = 0.5
             }
           },
@@ -587,13 +628,13 @@ local function excavatorGrahpics()
               priority = "high",
               filename = "__my_first_mod__/graphics/sprites/hr/east/gearbox-near.png",
               line_length = 8,
-              width = 1024,
-              height = 1024,
+              width = 695,
+              height = 250,
               frame_count = 255,
+              shift = util.by_pixel(-10.75, 62.0),
               animation_speed = electric_drill_animation_speed / 2,
               frame_sequence = gearbox_animation_sequence,
               direction_count = 1,
-              --shift = util.by_pixel(0, -4),
               repeat_count = 1,
               scale = 0.5
             }
