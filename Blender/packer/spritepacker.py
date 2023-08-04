@@ -15,7 +15,7 @@ def iter_image(files, directory: Path, extension: str, sort=False):
         yield Image.open(fpath)
 
 
-def pack(directory: Path, output: Path, extension: str, scale=None):
+def pack(directory: Path, output: Path, extension: str, scale=None, threshold=None):
     print(directory)
     print(output)
 
@@ -28,6 +28,15 @@ def pack(directory: Path, output: Path, extension: str, scale=None):
     min_upper, max_lower = _upper_bound, 0
     orig_size = None
     for im in iter_image(files, directory, extension):
+        if threshold is not None:
+            # Set pixels over the alpha threshold to 0
+            pixels = im.load()
+            for i in range(im.size[0]):
+                for j in range(im.size[1]):
+                    r, g, b, a = pixels[i, j]
+                    if a < threshold:
+                        im.putpixel((i, j), (r, g, b, 0))
+
         left, upper, right, lower = im.getbbox()
         if orig_size is None:
             orig_size = im.size
@@ -103,6 +112,9 @@ def parse_arguments():
     parser.add_argument("--output", "-o", help="The directory where to store the result", required=True)
     parser.add_argument("--extension", "-e", help="The extension of the input sprites, defaults to .png", default=".png")
     parser.add_argument("--scale", "-s", help="Scale as given by your animation.scale field", type=float)
+    parser.add_argument("--threshold", "-t", help="Alpha channel threshold $alpha < $t is seen as 0 for the bounding "
+                                                  "box calculations such that you can remove nearly transparent "
+                                                  "pixels. This will significantly slow down the execution", type=int)
 
     args = parser.parse_args()
 
@@ -114,7 +126,7 @@ def parse_arguments():
 
 def main():
     args = parse_arguments()
-    pack(args.dir, args.output, args.extension, args.scale)
+    pack(args.dir, args.output, args.extension, args.scale, args.threshold)
 
 
 if __name__ == "__main__":

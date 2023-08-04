@@ -5,20 +5,26 @@ It also outputs the exact Lua code that you can copy-paste into the animation ta
 
 ## Arguments
 
-| Argument    | Short | Required                                               | Description | Type   |
-|-------------|-------|--------------------------------------------------------|-------------|--------|
-| --dir       | -d    | The directory with the individual sprites to be packed | Yes         | String |
-| --output    | -o    | The directory where to store the result                | Yes         | String |
-| --extension | -e    | The extension of the input sprites, defaults to .png   | No          | String |
-| --scale     | -s    | Scale as given by your animation.scale field           | No          | float  |
+| Argument    | Short | Required                                                                           | Description | Type    |
+|-------------|-------|------------------------------------------------------------------------------------|-------------|---------|
+| --dir       | -d    | The directory with the individual sprites to be packed                             | Yes         | String  |
+| --output    | -o    | The directory where to store the result                                            | Yes         | String  |
+| --extension | -e    | The extension of the input sprites, defaults to .png                               | No          | String  |
+| --scale     | -s    | Scale as given by your animation.scale field                                       | No          | float   |
+| --threshold | -t    | Alpha channel threshold $alpha < $t is seen as 0 for the bounding box calculations | No          | integer |
 
 ## Requirements
 
  * Python 3
- * Pillow 
+ * Pillow 10.0
 
-I tested it on Python 3.11 and Pillow 9.4.0 but since the program is fairly simple I assume it works on earlier versions
-of either of those but let me know if you encounter any limitations.
+I tested it on Python 3.11 and Pillow 10.0. Currently, that's the latest version of Pillow which is required for the
+`alpha_only` argument in `Image.getbbox()` method. This version of Pillow supports Python 3.8 and later so this script
+might work on those versions as well, but I haven't tested it myself.
+
+If you don't need to use the --threshold argument, which is the case when you can guarantee that your background pixels
+have an alpha value of exactly 0 and no higher, then Pillow 9.x will probably also work without any changes to this
+script.
 
 ## Example
 
