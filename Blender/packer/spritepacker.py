@@ -37,7 +37,10 @@ def pack(directory: Path, output: Path, extension: str, scale=None, threshold=No
                     if a < threshold:
                         im.putpixel((i, j), (r, g, b, 0))
 
-        left, upper, right, lower = im.getbbox()
+        bbox = im.getbbox()
+        if bbox is None:
+            continue
+        left, upper, right, lower = bbox
         if orig_size is None:
             orig_size = im.size
         elif im.size != orig_size:
