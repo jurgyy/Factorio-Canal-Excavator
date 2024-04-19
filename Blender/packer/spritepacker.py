@@ -18,10 +18,8 @@ class AnchorShift:
         self.AnchorYShift = anchorYShift
 
     def CalcAnchorOffset(self, scale, xOffset, yOffset):
-        def calc(givenOffset, fixedOffset, secondGivenOffset):
-            scaleOffset = givenOffset * scale
-            totalOffset = fixedOffset - scaleOffset
-            return secondGivenOffset * scale + totalOffset
+        def calc(anchor, given, newGiven):
+            return newGiven * scale + anchor - given
         
         if scale is None:
             scale = 1
@@ -31,15 +29,6 @@ class AnchorShift:
 
 
 _upper_bound = 99999
-
-
-def iter_image(files, directory: Path, extension: str, sort=False):
-    for fname in sorted(files) if sort else files:
-        if not fname.endswith(extension):
-            continue
-        fpath = os.path.join(directory, fname)
-
-        yield Image.open(fpath)
 
 
 def offset(scale, fixedOffset, givenOffset, secondGivenOffset):
