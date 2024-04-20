@@ -19,6 +19,7 @@ class AnchorShift:
 
     def CalcAnchorOffset(self, scale, xOffset, yOffset):
         def calc(anchor, given, newGiven):
+            print(newGiven, scale, anchor, given)
             return newGiven * scale + anchor - given
         
         if scale is None:
@@ -31,13 +32,16 @@ class AnchorShift:
 _upper_bound = 99999
 
 
-def offset(scale, fixedOffset, givenOffset, secondGivenOffset):
-  scaleOffset = givenOffset * scale
-  totalOffset = fixedOffset - scaleOffset
-  return secondGivenOffset * scale + totalOffset
+def iter_image(files, directory: Path, extension: str, sort=False):
+    for fname in sorted(files) if sort else files:
+        if not fname.endswith(extension):
+            continue
+        fpath = os.path.join(directory, fname)
+
+        yield Image.open(fpath)
 
 
-def pack(directory: Path, output: Path, extension: str, scale=None, threshold: float = None,
+def pack(directory: Path, output: Path, name: str, extension: str, scale=None, threshold: float = None,
          anchorShift: AnchorShift = None):
     print(directory)
     print(output)
@@ -109,7 +113,10 @@ def pack(directory: Path, output: Path, extension: str, scale=None, threshold: f
         row_pos = i // 8
         packing.paste(im.crop((min_left, min_upper, max_right, max_lower)), (col_pos * single_width, row_pos * single_height))
 
-    output_fpath = output.joinpath("packing.png")
+    if name is None:
+        name = "packing"
+
+    output_fpath = output.joinpath(f"{name}.png")
 
     print(f"Writing to {output_fpath}")
     packing.save(output_fpath)
@@ -123,8 +130,8 @@ def pack(directory: Path, output: Path, extension: str, scale=None, threshold: f
     shift_x = (orig_width - min_left - max_right) / -2
     shift_y = (orig_height - min_upper - max_lower) / -2
 
+    print(f"\t-- Shift before scale/offset: {shift_x}, {shift_y}")
     if anchorShift is not None:
-        print(f"\t-- Shift before offset: {shift_x}, {shift_y}")
         shift_x, shift_y = anchorShift.CalcAnchorOffset(scale, shift_x, shift_y)
     elif scale is not None:
         shift_x = shift_x * scale
@@ -141,6 +148,7 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description="Sprite Packer")
     parser.add_argument("--dir", "-d", help="The directory with the individual sprites to be packed", required=True)
     parser.add_argument("--output", "-o", help="The directory where to store the result", required=True)
+    parser.add_argument("--name", "-n", help="Output filename without extension")
     parser.add_argument("--extension", "-e", help="The extension of the input sprites, defaults to .png", default=".png")
     parser.add_argument("--scale", "-s", help="Scale as given by your animation.scale field", type=float)
     parser.add_argument("--threshold", "-t", help="Alpha channel threshold $alpha < $t is seen as 0 for the bounding "
@@ -169,7 +177,7 @@ def main():
     if any([args.xoffset, args.yoffset, args.xshift, args.yshift]):
         anchorShift = AnchorShift(args.xoffset, args.yoffset, args.xshift, args.yshift)
 
-    pack(args.dir, args.output, args.extension, args.scale, args.threshold, anchorShift)
+    pack(args.dir, args.output, args.name, args.extension, args.scale, args.threshold, anchorShift)
 
 
 if __name__ == "__main__":
