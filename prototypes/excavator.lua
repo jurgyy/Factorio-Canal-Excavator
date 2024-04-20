@@ -7,7 +7,7 @@ canal_excavator.minable.result = "canal-excavator"
 canal_excavator.minable.mining_time = 0.1
 canal_excavator.resource_searching_radius = 2.49
 
-canal_excavator.collision_box = {{ -1.4, -5.3}, {1.4, 1.4}}
+canal_excavator.collision_box = {{ -1.49, -5.49}, {1.49, 1.49}}
 canal_excavator.selection_box = {{ -1.5, -5.5}, {1.5, 1.5}}
 canal_excavator.drawing_box = {{ -1.5, -5.5}, {1.5, 1.5}} -- TODO: more in the upwards direction?
 

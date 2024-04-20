@@ -8,6 +8,32 @@ linear_animation =
 
 animation_speed = 0.6
 
+offset = 
+{
+  hrScale = 0.5,
+  north =
+  {
+    lr = 
+    {
+      x = 0,
+      y = -128
+    },
+    hr =
+    {
+      x = -10,
+      y = -114
+    }
+  },
+  east = 
+  {
+    lr = 
+    {
+      x = 57,
+      y = -71.5
+    }
+  }
+}
+
 ---------------
 ---
 local function excavatorGrahpics()
@@ -29,79 +55,62 @@ local function excavatorGrahpics()
         {
           layers =
           {
-            {
+            { -- Machine animation
               priority = "high",
-              filename = "__base__/graphics/entity/electric-mining-drill/electric-mining-drill-N.png",
-              line_length = 1,
-              width = 96,
-              height = 104,
-              frame_count = 1,
+              filename = "__my_first_mod__/graphics/sprites/lr/north/machine.png",
+              line_length = 8,
+              width = 92,
+              height = 264,
+              frame_count = 64,
+              -- Given offset:
+              	shift = util.by_pixel(7.0 + offset.north.lr.x, 8.0 + offset.north.lr.y), 
+              -- shift = util.by_pixel(7.0, -120.0), 
               animation_speed = animation_speed,
+              frame_sequence = linear_animation,
               direction_count = 1,
-              shift = util.by_pixel(0, -4),
-              repeat_count = 5,
+              repeat_count = 1,
+              scale = 1,
               hr_version =
               {
                 priority = "high",
-                filename = "__base__/graphics/entity/electric-mining-drill/hr-electric-mining-drill-N.png",
-                line_length = 1,
-                width = 190,
-                height = 208,
-                frame_count = 1,
+                filename = "__my_first_mod__/graphics/sprites/hr/north/machine.png",
+                line_length = 8,
+                width = 182,
+                height = 526,
+                frame_count = 64,
+                shift = util.by_pixel(14 * offset.hrScale + offset.north.hr.x, 16.0 * offset.hrScale + offset.north.hr.y), 
                 animation_speed = animation_speed,
+                frame_sequence = linear_animation,
                 direction_count = 1,
-                shift = util.by_pixel(0, -4),
-                repeat_count = 5,
-                scale = 0.5
+                repeat_count = 1,
+                scale = 0.5,
               }
             },
-            {
+            { -- Shadows
               priority = "high",
-              filename = "__base__/graphics/entity/electric-mining-drill/electric-mining-drill-N-output.png",
-              line_length = 5,
-              width = 32,
-              height = 34,
-              frame_count = 5,
+              filename = "__my_first_mod__/graphics/sprites/lr/north/shadows.png",
+              line_length = 8,
+              width = 257,
+              height = 165,
+              shift = util.by_pixel(92.5 + offset.north.lr.x, 64.5 + offset.north.lr.y), 
+              frame_count = 64,
               animation_speed = animation_speed,
-              direction_count = 1,
-              shift = util.by_pixel(-4, -44),
-              hr_version =
-              {
-                priority = "high",
-                filename = "__base__/graphics/entity/electric-mining-drill/hr-electric-mining-drill-N-output.png",
-                line_length = 5,
-                width = 60,
-                height = 66,
-                frame_count = 5,
-                animation_speed = animation_speed,
-                direction_count = 1,
-                shift = util.by_pixel(-3, -44),
-                scale = 0.5
-              }
-            },
-            {
-              priority = "high",
-              filename = "__base__/graphics/entity/electric-mining-drill/electric-mining-drill-N-shadow.png",
-              line_length = 1,
-              width = 106,
-              height = 104,
-              frame_count = 1,
-              animation_speed = animation_speed,
+              frame_sequence = linear_animation,
               draw_as_shadow = true,
-              shift = util.by_pixel(6, -4),
-              repeat_count = 5,
+              repeat_count = 1,
               hr_version =
               {
                 priority = "high",
-                filename = "__base__/graphics/entity/electric-mining-drill/hr-electric-mining-drill-N-shadow.png",
-                line_length = 1,
-                width = 212,
-                height = 204,
-                frame_count = 1,
+                filename = "__my_first_mod__/graphics/sprites/hr/north/shadows.png",
+                line_length = 8,
+                width = 513,
+                height = 327,
+                shift = util.by_pixel(184.5 * offset.hrScale + offset.north.hr.x, 129.5 * offset.hrScale + offset.north.hr.y), 
+                frame_count = 64,
                 animation_speed = animation_speed,
+                frame_sequence = linear_animation,
                 draw_as_shadow = true,
-                shift = util.by_pixel(6, -3),
-                repeat_count = 5,
+                repeat_count = 1,
                 scale = 0.5
               }
             }
@@ -113,26 +122,29 @@ local function excavatorGrahpics()
           {
             { -- Machine animation
               priority = "high",
-              filename = "__my_first_mod__/graphics/sprites/graphics-east.png", -- TODO
+              filename = "__my_first_mod__/graphics/sprites/lr/east/machine.png",
               line_length = 8,
-              width = 258,
-              height = 258,
+              width = 234,
+              height = 187,
               frame_count = 64,
+              -- Given offset:
+              -- shift = util.by_pixel(2.0, 15.5), 
+              shift = util.by_pixel(2 + offset.east.lr.x, 15.5 + offset.east.lr.y),
               animation_speed = animation_speed,
               frame_sequence = linear_animation,
               direction_count = 1,
               repeat_count = 1,
-              scale = 2,
+              scale = 1,
               hr_version =
               {
                 priority = "high",
                 filename = "__my_first_mod__/graphics/sprites/hr/east/machine.png",
                 line_length = 8,
                 width = 466,
-                height = 372,
+                height = 371,
                 frame_count = 64,
                 shift = util.by_pixel(59.5, -56), 
-                -- preOffset:
+                -- Given offset:
                 -- shift = util.by_pixel(7.5, 15.5), 
                 animation_speed = animation_speed,
                 frame_sequence = linear_animation,
@@ -143,10 +155,11 @@ local function excavatorGrahpics()
             },
             { -- Shadows
               priority = "high",
-              filename = "__my_first_mod__/graphics/sprites/shadows-east.png",
+              filename = "__my_first_mod__/graphics/sprites/lr/east/shadows.png",
               line_length = 8,
-              width = 258,
-              height = 258,
+              width = 371,
+              height = 66,
+              shift = util.by_pixel(81.5 + offset.east.lr.x, 79.0 + offset.east.lr.y), 
               frame_count = 64,
               animation_speed = animation_speed,
               frame_sequence = linear_animation,
@@ -174,137 +187,131 @@ local function excavatorGrahpics()
         {
           layers =
           {
-            {
+            { -- Machine animation
               priority = "high",
-              filename = "__base__/graphics/entity/electric-mining-drill/electric-mining-drill-S.png",
-              line_length = 1,
+              filename = "__my_first_mod__/graphics/sprites/lr/south/machine.png",
+              line_length = 8,
               width = 92,
-              height = 98,
-              frame_count = 1,
+              height = 203,
+              frame_count = 64,
+              -- Given offset:
+              -- 	shift = util.by_pixel(-7.0, 64.5), 
+              shift = util.by_pixel(-2, 70),
               animation_speed = animation_speed,
+              frame_sequence = linear_animation,
               direction_count = 1,
-              shift = util.by_pixel(0, -2),
-              repeat_count = 5,
+              repeat_count = 1,
+              scale = 1,
               hr_version =
               {
                 priority = "high",
-                filename = "__base__/graphics/entity/electric-mining-drill/hr-electric-mining-drill-S.png",
-                line_length = 1,
-                width = 184,
-                height = 192,
-                frame_count = 1,
+                filename = "__my_first_mod__/graphics/sprites/hr/south/machine.png",
+                line_length = 8,
+                width = 181,
+                height = 403,
+                frame_count = 64,
+                shift = util.by_pixel(-2, 70), 
+                -- Given offset:
+                -- shift = util.by_pixel(-6.75, 64.75), 
                 animation_speed = animation_speed,
+                frame_sequence = linear_animation,
                 direction_count = 1,
-                shift = util.by_pixel(0, -1),
-                repeat_count = 5,
-                scale = 0.5
+                repeat_count = 1,
+                scale = 0.5,
               }
             },
-            {
+            { -- Shadows
               priority = "high",
-              filename = "__base__/graphics/entity/electric-mining-drill/electric-mining-drill-S-shadow.png",
-              line_length = 1,
-              width = 106,
-              height = 102,
-              frame_count = 1,
+              filename = "__my_first_mod__/graphics/sprites/lr/south/shadows.png",
+              line_length = 8,
+              width = 263,
+              height = 166,
+              shift = util.by_pixel(88.5, 90.5), 
+              frame_count = 64,
               animation_speed = animation_speed,
+              frame_sequence = linear_animation,
               draw_as_shadow = true,
-              shift = util.by_pixel(6, 2),
-              repeat_count = 5,
+              repeat_count = 1,
               hr_version =
               {
                 priority = "high",
-                filename = "__base__/graphics/entity/electric-mining-drill/hr-electric-mining-drill-S-shadow.png",
-                line_length = 1,
-                width = 212,
-                height = 204,
-                frame_count = 1,
+                filename = "__my_first_mod__/graphics/sprites/hr/south/shadows.png",
+                line_length = 8,
+                width = 522,
+                height = 329,
+                shift = util.by_pixel(88.25, 90.5), 
+                frame_count = 64,
                 animation_speed = animation_speed,
+                frame_sequence = linear_animation,
                 draw_as_shadow = true,
-                shift = util.by_pixel(6, 2),
-                repeat_count = 5,
+                repeat_count = 1,
                 scale = 0.5
               }
             }
           }
         },
-        west =
+        west = 
         {
           layers =
           {
-            {
+            { -- Machine animation
               priority = "high",
-              filename = "__base__/graphics/entity/electric-mining-drill/electric-mining-drill-W.png",
-              line_length = 1,
-              width = 96,
-              height = 94,
-              frame_count = 1,
+              filename = "__my_first_mod__/graphics/sprites/lr/west/machine.png",
+              line_length = 8,
+              width = 234,
+              height = 184,
+              frame_count = 64,
+              -- Given offset:
+              -- shift = util.by_pixel(-2, 10), 
+              shift = util.by_pixel(-59, -56.0),
               animation_speed = animation_speed,
+              frame_sequence = linear_animation,
               direction_count = 1,
-              shift = util.by_pixel(0, -4),
-              repeat_count = 5,
+              repeat_count = 1,
+              scale = 1,
               hr_version =
               {
                 priority = "high",
-                filename = "__base__/graphics/entity/electric-mining-drill/hr-electric-mining-drill-W.png",
-                line_length = 1,
-                width = 192,
-                height = 188,
-                frame_count = 1,
+                filename = "__my_first_mod__/graphics/sprites/hr/west/machine.png",
+                line_length = 8,
+                width = 466,
+                height = 367,
+                frame_count = 64,
+                shift = util.by_pixel(-59.5, -56), 
+                -- Given offset:
+                -- shift = util.by_pixel(-2, 10.25), 
                 animation_speed = animation_speed,
+                frame_sequence = linear_animation,
                 direction_count = 1,
-                shift = util.by_pixel(0, -4),
-                repeat_count = 5,
-                scale = 0.5
+                repeat_count = 1,
+                scale = 0.5,
               }
             },
-            {
+            { -- Shadows
               priority = "high",
-              filename = "__base__/graphics/entity/electric-mining-drill/electric-mining-drill-W-output.png",
-              line_length = 5,
-              width = 24,
-              height = 28,
-              frame_count = 5,
+              filename = "__my_first_mod__/graphics/sprites/lr/west/shadows.png",
+              line_length = 8,
+              width = 285,
+              height = 66,
+              shift = util.by_pixel(-29.5, 4.0), 
+              frame_count = 64,
               animation_speed = animation_speed,
-              direction_count = 1,
-              shift = util.by_pixel(-30, -12),
-              hr_version =
-              {
-                priority = "high",
-                filename = "__base__/graphics/entity/electric-mining-drill/hr-electric-mining-drill-W-output.png",
-                line_length = 5,
-                width = 50,
-                height = 60,
-                frame_count = 5,
-                animation_speed = animation_speed,
-                direction_count = 1,
-                shift = util.by_pixel(-31, -13),
-                scale = 0.5
-              }
-            },
-            {
-              priority = "high",
-              filename = "__base__/graphics/entity/electric-mining-drill/electric-mining-drill-W-shadow.png",
-              line_length = 1,
-              width = 102,
-              height = 92,
-              frame_count = 1,
-              animation_speed = animation_speed,
+              frame_sequence = linear_animation,
               draw_as_shadow = true,
-              shift = util.by_pixel(-6, 2),
-              repeat_count = 5,
+              repeat_count = 1,
               hr_version =
               {
                 priority = "high",
-                filename = "__base__/graphics/entity/electric-mining-drill/hr-electric-mining-drill-W-shadow.png",
-                line_length = 1,
-                width = 200,
-                height = 182,
-                frame_count = 1,
+                filename = "__my_first_mod__/graphics/sprites/hr/west/shadows.png",
+                line_length = 8,
+                width = 567,
+                height = 129,
+                shift = util.by_pixel(-30.25, 3.5),
+                frame_count = 64,
                 animation_speed = animation_speed,
+                frame_sequence = linear_animation,
                 draw_as_shadow = true,
-                shift = util.by_pixel(-5, 2),
-                repeat_count = 5,
+                repeat_count = 1,
                 scale = 0.5
               }
             }
@@ -316,28 +323,57 @@ local function excavatorGrahpics()
         {  -- Hopper Dust
           fadeout = true,
 
-          north_animation = nil,
-          east_animation =
+          north_animation = 
           {
             priority = "high",
-            filename = "__my_first_mod__/graphics/sprites/graphics-east.png", -- TODO
+            filename = "__my_first_mod__/graphics/sprites/lr/north/hopperDust.png",
             line_length = 8,
-            width = 112,
-            height = 272,
-            shift = util.by_pixel(142.5, 19.0),
+            width = 87,
+            height = 59,
+            shift = util.by_pixel(-2.5 + offset.north.lr.x, -54.5 + offset.north.lr.y), 
             frame_count = 64,
             frame_sequence = linear_animation,
             animation_speed = animation_speed,
             direction_count = 1,
             repeat_count = 1,
-            scale = 2,
+            scale = 1,
+            hr_version =
+            {
+              priority = "high",
+              filename = "__my_first_mod__/graphics/sprites/hr/north/hopperDust.png",
+              line_length = 8,
+              width = 185,
+              height = 119,
+              shift = util.by_pixel(-1.5 * offset.hrScale + offset.north.hr.x, -111.5 * offset.hrScale + offset.north.hr.y), 
+              frame_count = 64,
+              frame_sequence = linear_animation,
+              animation_speed = animation_speed,
+              direction_count = 1,
+              repeat_count = 1,
+              scale = 0.5,
+            }
+          },
+          east_animation =
+          {
+            priority = "high",
+            filename = "__my_first_mod__/graphics/sprites/lr/east/hopperDust.png",
+            line_length = 8,
+            width = 59,
+            height = 77,
+            shift = util.by_pixel(136.5, -56.0),
+            frame_count = 64,
+            frame_sequence = linear_animation,
+            animation_speed = animation_speed,
+            direction_count = 1,
+            repeat_count = 1,
+            scale = 1,
             hr_version =
             {
               priority = "high",
               filename = "__my_first_mod__/graphics/sprites/hr/east/hopperDust.png",
               line_length = 8,
-              width = 120,
-              height = 160,
+              width = 125,
+              height = 166,
               shift = util.by_pixel(138.5, -55.5),
               frame_count = 64,
               frame_sequence = linear_animation,
@@ -347,35 +383,27 @@ local function excavatorGrahpics()
               scale = 0.5,
             }
           },
-          south_animation = nil,
-          west_animation = nil,
-        },
-        { -- Floor Dust
-          fadeout = true,
-
-          north_animation = nil,
-          east_animation =
-          {  
+          south_animation = {
             priority = "high",
-            filename = "__my_first_mod__/graphics/sprites/graphics-east.png", -- TODO
+            filename = "__my_first_mod__/graphics/sprites/lr/south/hopperDust.png",
             line_length = 8,
-            width = 112,
-            height = 272,
-            shift = util.by_pixel(142.5, 19.0),
+            width = 93,
+            height = 64,
+            shift = util.by_pixel(6.5, 78.5),
             frame_count = 64,
             frame_sequence = linear_animation,
             animation_speed = animation_speed,
             direction_count = 1,
             repeat_count = 1,
-            scale = 2,
+            scale = 1,
             hr_version =
             {
               priority = "high",
-              filename = "__my_first_mod__/graphics/sprites/hr/east/floorDust.png",
+              filename = "__my_first_mod__/graphics/sprites/hr/south/hopperDust.png",
               line_length = 8,
-              width = 203,
-              height = 151,
-              shift = util.by_pixel(-9.25, -6.25), 
+              width = 187,
+              height = 142,
+              shift = util.by_pixel(4.5, 80.25), 
               frame_count = 64,
               frame_sequence = linear_animation,
               animation_speed = animation_speed,
@@ -384,8 +412,160 @@ local function excavatorGrahpics()
               scale = 0.5,
             }
           },
-          south_animation = nil,
-          west_animation = nil,
+          west_animation = 
+          {
+            priority = "high",
+            filename = "__my_first_mod__/graphics/sprites/lr/west/hopperDust.png",
+            line_length = 8,
+            width = 61,
+            height = 85,
+            shift = util.by_pixel(-137.5, -45.5), 
+            frame_count = 64,
+            frame_sequence = linear_animation,
+            animation_speed = animation_speed,
+            direction_count = 1,
+            repeat_count = 1,
+            scale = 1,
+            hr_version =
+            {
+              priority = "high",
+              filename = "__my_first_mod__/graphics/sprites/hr/west/hopperDust.png",
+              line_length = 8,
+              width = 123,
+              height = 171,
+              shift = util.by_pixel(-137.25, -47.5),
+              --shift = util.by_pixel(-79.75, 18.75), 
+              frame_count = 64,
+              frame_sequence = linear_animation,
+              animation_speed = animation_speed,
+              direction_count = 1,
+              repeat_count = 1,
+              scale = 0.5,
+            }
+          },
+        },
+        { -- Floor Dust
+          fadeout = true,
+
+          north_animation =
+          {  
+            priority = "high",
+            filename = "__my_first_mod__/graphics/sprites/lr/north/floorDust.png",
+            line_length = 8,
+            width = 91,
+            height = 80,
+            shift = util.by_pixel(-1.5 + offset.north.lr.x, 101.0 + offset.north.lr.y), 
+            frame_count = 64,
+            frame_sequence = linear_animation,
+            animation_speed = animation_speed,
+            direction_count = 1,
+            repeat_count = 1,
+            scale = 1,
+            hr_version =
+            {
+              priority = "high",
+              filename = "__my_first_mod__/graphics/sprites/hr/north/floorDust.png",
+              line_length = 8,
+              width = 196,
+              height = 161,
+              shift = util.by_pixel(-3 * offset.hrScale + offset.north.hr.x, 201.5 * offset.hrScale + offset.north.hr.y), 
+              frame_count = 64,
+              frame_sequence = linear_animation,
+              animation_speed = animation_speed,
+              direction_count = 1,
+              repeat_count = 1,
+              scale = 0.5,
+            }
+          },
+          east_animation =
+          {  
+            priority = "high",
+            filename = "__my_first_mod__/graphics/sprites/lr/east/floorDust.png",
+            line_length = 8,
+            width = 91,
+            height = 72,
+            shift = util.by_pixel(-12.0, -8.5),
+            frame_count = 64,
+            frame_sequence = linear_animation,
+            animation_speed = animation_speed,
+            direction_count = 1,
+            repeat_count = 1,
+            scale = 1,
+            hr_version =
+            {
+              priority = "high",
+              filename = "__my_first_mod__/graphics/sprites/hr/east/floorDust.png",
+              line_length = 8,
+              width = 196,
+              height = 146,
+              shift = util.by_pixel(-10.5, -7.5), 
+              frame_count = 64,
+              frame_sequence = linear_animation,
+              animation_speed = animation_speed,
+              direction_count = 1,
+              repeat_count = 1,
+              scale = 0.5,
+            }
+          },
+          south_animation = {  
+            priority = "high",
+            filename = "__my_first_mod__/graphics/sprites/lr/south/floorDust.png",
+            line_length = 8,
+            width = 98,
+            height = 74,
+            shift = util.by_pixel(7.0, 31.5), 
+            frame_count = 64,
+            frame_sequence = linear_animation,
+            animation_speed = animation_speed,
+            direction_count = 1,
+            repeat_count = 1,
+            scale = 1,
+            hr_version =
+            {
+              priority = "high",
+              filename = "__my_first_mod__/graphics/sprites/hr/south/floorDust.png",
+              line_length = 8,
+              width = 193,
+              height = 156,
+              shift = util.by_pixel(7.0, 31.75),
+              frame_count = 64,
+              frame_sequence = linear_animation,
+              animation_speed = animation_speed,
+              direction_count = 1,
+              repeat_count = 1,
+              scale = 0.5,
+            }
+          },
+          west_animation =
+          {  
+            priority = "high",
+            filename = "__my_first_mod__/graphics/sprites/lr/west/floorDust.png",
+            line_length = 8,
+            width = 97,
+            height = 66,
+            shift = util.by_pixel(10.5, 5.0), 
+            frame_count = 64,
+            frame_sequence = linear_animation,
+            animation_speed = animation_speed,
+            direction_count = 1,
+            repeat_count = 1,
+            scale = 1,
+            hr_version =
+            {
+              priority = "high",
+              filename = "__my_first_mod__/graphics/sprites/hr/west/floorDust.png",
+              line_length = 8,
+              width = 194,
+              height = 135,
+              shift = util.by_pixel(9.5, 5.0), 
+              frame_count = 64,
+              frame_sequence = linear_animation,
+              animation_speed = animation_speed,
+              direction_count = 1,
+              repeat_count = 1,
+              scale = 0.5,
+            }
+          },
         },
       }
     }
