@@ -19,6 +19,7 @@ return
     corpse = "electric-mining-drill-remnants", -- TODO
     dying_explosion = "electric-mining-drill-explosion",
     
+    collision_mask = {"object-layer", "train-layer"},
     collision_box = {{ -1.49, -5.49}, {1.49, 1.49}},
     selection_box = {{ -1.5, -5.5}, {1.5, 1.5}},
     drawing_box = {{ -1.5, -5.5}, {1.5, 1.5}}, -- TODO: more in the upwards direction?
