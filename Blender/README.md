@@ -1,112 +1,143 @@
 # Render steps
 
-## East
+Steps given for eastward direction but should be identical for all the others as well.
 
-### Objects
+Sprite packing can be done as soon as the first animation sequence is rendered while rendering the next animation sequence.
 
-1. Disable all lights
-2. Set World Surface Strength to 1.000
-3. Ensure animation start is 1 and end is 64
+## HDRI orientation
 
-#### Gantry
+1. Go to Shading  
+2. Change Shader Type to World  
+3. Change the Mapping angle to:  
+  * East: (-4d, 0d, 147d)
+  * West: (0d, -3d, 321d)
+    * hr
+      * "-s", "0.5",
+      * "-xo", "-59.5",
+      * "-yo", "-56",
+      * "-xs", "-2",
+      * "-ys", "10.25",
+    * lr
+      * "-s", "1",
+      * "-xo", "-59",
+      * "-yo", "-56",
+      * "-xs", "-2",
+      * "-ys", "10",
+  * South: (-6.7d, 16.9d, 33.6d)
 
-1. Change Scene > Output > path to [..]\east\gantry\
-2. Disable Render for:
-  a. Gearbox collection
-  b. Through
-  c. DustDomain
-  d. (Optionally) Disable DustDomain > physics > Fluid viewport for more performance
-3. Enable masks (disable others):
-  a. ScrewNearMaskEastLeft
-  b. ScrewNearMaskEastRight
-4. Ensure gantry is at start position:
-  a. Enable animation on Controller-Gear
-  b. Go to first frame
-  c. Disable animation on Controller-Gear
-5. Enable animation on Controller-Belt
-6. Render animation
 
-#### Gearbox far bot
+### Machine
 
- 1. Change Scene > Output > path to [..]\east\gearbox-far-bot\
- 2. Disable Center collection
- 3. Enable Gearbox collection
- 4. Enable Controller-Gear animation
- 5. Enable GearMaskLeft, disable the rest
- 6. Render animation
+1. Disable all light  
+2. Set World Strength to 3.000  
+3. Disable Shadow Catcher  
+4. Disable Floor Dust collection  
+5. Disable Hopper Dust collection  
+6. Set animation start and stop to 1 and 64  
+7. Click on an object in the Main Render collection  
+8. Right click Main Render collection > Select Objects  
+9. Go to Object Properties and Alt + click on Holdout and disable it (if it was already disabled, click twice to ensure it is properly set to each object)  
+10. Go to random frame and do a test render (F12)  
+11. Go to Output and set both X and Y resolution to 1080.
+12. Change the output path to (...)/hr/east/Machine/
+13. Render animation.  
+14. Set resolution to 540 and output path to (...)/lr/east/Machine/
+15. Render animation.
 
-#### Gearbox far top
+## Hopper Dust
 
- 1. Change Scene > Output > path to [..]\east\gearbox-far-top\
- 2. Enable GearsTopMask
- 3. Enable GearboxPlugMask
- 4. Disable other masks
- 5. Render animation
-
-#### Gearbox near
-
- 1. Change Scene > Output > path to [..]\east\gearbox-near\
- 2. Enable GearMaskRight
- 3. Disable other masks
- 4. Render animation
-
-#### Screw Far
- 1. Change Scene > Output > path to [..]\east\screw-far\
- 2. Disable Gearbox Coollection
- 3. Enable Center collection
- 4. Disable Gantry collection
- 5. Enable ScrewNearMaskEastRight
- 6. Enable ScrewNearMaskEastRight Transformation constraint
- 7. Set animation end frame to 10
- 8. Render animation
- 9. Set animation and frame to 64
-
-#### Trough
-
- 1. Change Scene > Output > path to [..]\east\through\
- 2. Disable ScrewNearMaskEastRight Transformation constraint
- 3. Enable Gantry collection
- 4. Disable ScrewBack and ScrewFront
- 4. Select all objects from Gantry collection
- 5. Go to Object Properties > Visibility > Ray Visibility > hold alt and uncheck Camera
- 6. Select GantryPlaceHolder
- 7. Go to Constraints > Move with screw > Y Source Axis > Max > multiply by 4.25
- 8. Disable all masks
- 9. Enable Trough
- 10. Render animation
- 11. Go to Constraints > Move with screw > Y Source Axis > Max > divide by 4.25
- 12. Select all objects from Gantry collection
- 13. Go to Object Properties > Visibility > Ray Visibility > hold alt and check Camera (if already checked, double click the box)
- 
-
-#### Dust
-
- 1. Change Scene > Output > path to [..]\east\dust\
- 2. Enable all objects in Center collection
- 3. Select all objects from Center collection
- 4. Go to Object Properties > Visibility > hold alt and check Holdout
- 5. Hide Trough
- 6. Enable DustDomain
- 7. Select DustDomain and enable Physics > Fluid in viewport
- 8. Go to frame 1
- 9. Disable ControllerGear animation. If already disabled, enable it, then disable it.
- 10. Set animation End to 192
- 11. Prerender animation
- 12. Render animation
- 
- Open dust-animation.blend
- 1. Add > Image Sequence > Select all 192 frames
- 2. Move sequence to frame 1
- 3. Duplicate to frame -63
- 4. Select duplicate and Add > Effect Strip > Transform
- 5. Select the Transform and modify Position X to 0.14
- 6. Uncheck channel with the duplicate
- 7. Duplicate one more time to frame -126
- 8. Change Scene > Output > path to [..]\east\dust-combined\
- 9. Render animation
-
+1. Click on an object in the Main Render collection  
+2. Right click Main Render collection > Select Objects  
+3. Go to Object Properties and Alt + click on Holdout and enable it  
+4. Enable Hopper Dust collection
+5. Change output path to (...)/lr/east/HopperDust/
+6. Go to frame 30 and do a test render. Is the dust visible and everything else heldout?
+7. Render animation.
+8. Set resolution to 1080 and output path to (...)/hr/east/HopperDust/
+9. Render animation.
 
 ## Shadows
 
-1. Enable light environment.sun
-2. Set World Surface Strength to 0.000
+1. Disable Hopper Dust collection  
+2. Set World Strength to 0.000  
+3. Enable Ground Shadow Light East  
+4. Enable Shadow Catcher  
+5. Do a test render. Do you see the shadows and is everything else heldout?  
+6. Change output path to (...)/hr/east/Shadows/  
+7. Render animation.  
+8. Set resolution to 540 and output path to (...)/lr/east/Shadows/  
+9. Render animation.
+
+## Floor Dust
+
+1. Disable Shadow Catcher  
+2. Disable Ground Shadow Light East  
+3. Set World Strength to 3.000
+4. Enable Floor Dust collection
+5. Set Start frame to 48 and end frame to 111
+6. Go to frame 100 and do a test render. Is everything except for the dust heldout?
+7. Change output path to (...)/hr/east/FloorDust/
+8. Render animation.
+9. Set resolution to 540 and output path to (...)/lr/east/FloorDust/  
+10. Render animation.
+
+## Floor Dust Part 2
+
+1. Open dust-animation.blend  
+2. Set Resolution to 1080  
+3. Set cursor to frame 48  
+4. Shift + A > Add Image Sequence > (...)/hr/east/FloorDust/ > Select All > Add  
+5. Select the image sequence > Shift + D and set it before it starting at frame -16  
+6. Add the HR Excavator image sequence and start it on frame 1.  
+7. Do the two sequences align?  
+8. Disable Excavator Channel(s)  
+9. Set output to (...)/hr/east/FloorDustCombined/  
+10. Render animation.  
+11. Disable HR Dust Channel.  
+12. Set Resolution to 540  
+13. Shift + A > Add Image Sequence > (...)/lr/east/FloorDust/ > Select All > Add  
+14. Select the image sequence > Shift + D and set it before it starting at frame -16  
+15. Add the LR Excavator image sequence and start it on frame 1.  
+16. Do the two sequences align?  
+17. Disable Excavator Channel(s)  
+18. Set output to (...)/lr/east/FloorDustCombined/  
+19. Render animation.  
+
+# Sprite Sheet Packing steps
+
+## Machine
+
+1. Set -d argument to "(...)/hr/east/Machine/"  
+2. Set -o argument to "./graphics/sprites/hr/east/"  
+3. Set -n argument to "machine"  
+4. Set -s argument to "0.5"  
+5. Comment out all other arguments
+6. Run the script.
+7. If you didn't change the size of the render result compared to the previous version, the animation should be working immediatly. If you did change the size, check in Factorio if the machine is still in the right place, if not, change the graphics_set.animation.east.layers[x].hr_version.shift values in prototypes\excavator-animations.lua until it's correct. Then change the -xo and -yo values in the launch.json accordingly and the -xs and -ys values with the given values by the packer's output: "shift = util.by_pixel($xs, $ys)".  
+8. Set -d argument to "(...)/lr/east/Machine/"  
+9. Set -o argument to "./graphics/sprites/lr/east/"  
+10. Set -s argument to "1"  
+11. Run the script.
+12. Repeat step 7 for the low ress animation
+
+## Hopper Dust
+
+1. Set -d argument to "(...)/lr/east/HopperDust/"  
+3. Set -n argument to "hopperDust"  
+4. Uncomment all other arguments.  
+5. Run the script.  
+6. Set -d argument to "(...)/hr/east/HopperDust/"  
+7. Set -s argument to "0.5"  
+8. Set -o argument to "./graphics/sprites/hr/east/"  
+9. Run the script.  
+
+## Floor Dust
+
+1. Set -d argument to "(...)/hr/east/FloorDustCombined/"  
+3. Set -n argument to "floorDust"  
+4. Uncomment all other arguments.  
+5. Run the script.  
+6. Set -d argument to "(...)/lr/east/HopperDust/"  
+7. Set -s argument to "1"  
+8. Set -o argument to "./graphics/sprites/lr/east/"  
+9. Run the script.  
