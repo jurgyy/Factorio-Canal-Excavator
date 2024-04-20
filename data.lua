@@ -1,5 +1,5 @@
-require("prototypes.excavator-animations")
-require("prototypes.excavator")
+--require("prototypes.excavator-animations")
+require("prototypes.excavator.data")
 require("prototypes.canalMarker")
 require("prototypes.emptyCanal")
 require("prototypes.canalSand")

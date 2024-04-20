@@ -39,15 +39,8 @@ offset =
 local function excavatorGrahpics()
     graphics_set =
     {
-      drilling_vertical_movement_duration = 10,-- / animation_speed,
-      animation_progress = 1,
-      min_animation_progress = 0,
-      max_animation_progress = 30,
-
-      status_colors = nil, --electric_mining_drill_status_colors(),
-
       circuit_connector_layer = "object",
-      circuit_connector_secondary_draw_order = { north = 14, east = 30, south = 30, west = 30 },
+      circuit_connector_secondary_draw_order = { north = 14, east = 30, south = 127, west = 30 },
 
       animation =
       {
