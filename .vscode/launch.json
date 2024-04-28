@@ -1,0 +1,47 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: Reflection",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "./Blender/packer/reflection.py",
+            "console": "internalConsole",
+            "args": [
+                "-d",
+                "./Blender/Excavator/Output/v2/37/",
+                "-o",
+                "./graphics/stills/",
+                "-s",
+                "1",
+                "-r",
+                "25"
+            ]
+        },
+        {
+            "name": "Python Debugger: Spritepacker",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "./Blender/packer/spritepacker.py",
+            "console": "internalConsole",
+            "args": [
+                "-d",
+                "./Blender/output/8/hr/West/Shadows/",
+                "-o",
+                "./graphics/sprites/hr/west/",
+                "-n",
+                "shadows",
+                "-s", "0.5",
+                // "-xo", "4",
+                // "-yo", "-130",
+                // "-xs", "14",
+                // "-ys", "16",
+                // "-s", "1",
+                // "-xo", "7",
+                // "-yo", "-120",
+                // "-xs", "14",
+                // "-ys", "16",
+            ]
+        }
+    ]
+}
