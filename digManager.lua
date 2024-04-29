@@ -31,6 +31,30 @@ local function is_any_neighbour_named(surface, center, tile_names)
   return false
 end
 
+local function die_water_colliding_entities(surface, bbox)
+    local entities = surface.find_entities_filtered{
+        area = bbox,
+        collision_mask = "water-tile"
+    }
+
+    for _, entity in pairs(entities) do
+        game.print("Destroying " .. entity.name)
+        entity.die()
+    end
+end
+
+local function destroy_corpses(surface, bbox)
+    local remnants = surface.find_entities_filtered{
+        area = bbox,
+        type = "corpse"
+    }
+
+    for _, entity in pairs(remnants) do
+        -- game.print("remnant destroyed: " .. entity.name)
+        entity.destroy()
+    end
+end
+
 local function set_dug(surface, position)
   --game.print("Dug tile: ".. surface.name .. " - ".. position.x .. ", " .. position.y)
   
@@ -110,30 +134,6 @@ local function move_players(surface, bbox)
     end
 end
 
-local function die_water_coliding_entities(surface, bbox)
-    local entities = surface.find_entities_filtered{
-        area = bbox,
-        collision_mask = "water-tile"
-    }
-
-    for _, entity in pairs(entities) do
-        game.print("Destroying " .. entity.name)
-        entity.die()
-    end
-end
-
-local function destroy_corpses(surface, bbox)
-    local remnants = surface.find_entities_filtered{
-        area = bbox,
-        type = "corpse"
-    }
-
-    for _, entity in pairs(remnants) do
-        -- game.print("remnant destroyed: " .. entity.name)
-        entity.destroy()
-    end
-end
-
 function dig_manager.set_water(surface, position)
     -- game.print("Set water")
     --game.print("Set water: " .. math.floor(position.x) .. ", " .. math.floor(position.y))
@@ -141,7 +141,7 @@ function dig_manager.set_water(surface, position)
     util.highlight_position(surface, position)
 
     local bbox = flib_bounding_box.from_position(position, true)
-    die_water_coliding_entities(surface, bbox)
+    die_water_colliding_entities(surface, bbox)
     destroy_corpses(surface, bbox)
     move_players(surface, bbox)
 
