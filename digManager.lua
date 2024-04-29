@@ -1,9 +1,9 @@
 local util = require("util")
 
-local transform_manager = {}
+local dig_manager = {}
 
 local last_nth_tick = nil
-transform_manager.check_interval = 15
+dig_manager.check_interval = 15
 
 local water_tile_names = {"deepwater", "deepwater-green", "water", "water-green", "water-mud", "water-shallow", "water-wube"}
 local dug_tile_name = "canal-sand"
@@ -52,7 +52,7 @@ local function set_dug(surface, position)
   })
 end
 
-function transform_manager.set_water(surface, position)
+function dig_manager.set_water(surface, position)
     -- game.print("Set water")
     --game.print("Set water: " .. math.floor(position.x) .. ", " .. math.floor(position.y))
     global.dug[surface.index][math.floor(position.x)][math.floor(position.y)] = nil
@@ -83,7 +83,7 @@ function transform_manager.set_water(surface, position)
     end
 end
   
-function transform_manager.is_dug(surface, position)
+function dig_manager.is_dug(surface, position)
     if global.dug == nil then
         global.dug = {} -- todo remove
     end
@@ -106,8 +106,8 @@ function transform_manager.is_dug(surface, position)
     return global.dug[surface.index][xfloor][yfloor]
 end
   
-function transform_manager.recursive_create_water(surface, center)
-    transform_manager.set_water(surface, center)
+function dig_manager.recursive_create_water(surface, center)
+    dig_manager.set_water(surface, center)
 
     -- If a neighbouring tile is dug, register it for a delayed transition into water
     local surrounding = {
@@ -120,25 +120,25 @@ function transform_manager.recursive_create_water(surface, center)
     for _, pos in ipairs(surrounding) do
         --tile = surface.get_tile(pos.x, pos.y)
         --if tile.name == dug_tile_name then
-        if transform_manager.is_dug(surface, pos) then
+        if dig_manager.is_dug(surface, pos) then
         -- TODO a single tile can be registered by multiple neighbours causing the set_water function to be called multiple
         -- times at possibly different moments.
-        transform_manager.register_delayed_transition(game.tick, surface, pos)
+        dig_manager.register_delayed_transition(game.tick, surface, pos)
         end
     end
 end
   
-function transform_manager.register_delayed_transition(current_tick, surface, position, mult)
+function dig_manager.register_delayed_transition(current_tick, surface, position, mult)
     -- TODO current_tick?
     -- Register a mined out tile to transition into a water tile after a short random delay.
     local tick
     if mult == nil then
-        tick = last_nth_tick + transform_manager.check_interval * math.random(1, 6)
+        tick = last_nth_tick + dig_manager.check_interval * math.random(1, 6)
     elseif mult <= 0 then
         -- Delay has to be at least 1 tick out, so execute it on the next check
-        tick = last_nth_tick + transform_manager.check_interval
+        tick = last_nth_tick + dig_manager.check_interval
     else
-        tick = last_nth_tick + transform_manager.check_interval * mult 
+        tick = last_nth_tick + dig_manager.check_interval * mult 
     end
 
     -- tick = current_tick + delay
@@ -149,7 +149,7 @@ function transform_manager.register_delayed_transition(current_tick, surface, po
     table.insert(global.dug_to_water[tick], {surface=surface, position=position})
 end
 
-function transform_manager.periodic_check_dug_event(event)
+function dig_manager.periodic_check_dug_event(event)
     -- game.print("check " .. event.tick .. " | " .. event.nth_tick)
     last_nth_tick = event.tick
 
@@ -157,13 +157,13 @@ function transform_manager.periodic_check_dug_event(event)
         -- game.print("transitioning")
         for _, transition in ipairs(global.dug_to_water[event.tick]) do
         --game.print("transitioning position " .. transition.position.x .. ", " .. transition.position.y)
-        transform_manager.recursive_create_water(transition.surface, transition.position)
+        dig_manager.recursive_create_water(transition.surface, transition.position)
         end
         global.dug_to_water[event.tick] = nil
     end
 end
 
-function transform_manager.resource_depleted_event(event)
+function dig_manager.resource_depleted_event(event)
     if event.entity.name ~= "rsc-canal-marker" then
         return
     end
@@ -173,8 +173,8 @@ function transform_manager.resource_depleted_event(event)
 
     set_dug(surface, position)
     if is_any_neighbour_named(surface, position, water_tile_names) then
-        transform_manager.register_delayed_transition(event.tick, surface, position, 1)
+        dig_manager.register_delayed_transition(event.tick, surface, position, 1)
     end
 end
 
-return transform_manager
+return dig_manager
