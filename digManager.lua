@@ -1,4 +1,7 @@
+local flib_bounding_box = require("__flib__/bounding-box")
+
 local util = require("util")
+local grid_spiral = require("gridSpiral")
 
 local dig_manager = {}
 
@@ -52,35 +55,97 @@ local function set_dug(surface, position)
   })
 end
 
+
+local function find_nearest_empty_tile(surface, center, max_steps)
+    max_steps = max_steps or 100
+
+    local spiral = grid_spiral.new(center.x, center.y)
+    for _ = 1, 100 do
+        local pos = spiral:Position()
+        local tile = surface.get_tile(pos)
+
+        if tile.valid then
+            if next(tile.prototype.collision_mask) ~= nil then
+                if tile.prototype.collision_mask["ground-tile"] then
+                    local bbox = flib_bounding_box.from_position(pos, true)
+                    local entities = surface.find_entities(bbox)
+                    if next(entities) == nil then
+                        --util.highlight_bbox(surface, bbox)
+                        return pos 
+                    end
+                --     util.highlight_bbox(surface, bbox, {r = 1, g = 1, b = 0, a = 1})
+                --     log("Tile not empty")
+                -- else
+                --     util.highlight_bbox(surface, bbox, {r = 0, g = 0, b = 1, a = 1})
+                --     log("Tile doesn't match mask")
+                end
+            -- else
+            --     log("Collision mask empty")
+            --     util.highlight_bbox(surface, bbox, {r = 1, g = 1, b = 1, a = 1})
+            end
+        -- else
+        --     util.highlight_bbox(surface, bbox, {r = 1, g = 0, b = 0, a = 1})
+        --     log("Tile not valid")
+        end
+
+        spiral:goNext()
+    end
+
+    return nil
+end
+
+local function move_players(surface, bbox)
+    local players = surface.find_entities_filtered{
+        area = bbox,
+        collision_mask = "player-layer"
+    }
+
+    for _, player in pairs(players) do
+        local safe_position = find_nearest_empty_tile(surface, player.position, 100)
+        if safe_position == nil then
+            player.die()
+        else
+            player.teleport(safe_position)
+        end
+    end
+end
+
+local function die_water_coliding_entities(surface, bbox)
+    local entities = surface.find_entities_filtered{
+        area = bbox,
+        collision_mask = "water-tile"
+    }
+
+    for _, entity in pairs(entities) do
+        game.print("Destroying " .. entity.name)
+        entity.die()
+    end
+end
+
+local function destroy_corpses(surface, bbox)
+    local remnants = surface.find_entities_filtered{
+        area = bbox,
+        type = "corpse"
+    }
+
+    for _, entity in pairs(remnants) do
+        -- game.print("remnant destroyed: " .. entity.name)
+        entity.destroy()
+    end
+end
+
 function dig_manager.set_water(surface, position)
     -- game.print("Set water")
     --game.print("Set water: " .. math.floor(position.x) .. ", " .. math.floor(position.y))
     global.dug[surface.index][math.floor(position.x)][math.floor(position.y)] = nil
     util.highlight_position(surface, position)
 
-    -- Die all entities that collide with water
-    local entities = surface.find_entities_filtered{
-        position = position,
-        collision_mask = "water-tile"
-    }
+    local bbox = flib_bounding_box.from_position(position, true)
+    die_water_coliding_entities(surface, bbox)
+    destroy_corpses(surface, bbox)
+    move_players(surface, bbox)
 
-    -- Set the tile to water
     surface.set_tiles({{name="water", position=position}})
-
-    for _, entity in pairs(entities) do
-        --game.print("Killing " .. entity.name)
-        entity.die()
-    end
-
-    -- Destory all remnants on the tile that might have been created by the die function earlier
-    local remnants = surface.find_entities_filtered{
-        position = position,
-        type = "corpse"
-    }
-    for _, entity in pairs(remnants) do
-        -- game.print("remnant destroyed: " .. entity.name)
-        entity.destroy()
-    end
 end
   
 function dig_manager.is_dug(surface, position)
