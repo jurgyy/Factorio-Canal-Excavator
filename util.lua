@@ -9,19 +9,22 @@ function util.to_str(s)
     return tostring(s)
 end
 
-function util.highlight_position(surface, position)
+function util.highlight_position(surface, position, color)
     local bbox = flib_bounding_box.from_position(position, true)
-    util.highlight_bbox(surface, bbox)
+    util.highlight_bbox(surface, bbox, color)
 end
 
 
-function util.highlight_bbox(surface, bbox)
+function util.highlight_bbox(surface, bbox, color)
+    if color == nil then
+        color = {r = 0, g = 1, b = 0, a = 1}
+    end
     rendering.draw_rectangle {
-        color = {r = 0, g = 1, b = 0, a = 1},
-            left_top = bbox.left_top,
-            right_bottom = bbox.right_bottom,
-            time_to_live = 120,
-            surface = surface
+        color = color,
+        left_top = bbox.left_top,
+        right_bottom = bbox.right_bottom,
+        time_to_live = 120,
+        surface = surface
     }
 end
 
