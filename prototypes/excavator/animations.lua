@@ -8,34 +8,6 @@ linear_animation =
 
 animation_speed = 0.6
 
-offset = 
-{
-  hrScale = 0.5,
-  north =
-  {
-    lr = 
-    {
-      x = 0,
-      y = -128
-    },
-    hr =
-    {
-      x = -10,
-      y = -114
-    }
-  },
-  east = 
-  {
-    lr = 
-    {
-      x = 57,
-      y = -71.5
-    }
-  }
-}
-
----------------
----
 local function excavatorGrahpics()
     graphics_set =
     {

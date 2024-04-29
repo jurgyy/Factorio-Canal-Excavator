@@ -73,5 +73,21 @@ return
 
     circuit_wire_connection_points = circuit_connector_definitions["electric-mining-drill"].points, -- TODO
     circuit_connector_sprites = circuit_connector_definitions["electric-mining-drill"].sprites,
-    circuit_wire_max_distance = default_circuit_wire_max_distance
+    circuit_wire_max_distance = default_circuit_wire_max_distance,
+
+    water_reflection =
+    {
+      pictures =
+      {
+        filename = "__my_first_mod__/graphics/sprites/reflections.png",
+        priority = "extra-high",
+        width = 66,
+        height = 71,
+        shift = util.by_pixel(0, 50),
+        variation_count = 4,
+        scale = 5
+      },
+      rotate = false,
+      orientation_to_variation = true
+    }
 }
