@@ -1,7 +1,6 @@
 local event = require("__flib__.event")
 local util = require("util")
 
-local ore_manager = require("oreManager")
 local dig_manager = require("digManager")
 
 local place_tile_event = require("events.placeTileEvent")
@@ -47,7 +46,7 @@ end)
 
 
 local function local_tile_mined_event(event)
-  tile_mined_event(event, ore_manager.ore_starting_amount)
+  tile_mined_event(event)
 end
 
 function debug_check_leftover_dug_event(event)

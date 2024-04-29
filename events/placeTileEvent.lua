@@ -1,5 +1,6 @@
 local ore_manager = require("oreManager")
 local dig_manager = require("digManager")
+local tile_mined_event = require("tileMinedEvent")
 local util = require("util")
 
 local function get_conflicting_entities(surface, position)
@@ -31,6 +32,8 @@ end
 
 local function place_tile_event(event)
     if event.item.name ~= "item-canal-marker" then
+        -- Call tile_mined_event in case the new tile is placed ontop of a canal marker
+        tile_mined_event(event)
         return
     end
 
