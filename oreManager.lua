@@ -1,7 +1,5 @@
 local ore_manager = {}
 
-ore_manager.ore_starting_amount = 5
-
 local function pop_stored_ore_amount(surface, x, y)
   -- Retrieve the stored remaining_ore value and set index to nil
   local amount = global.remaining_ore[surface.index][x][y]
@@ -18,7 +16,7 @@ function ore_manager.pop_stored_ore_amount(surface, position)
   if global.remaining_ore[surface.index] == nil
   or global.remaining_ore[surface.index][x] == nil
   or global.remaining_ore[surface.index][x][y] == nil then
-    return ore_manager.ore_starting_amount
+    return global.ore_starting_amount
   end
   return pop_stored_ore_amount(surface, x, y)
 end

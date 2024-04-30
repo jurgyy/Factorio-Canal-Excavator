@@ -1,6 +1,7 @@
 local event = require("__flib__.event")
 local util = require("util")
 
+local ore_manager = require("oreManager")
 local dig_manager = require("digManager")
 
 local place_tile_event = require("events.placeTileEvent")
@@ -14,6 +15,16 @@ local tile_mined_event = require("events.tileMinedEvent")
 --   random delay [10, 60) ticks to turn into water
 --   Notify surrounding dug tiles
 
+local function get_landfill_stone_amount()
+  for _, ingredient in ipairs(game.recipe_prototypes["landfill"].ingredients) do
+    if ingredient.name == "stone" then
+      return ingredient.amount
+    end
+  end
+  return 20
+end
+
+
 script.on_init(function()
   -- dug_to_water contains all dug tiles that have yet to be transformed into water. indexed by the tick they will transform
   global.dug_to_water = {}
@@ -21,12 +32,15 @@ script.on_init(function()
   global.dug = {}
   -- remaining_ore contains all tiles that were started, have since been removed. Indexed by [surface.index][x][y]
   global.remaining_ore = {}
+
+  global.ore_starting_amount = get_landfill_stone_amount()
 end)
 
--- script.on_load(function()
---     if global.dug == nil then
---       global.dug = {}
---     end
+-- script.on_migrations(function()
+--     -- if global.dug == nil then
+--     --   global.dug = {}
+--     -- end
+--     if game == nil then log("game is nill") else log("game is not nill") end
 -- end)
 
 script.on_configuration_changed(function(configurationChangedData)
@@ -42,6 +56,8 @@ script.on_configuration_changed(function(configurationChangedData)
 
   game.print("mod startup settings changed: " .. util.to_str(configurationChangedData.mod_startup_settings_changed))
   game.print("migration applied: " .. util.to_str(configurationChangedData.migration_applied))
+  
+  global.ore_starting_amount = get_landfill_stone_amount()
 end)
 
 

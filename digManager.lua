@@ -9,7 +9,7 @@ local last_nth_tick = nil
 dig_manager.check_interval = 15
 
 local water_tile_names = {"deepwater", "deepwater-green", "water", "water-green", "water-mud", "water-shallow", "water-wube"}
-local dug_tile_name = "canal-sand"
+local dug_tile_name = "tile-dug"
 
 local function is_any_neighbour_named(surface, center, tile_names)
   local surrounding = {
