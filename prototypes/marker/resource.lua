@@ -1,7 +1,7 @@
-return {
+local marker = {
     type = "resource",
     name = "rsc-canal-marker",
-    icon = "__my_first_mod__/graphics/icons/icon.png",
+    icon = "__my_first_mod__/graphics/icons/marker.png",
     icon_size = 32,
     flags = {"placeable-player", "player-creation", "not-repairable", "not-flammable"},
     category = "ent-canal-marker",
@@ -24,7 +24,6 @@ return {
     map_color = {r = 0.490, g = 0.304, b = 0.0245},
     mining_visualisation_tint = {r = 0.490, g = 0.304, b = 0.0245, a = 1.000},
 
-    -- stages = data.raw["resource"]["copper-ore"].stages,
     stages = {
       sheet = {
         -- Replace the following lines to make them visible for debugging purposes
@@ -34,27 +33,12 @@ return {
         variation_count = 1
       }
     },
-    stage_counts = {1}
-    -- stage_counts = {32, 28, 24, 20, 16, 12, 8, 4},
-    -- stages =
-    -- {
-    --   sheet =
-    --   {
-    --     filename = "__my_first_mod__/graphics/resource.png",
-    --     priority = "extra-high",
-    --     size = 64,
-    --     frame_count = 8,
-    --     variation_count = 8,
-    --     hr_version = nil
-    --     -- {
-    --     --   filename = "__base__/graphics/entity/" .. resource_parameters.name .. "/hr-" .. resource_parameters.name .. ".png",
-    --     --   priority = "extra-high",
-    --     --   size = 128,
-    --     --   frame_count = 8,
-    --     --   variation_count = 8,
-    --     --   scale = 0.5
-    --     -- }
-    --   }
-    -- }
-
+    stage_counts = {0}
+    -- stages = data.raw.resource["stone"].stages,
+    -- stage_counts = {32, 28, 24, 12, 8, 4, 2, 1},
 }
+
+-- local tint = { r = 0.300, g = 0.300, b = 0.03,   a = 0.5 }
+-- marker.stages.sheet.tint = tint
+-- marker.stages.sheet.hr_version.tint = tint
+return marker
