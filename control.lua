@@ -4,6 +4,7 @@ local util = require("util")
 local ore_manager = require("oreManager")
 local dig_manager = require("digManager")
 
+local ghost_marker_built_event = require("events.ghostMarkerBuiltEvent")
 local place_tile_event = require("events.placeTileEvent")
 local tile_mined_event = require("events.tileMinedEvent")
 
@@ -65,19 +66,18 @@ local function local_tile_mined_event(event)
   tile_mined_event(event)
 end
 
-function debug_check_leftover_dug_event(event)
+local function debug_check_leftover_dug_event(event)
   for i, dug in ipairs(global.dug_to_water) do
       game.print(i .. " dug tile on " .. dug.position.x .. ", " .. dug.position.y)
   end
 end
 
--- script.on_event(defines.events.on_built_entity, register_marker, {{filter="type", type="resource"}})
--- script.on_event(defines.events.on_entity_destroyed, change_marker_to_water) -- TODO: on_resource_depleted? https://lua-api.factorio.com/latest/events.html#on_resource_depleted
 script.on_event(defines.events.on_resource_depleted, dig_manager.resource_depleted_event)
 script.on_event(defines.events.on_player_built_tile, place_tile_event)
 script.on_event(defines.events.on_robot_built_tile, place_tile_event)
 script.on_event(defines.events.on_player_mined_tile, local_tile_mined_event)
 script.on_event(defines.events.on_robot_mined_tile, local_tile_mined_event)
+script.on_event(defines.events.on_built_entity, ghost_marker_built_event)
 
 script.on_nth_tick(dig_manager.check_interval, dig_manager.periodic_check_dug_event)
 script.on_nth_tick(1, debug_check_leftover_dug_event)
