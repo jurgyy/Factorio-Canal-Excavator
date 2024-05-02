@@ -138,14 +138,18 @@ function dig_manager.set_water(surface, position)
     -- game.print("Set water")
     --game.print("Set water: " .. math.floor(position.x) .. ", " .. math.floor(position.y))
     global.dug[surface.index][math.floor(position.x)][math.floor(position.y)] = nil
-    util.highlight_position(surface, position)
+    --util.highlight_position(surface, position, {r = 0, g = 0, b = 1.0})
 
     local bbox = flib_bounding_box.from_position(position, true)
     die_water_colliding_entities(surface, bbox)
     destroy_corpses(surface, bbox)
     move_players(surface, bbox)
 
-    surface.set_tiles({{name="water", position=position}})
+    if settings.global["place-shallow-water"].value then
+        surface.set_tiles({{name="water-shallow", position=position}})
+    else
+        surface.set_tiles({{name="water", position=position}})
+    end
 end
   
 function dig_manager.is_dug(surface, position)
