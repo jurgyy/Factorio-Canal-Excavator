@@ -37,7 +37,7 @@ local function place_tile_event(event)
         return
     end
 
-    local radius = game.entity_prototypes["canal-excavator"].mining_drill_radius - 0.5
+    local radius = game.entity_prototypes["canal-excavator"].mining_drill_radius - 1
     local surface = game.surfaces[event.surface_index]
     local placer
     if event.player_index == nil then
