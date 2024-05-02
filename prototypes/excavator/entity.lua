@@ -1,12 +1,12 @@
 local hit_effects = require ("__base__.prototypes.entity.hit-effects")
 local sounds = require("__base__.prototypes.entity.sounds")
-local graphicsFunc = require ("__my_first_mod__/prototypes/excavator/animations")
+local graphicsFunc = require ("__canal_excavator__/prototypes/excavator/animations")
 
 return 
 {
     type = "mining-drill",
     name = "canal-excavator",
-    icon = "__my_first_mod__/graphics/icons/excavator-64.png", -- TODO mipmaps
+    icon = "__canal_excavator__/graphics/icons/excavator-64.png", -- TODO mipmaps
     icon_size = 64,
     icon_mipmaps = 0,
     minable =
@@ -80,7 +80,7 @@ return
     {
       pictures =
       {
-        filename = "__my_first_mod__/graphics/sprites/reflections.png",
+        filename = "__canal_excavator__/graphics/sprites/reflections.png",
         priority = "extra-high",
         width = 66,
         height = 71,

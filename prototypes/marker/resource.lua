@@ -1,7 +1,7 @@
 local marker = {
     type = "resource",
     name = "rsc-canal-marker",
-    icon = "__my_first_mod__/graphics/icons/marker.png",
+    icon = "__canal_excavator__/graphics/icons/marker.png",
     icon_size = 32,
     flags = {"placeable-player", "player-creation", "not-repairable", "not-flammable"},
     category = "ent-canal-marker",
@@ -27,8 +27,8 @@ local marker = {
     stages = {
       sheet = {
         -- Replace the following lines to make them visible for debugging purposes
-        -- filename = "__my_first_mod__/graphics/canal-marker-vis.png",
-        filename = "__my_first_mod__/graphics/canal-marker.png",
+        -- filename = "__canal_excavator__/graphics/canal-marker-vis.png",
+        filename = "__canal_excavator__/graphics/canal-marker.png",
         size = 64,
         variation_count = 1
       }

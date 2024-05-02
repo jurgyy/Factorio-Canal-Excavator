@@ -1,11 +1,11 @@
 {
-    "name": "my_first_mod",
+    "name": "canal_excavator",
     "version": "0.0.2",
-    "title": "My First Mod",
+    "title": "Canal Excavator",
     "author": "Jurgy",
     "factorio_version": "1.1",
     "contact": "w/e",
-    "homepage": "http://github.com/jurgyy",
-    "description": "test mod",
+    "homepage": "https://github.com/jurgyy/Factorio-Canal-Excavator",
+    "description": "Introduces a machine that can excavate tiles and transforms them into water when the dug tile touches another water source",
     "dependencies": ["base"]
 }
