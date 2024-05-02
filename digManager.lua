@@ -6,7 +6,7 @@ local grid_spiral = require("gridSpiral")
 local dig_manager = {}
 
 local last_nth_tick = nil
-dig_manager.check_interval = 15
+dig_manager.check_interval = 15 -- If this value ever gets changed between mod versions, make sure all the registered transitions still fire
 
 local water_tile_names = {"deepwater", "deepwater-green", "water", "water-green", "water-mud", "water-shallow", "water-wube"}
 local dug_tile_name = "tile-dug"
@@ -38,7 +38,6 @@ local function die_water_colliding_entities(surface, bbox)
     }
 
     for _, entity in pairs(entities) do
-        game.print("Destroying " .. entity.name)
         entity.die()
     end
 end
@@ -50,18 +49,11 @@ local function destroy_corpses(surface, bbox)
     }
 
     for _, entity in pairs(remnants) do
-        -- game.print("remnant destroyed: " .. entity.name)
         entity.destroy()
     end
 end
 
 local function set_dug(surface, position)
-  --game.print("Dug tile: ".. surface.name .. " - ".. position.x .. ", " .. position.y)
-  
-  if global.dug == nil then
-    global.dug = {} -- todo remove
-  end
-
   if global.dug[surface.index] == nil then
     global.dug[surface.index] = {}
   end
@@ -79,37 +71,14 @@ local function set_dug(surface, position)
   })
 end
 
-
-local function find_nearest_empty_tile(surface, center, max_steps)
+local function find_nearest_safe_tile(surface, entity, max_steps)
     max_steps = max_steps or 100
 
-    local spiral = grid_spiral.new(center.x, center.y)
-    for _ = 1, 100 do
+    local spiral = grid_spiral.new(entity.position.x, entity.position.y)
+    for _ = 1, max_steps do
         local pos = spiral:Position()
-        local tile = surface.get_tile(pos)
-
-        if tile.valid then
-            if next(tile.prototype.collision_mask) ~= nil then
-                if tile.prototype.collision_mask["ground-tile"] then
-                    local bbox = flib_bounding_box.from_position(pos, true)
-                    local entities = surface.find_entities(bbox)
-                    if next(entities) == nil then
-                        --util.highlight_bbox(surface, bbox)
-                        return pos 
-                    end
-                --     util.highlight_bbox(surface, bbox, {r = 1, g = 1, b = 0, a = 1})
-                --     log("Tile not empty")
-                -- else
-                --     util.highlight_bbox(surface, bbox, {r = 0, g = 0, b = 1, a = 1})
-                --     log("Tile doesn't match mask")
-                end
-            -- else
-            --     log("Collision mask empty")
-            --     util.highlight_bbox(surface, bbox, {r = 1, g = 1, b = 1, a = 1})
-            end
-        -- else
-        --     util.highlight_bbox(surface, bbox, {r = 1, g = 0, b = 0, a = 1})
-        --     log("Tile not valid")
+        if not surface.entity_prototype_collides(entity, pos, false, entity.direction) then
+            return pos
         end
 
         spiral:goNext()
@@ -125,7 +94,7 @@ local function move_players(surface, bbox)
     }
 
     for _, player in pairs(players) do
-        local safe_position = find_nearest_empty_tile(surface, player.position, 100)
+        local safe_position = find_nearest_safe_tile(surface, player, 100)
         if safe_position == nil then
             player.die()
         else
@@ -135,8 +104,6 @@ local function move_players(surface, bbox)
 end
 
 function dig_manager.set_water(surface, position)
-    -- game.print("Set water")
-    --game.print("Set water: " .. math.floor(position.x) .. ", " .. math.floor(position.y))
     global.dug[surface.index][math.floor(position.x)][math.floor(position.y)] = nil
     --util.highlight_position(surface, position, {r = 0, g = 0, b = 1.0})
 
@@ -153,10 +120,6 @@ function dig_manager.set_water(surface, position)
 end
   
 function dig_manager.is_dug(surface, position)
-    if global.dug == nil then
-        global.dug = {} -- todo remove
-    end
-
     if global.dug[surface.index] == nil then
         return false
     end
@@ -187,19 +150,24 @@ function dig_manager.recursive_create_water(surface, center)
     }
 
     for _, pos in ipairs(surrounding) do
-        --tile = surface.get_tile(pos.x, pos.y)
-        --if tile.name == dug_tile_name then
         if dig_manager.is_dug(surface, pos) then
-        -- TODO a single tile can be registered by multiple neighbours causing the set_water function to be called multiple
-        -- times at possibly different moments.
-        dig_manager.register_delayed_transition(game.tick, surface, pos)
+            dig_manager.register_delayed_transition(surface, pos)
         end
     end
 end
   
-function dig_manager.register_delayed_transition(current_tick, surface, position, mult)
-    -- TODO current_tick?
+function dig_manager.register_delayed_transition(surface, position, mult)
     -- Register a mined out tile to transition into a water tile after a short random delay.
+    
+    -- TODO a tile can be registered twice if two water touching tiles got dug the same tick and a third adjacent tile was already dug but not touching water.
+    -- This is less obvious with a small variation in check interfal, but if between the two triggers landfill get's placed, the second trigger
+    -- Replaces the landfill with water again.
+
+    if last_nth_tick == nil then
+        -- In the case game just loaded and before the first check interval a transition gets registered, calculate last_nth_tick manually.
+        last_nth_tick = math.floor(game.tick / dig_manager.check_interval) * dig_manager.check_interval
+    end
+
     local tick
     if mult == nil then
         tick = last_nth_tick + dig_manager.check_interval * math.random(1, 6)
@@ -219,14 +187,12 @@ function dig_manager.register_delayed_transition(current_tick, surface, position
 end
 
 function dig_manager.periodic_check_dug_event(event)
-    -- game.print("check " .. event.tick .. " | " .. event.nth_tick)
+    game.print(event.tick)
     last_nth_tick = event.tick
 
     if global.dug_to_water[event.tick] ~= nil then
-        -- game.print("transitioning")
         for _, transition in ipairs(global.dug_to_water[event.tick]) do
-        --game.print("transitioning position " .. transition.position.x .. ", " .. transition.position.y)
-        dig_manager.recursive_create_water(transition.surface, transition.position)
+            dig_manager.recursive_create_water(transition.surface, transition.position)
         end
         global.dug_to_water[event.tick] = nil
     end
@@ -242,7 +208,7 @@ function dig_manager.resource_depleted_event(event)
 
     set_dug(surface, position)
     if is_any_neighbour_named(surface, position, water_tile_names) then
-        dig_manager.register_delayed_transition(event.tick, surface, position, 1)
+        dig_manager.register_delayed_transition(surface, position, 1)
     end
 end
 
