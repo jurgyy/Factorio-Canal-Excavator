@@ -34,13 +34,19 @@ local function place_tile_event(event)
 
     local radius = game.entity_prototypes["canal-excavator"].mining_drill_radius - 1
     local surface = game.surfaces[event.surface_index]
+    local placer
+    if event.player_index == nil then
+        placer = event.robot
+    else
+        placer = game.get_player(event.player_index)
+    end
 
     for _, tile in ipairs(event.tiles) do
         if dig_manager.is_dug(surface, tile.position) then
             local lua_tile = surface.get_tile(tile.position)
 
             if event.player_index ~= nil then
-                game.get_player(event.player_index).mine_tile(lua_tile)
+                placer.mine_tile(lua_tile)
             end
         else
             local resource = surface.create_entity{name="rsc-canal-marker", position=tile.position}
