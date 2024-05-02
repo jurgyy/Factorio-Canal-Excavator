@@ -21,7 +21,7 @@ local marker = {
     },
     collision_box = {{ -0.49, -0.49}, {0.49, 0.49}},
     selection_box = {{ -0.49, -0.49}, {0.49, 0.49}},
-    map_color = {r = 0.490, g = 0.304, b = 0.0245},
+    map_color = { r = 0.181, g = 0.104, b = 0.075},
     mining_visualisation_tint = {r = 0.490, g = 0.304, b = 0.0245, a = 1.000},
 
     stages = {
