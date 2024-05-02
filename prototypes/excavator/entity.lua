@@ -20,7 +20,7 @@ return
     dying_explosion = "electric-mining-drill-explosion",
     
     collision_mask = {"object-layer", "train-layer"},
-    collision_box = {{ -1.49, -5.49}, {1.49, 1.49}},
+    collision_box = {{ -1.29, -5.39}, {1.29, 1.49}},
     selection_box = {{ -1.5, -5.5}, {1.5, 1.5}},
     drawing_box = {{ -1.5, -5.5}, {1.5, 1.5}}, -- TODO: more in the upwards direction?
     
@@ -60,7 +60,8 @@ return
     module_specification =
     {
         module_slots = 5,
-        -- module_info_icon_shift = {10, 0}
+        module_info_max_icons_per_row  = 5,
+        module_info_icon_shift = {0, -0.25}
     },
     radius_visualisation_picture =
     {
