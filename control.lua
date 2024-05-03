@@ -36,6 +36,8 @@ script.on_configuration_changed(function(configurationChangedData)
   global.ore_starting_amount = get_landfill_stone_cost()
 end)
 
+commands.add_command("transition-dug", nil, dig_manager.transition_dug)
+
 script.on_event(defines.events.on_resource_depleted, dig_manager.resource_depleted_event)
 script.on_event(defines.events.on_player_built_tile, place_tile_event)
 script.on_event(defines.events.on_robot_built_tile, place_tile_event)
