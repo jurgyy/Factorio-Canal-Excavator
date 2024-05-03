@@ -20,8 +20,8 @@ Path.dirToString = dirToString
 del(dirToString)
 # ----
 
-outputRoot = Path(os.getcwd()).joinpath("output/8/")
-modRoot = Path(os.getcwd()).join("..")
+outputRoot = Path(os.getcwd()).joinpath("output/10/")
+modRoot = Path(os.getcwd()).joinpath("..")
 mainAnimationStart = 1
 mainAnimationStop = 64
 floorDustAnimationStart = 48
@@ -357,6 +357,7 @@ def renderFloorDustAnimation(direction, resName, res):
     bpy.context.scene.sequence_editor_clear()
 
 def renderDrop():
+    # Drop currently part of Hopper Dust animation, so no need to render it seperately
     hideEverythingBut(colName="Drop")
     holdOutCollection("Main Render", value=True, unhide=True)
 
@@ -368,6 +369,26 @@ def renderDrop():
             bpy.context.scene.render.filepath = outputRoot.joinpath(f"{name}/{direction}/Drop/").dirToString()
             bpy.ops.render.render(animation=True)
 
+def renderIcon():
+    def config_compositor(forIcon: bool):
+        for node in bpy.context.scene.node_tree.nodes:
+            if node.type == "FLIP" or node.type == "HUE_SAT":
+                node.mute = not forIcon
+
+    hideEverythingBut(colName=["Hopper Dust", "Main Render"])
+    setSceneDirection("South")
+    config_compositor(True)
+    bpy.context.scene.camera = bpy.data.objects["Camera-Icon"]
+    bpy.context.scene.frame_set(46)
+
+    bpy.context.scene.render.resolution_x = 64
+    bpy.context.scene.render.resolution_y = 64
+    bpy.context.scene.render.filepath = str(outputRoot.joinpath(f"excavator-64"))
+
+    bpy.ops.render.render(write_still=True)
+
+    config_compositor(False)
+
 
 def main():
     renderMachine()
@@ -377,6 +398,7 @@ def main():
     renderReflections()
     #renderMachineStills()
     #renderDrop()
+    renderIcon()
 
 
 if __name__ == "__main__":
