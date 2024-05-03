@@ -6,7 +6,7 @@ return
 {
     type = "mining-drill",
     name = "canal-excavator",
-    icon = "__canal_excavator__/graphics/icons/excavator-64.png", -- TODO mipmaps
+    icon = "__canal_excavator__/graphics/icons/excavator-64.png",
     icon_size = 64,
     icon_mipmaps = 0,
     minable =
@@ -19,11 +19,12 @@ return
     corpse = "electric-mining-drill-remnants", -- TODO
     dying_explosion = "electric-mining-drill-explosion",
     
-    collision_mask = {"train-layer"},
+    collision_mask = {"train-layer", "object-layer" }, -- object-layer unfortunatly collides with shallow water
     collision_box = {{ -1.29, -5.39}, {1.29, 1.49}},
     selection_box = {{ -1.5, -5.5}, {1.5, 1.5}},
-    drawing_box = {{ -1.5, -5.5}, {1.5, 1.5}}, -- TODO: more in the upwards direction?
-    
+    drawing_box = {{ -1.5, -5.5}, {1.5, 1.5}},
+    flags = { "player-creation", "placeable-neutral" },
+
     damaged_trigger_effect = hit_effects.entity(),
     input_fluid_box = nil,
     

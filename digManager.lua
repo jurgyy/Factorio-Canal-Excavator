@@ -113,6 +113,7 @@ function dig_manager.set_water(surface, position)
     move_players(surface, bbox)
 
     if settings.global["place-shallow-water"].value then
+        -- Setting currently hidden due to collision masks problem
         surface.set_tiles({{name="water-shallow", position=position}})
     else
         surface.set_tiles({{name="water", position=position}})
