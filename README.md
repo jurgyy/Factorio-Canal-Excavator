@@ -26,6 +26,11 @@ This mod should be compatible with most other mods since it only adds new object
 ## Future Plans
 Currently I'm still finishing up the main functionality of the mod. After the initial release I'm thinking about further compatibilty with Space Exploration. Since not all planets are stone rich, I want to modify the dug resource by the planet it's on. The exact implementation of this idea has yet to be decided.
 
+## Known Issues
+
+ * The excavator can't be placed on shallow water. Unfortunatly, without messing with the collision mask of all entities, this is impossible.  
+ * Items don't get picked up when an excavator gets build on top of it. I can't add the "item-layer" collision mask to the excavator's mask, since water tiles have that layer as well.
+
 ## Q&A
 
 *Q: A tile won't transition into water even though it is touching another water tile*  
