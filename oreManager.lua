@@ -43,6 +43,14 @@ function ore_manager.insert_stored_ore_amount(surface, position, amount)
 end
 
 function ore_manager.clear_stored_ore_amount()
+  local count
+  if global.remaining_ore == nil then
+    count = 0
+  else
+    count = #global.remaining_ore
+  end
+  
+  game.print("Resetting " .. count .. " partially dug tiles")
   global.remaining_ore = {}
 end
 

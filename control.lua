@@ -1,4 +1,5 @@
 local dig_manager = require("digManager")
+local ore_manager = require("oreManager")
 
 local entity_built_event = require("events.entityBuiltEvent")
 local place_tile_event = require("events.placeTileEvent")
@@ -37,6 +38,7 @@ script.on_configuration_changed(function(configurationChangedData)
 end)
 
 commands.add_command("transition-dug", nil, dig_manager.transition_dug)
+commands.add_command("reset-partially-dug", nil, ore_manager.clear_stored_ore_amount)
 
 script.on_event(defines.events.on_resource_depleted, dig_manager.resource_depleted_event)
 script.on_event(defines.events.on_player_built_tile, place_tile_event)
