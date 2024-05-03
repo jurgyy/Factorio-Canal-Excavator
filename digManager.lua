@@ -178,7 +178,6 @@ function dig_manager.register_delayed_transition(surface, position, mult)
         tick = last_nth_tick + dig_manager.check_interval * mult 
     end
 
-    -- tick = current_tick + delay
     if global.dug_to_water[tick] == nil then
         global.dug_to_water[tick] = {}
     end
@@ -186,16 +185,18 @@ function dig_manager.register_delayed_transition(surface, position, mult)
     table.insert(global.dug_to_water[tick], {surface=surface, position=position})
 end
 
-function dig_manager.periodic_check_dug_event(event)
-    game.print(event.tick)
-    last_nth_tick = event.tick
-
-    if global.dug_to_water[event.tick] ~= nil then
-        for _, transition in ipairs(global.dug_to_water[event.tick]) do
+local function transition_tick(tick)
+    if global.dug_to_water[tick] ~= nil then
+        for _, transition in ipairs(global.dug_to_water[tick]) do
             dig_manager.recursive_create_water(transition.surface, transition.position)
         end
-        global.dug_to_water[event.tick] = nil
+        global.dug_to_water[tick] = nil
     end
+end
+
+function dig_manager.periodic_check_dug_event(event)
+    last_nth_tick = event.tick
+    transition_tick(last_nth_tick)
 end
 
 function dig_manager.resource_depleted_event(event)
@@ -209,6 +210,22 @@ function dig_manager.resource_depleted_event(event)
     set_dug(surface, position)
     if is_any_neighbour_named(surface, position, water_tile_names) then
         dig_manager.register_delayed_transition(surface, position, 1)
+    end
+end
+
+function dig_manager.transition_dug()
+    if next(global.dug_to_water) == nil then
+        game.print("No tiles registered for transition.")
+    else
+        game.print("Force transitioning all tiles that are dug and touching water.")
+        
+        local count = 0
+        for tick, _ in pairs(global.dug_to_water) do
+            game.print(tick)
+            count = count + 1
+            transition_tick(tick)
+        end
+        game.print("Transitioned " .. count .. " dug tiles.")
     end
 end
 
