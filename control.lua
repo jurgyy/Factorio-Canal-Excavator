@@ -1,6 +1,6 @@
 local dig_manager = require("digManager")
 
-local ghost_marker_built_event = require("events.ghostMarkerBuiltEvent")
+local entity_built_event = require("events.entityBuiltEvent")
 local place_tile_event = require("events.placeTileEvent")
 local tile_mined_event = require("events.tileMinedEvent")
 
@@ -43,7 +43,7 @@ script.on_event(defines.events.on_player_built_tile, place_tile_event)
 script.on_event(defines.events.on_robot_built_tile, place_tile_event)
 script.on_event(defines.events.on_player_mined_tile, tile_mined_event)
 script.on_event(defines.events.on_robot_mined_tile, tile_mined_event)
-script.on_event(defines.events.on_built_entity, ghost_marker_built_event)
+script.on_event(defines.events.on_built_entity, entity_built_event)
 
 script.on_nth_tick(dig_manager.check_interval, dig_manager.periodic_check_dug_event)
 
