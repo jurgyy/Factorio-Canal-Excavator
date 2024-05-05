@@ -26,4 +26,5 @@ data:extend({
             time = 30
         },
         order = "c-k-c"
+    }
 })
