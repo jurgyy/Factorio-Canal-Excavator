@@ -17,7 +17,11 @@ local marker = {
     minable =
     {
       mining_time = 1,
-      result = "stone"
+      results = {{
+        name = "stone",
+        probability = 1,
+        amount = 1
+      }}
     },
     collision_box = {{ -0.49, -0.49}, {0.49, 0.49}},
     selection_box = {{ -0.49, -0.49}, {0.49, 0.49}},
