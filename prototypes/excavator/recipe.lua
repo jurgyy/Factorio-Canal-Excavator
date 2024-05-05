@@ -3,19 +3,23 @@ return {
     name = "canal-excavator",
     normal =
     {
-        energy_required = 2,
+        energy_required = 10,
         ingredients =
         {
-            {"iron-plate", 10}
+            {"steel-plate", 50},
+            {"concrete", 25},
+            {"iron-gear-wheel", 10}
         },
         result = "canal-excavator"
     },
     expensive =
     {
-        energy_required = 2,
+        energy_required = 10,
         ingredients =
         {
-            {"iron-plate", 20}
+            {"steel-plate", 100},
+            {"concrete", 50},
+            {"iron-gear-wheel", 20}
         },
         result = "canal-excavator"
     }
