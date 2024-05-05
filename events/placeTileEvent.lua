@@ -49,8 +49,7 @@ local function place_tile_event(event)
                 placer.mine_tile(lua_tile)
             end
         else
-            local resource = surface.create_entity{name="rsc-canal-marker", position=tile.position}
-            resource.amount = ore_manager.pop_stored_ore_amount(surface, tile.position)
+            ore_manager.create_ore(surface, tile.position)
 
             -- Wake-up idle excavators
             local excavators = find_entities_in_radius(tile, radius, surface, "canal-excavator")

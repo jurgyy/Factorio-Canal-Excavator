@@ -1,6 +1,7 @@
 local marker = {
     type = "resource",
     name = "rsc-canal-marker",
+    localised_name  = "rsc-canal-marker",
     icon = "__canal_excavator__/graphics/icons/marker.png",
     icon_size = 32,
     flags = {"placeable-player", "player-creation", "not-repairable", "not-flammable"},
@@ -45,4 +46,25 @@ local marker = {
 -- local tint = { r = 0.300, g = 0.300, b = 0.03,   a = 0.5 }
 -- marker.stages.sheet.tint = tint
 -- marker.stages.sheet.hr_version.tint = tint
-return marker
+
+
+local markers = {marker}
+local resource_granularity = require("resourceGranularity")
+
+for i = 1, resource_granularity do
+    local reducedResource = table.deepcopy(marker)
+    log(">>> Localised name: " .. tostring(marker.localised_name))
+
+    reducedResource.name = marker.name .. "-" .. i
+    reducedResource.minable.results[1].probability = i / resource_granularity
+
+    -- local color = { r = 1/i, g = 1/i, b = 1/i,   a = 0.5 }
+    -- reducedResource.stages.sheet.tint = color
+    -- reducedResource.stages.sheet.hr_version.tint = color
+
+    table.insert(markers, reducedResource)
+end
+
+marker.name = marker.name .. "-" .. resource_granularity
+
+return markers

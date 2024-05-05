@@ -1,5 +1,20 @@
 local ore_manager = {}
 
+local function get_resource_entity_current_name()
+  local resource_steps = 10
+  local productivity = 1 + game.forces["player"].mining_drill_productivity_bonus
+  game.print("productivity: " .. productivity)
+  if productivity < 1 then
+      game.print("Productivity lower than one not supported. Falling back as if productivity is equal to 1.")
+      productivity = 1
+  end
+  local index = math.floor(resource_steps / productivity)
+  if index < 1 then
+      index = 1
+  end
+  return "rsc-canal-marker-" .. index
+end
+
 local function pop_stored_ore_amount(surface, x, y)
   -- Retrieve the stored remaining_ore value and set index to nil
   local amount = global.remaining_ore[surface.index][x][y]
@@ -8,17 +23,21 @@ local function pop_stored_ore_amount(surface, x, y)
   return amount
 end
 
+function ore_manager.is_tile_started(surface, position)
+  return global.remaining_ore[surface.index] ~= nil
+     and global.remaining_ore[surface.index][position.x] ~= nil
+     and global.remaining_ore[surface.index][position.x][position.y] ~= nil
+end
+
 function ore_manager.pop_stored_ore_amount(surface, position)
   -- Retrieve the stored remaining_ore value or the starting amount if is a new tile
   local x = math.floor(position.x)
   local y = math.floor(position.y)
 
-  if global.remaining_ore[surface.index] == nil
-  or global.remaining_ore[surface.index][x] == nil
-  or global.remaining_ore[surface.index][x][y] == nil then
-    return global.ore_starting_amount
+  if ore_manager.is_tile_started(surface, position) then
+    return pop_stored_ore_amount(surface, x, y)
   end
-  return pop_stored_ore_amount(surface, x, y)
+  return global.ore_starting_amount
 end
   
 function ore_manager.insert_stored_ore_amount(surface, position, amount)
@@ -52,6 +71,27 @@ function ore_manager.clear_stored_ore_amount()
   
   game.print("Resetting " .. count .. " partially dug tiles")
   global.remaining_ore = {}
+end
+
+function ore_manager.create_ore(surface, position)
+  local name = get_resource_entity_current_name()
+  game.print(name)
+  local resource = surface.create_entity{name=name, position=position, force=game.forces.player}
+
+  if global.resources == nil then
+    global.resources = {}
+  end
+  local uid = script.register_on_entity_destroyed(resource)
+  global.resources[uid] = resource
+
+  resource.amount = ore_manager.pop_stored_ore_amount(surface, position)
+  return resource
+end
+
+function ore_manager.delete_ore(entity)
+  if entity.valid then
+    entity.destroy()
+  end
 end
 
 return ore_manager
