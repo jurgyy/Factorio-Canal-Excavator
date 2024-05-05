@@ -369,15 +369,16 @@ def renderDrop():
             bpy.context.scene.render.filepath = outputRoot.joinpath(f"{name}/{direction}/Drop/").dirToString()
             bpy.ops.render.render(animation=True)
 
-def renderIcon():
-    def config_compositor(forIcon: bool):
-        for node in bpy.context.scene.node_tree.nodes:
-            if node.type == "FLIP" or node.type == "HUE_SAT":
-                node.mute = not forIcon
+def config_compositor(nodes, enable: bool):
+    for node in bpy.context.scene.node_tree.nodes:
+        if node.name in nodes:
+            node.mute = not enable
 
+def renderIcon():
     hideEverythingBut(colName=["Hopper Dust", "Main Render"])
     setSceneDirection("South")
-    config_compositor(True)
+    compositorNodes = ["Flip", "IconSat"]
+    config_compositor(compositorNodes, True)
     bpy.context.scene.camera = bpy.data.objects["Camera-Icon"]
     bpy.context.scene.frame_set(46)
 
@@ -387,7 +388,25 @@ def renderIcon():
 
     bpy.ops.render.render(write_still=True)
 
-    config_compositor(False)
+    config_compositor(compositorNodes, False)
+
+
+def renderTech():
+    hideEverythingBut(colName=["Hopper Dust", "Main Render", "Floor Dust", "Drop"])
+    setSceneDirection("South")
+    compositorNodes = ["TechSat"]
+    config_compositor(compositorNodes, True)
+    bpy.context.scene.camera = bpy.data.objects["Camera-Icon"]
+    bpy.context.scene.frame_set(59)
+
+    bpy.context.scene.render.resolution_x = 256
+    bpy.context.scene.render.resolution_y = 256
+    bpy.context.scene.render.filepath = str(outputRoot.joinpath(f"excavator-tech"))
+
+    bpy.ops.render.render(write_still=True)
+
+    config_compositor(compositorNodes, False)
+
 
 
 def main():
@@ -398,7 +417,8 @@ def main():
     renderReflections()
     #renderMachineStills()
     #renderDrop()
-    renderIcon()
+    #renderIcon()
+    renderTech()
 
 
 if __name__ == "__main__":
