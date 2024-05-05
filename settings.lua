@@ -6,5 +6,11 @@ data:extend({
         setting_type = "runtime-global",
         default_value = false,
         hidden = true
+    },
+    {
+        name = "auto-deconstruct",
+        type = "bool-setting",
+        setting_type = "runtime-per-user",
+        default_value = true
     }
 })

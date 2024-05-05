@@ -1,3 +1,5 @@
+local flib_bounding_box = require("__flib__/bounding-box")
+
 local ore_manager = {}
 
 local function get_resource_entity_current_name()
@@ -92,6 +94,14 @@ function ore_manager.delete_ore(entity)
   if entity.valid then
     entity.destroy()
   end
+end
+
+function ore_manager.get_colliding_entities(surface, position)
+  return surface.find_entities_filtered{
+    area = flib_bounding_box.from_position(position, true),
+    name = {"canal-excavator"},
+    invert = true
+  }
 end
 
 return ore_manager

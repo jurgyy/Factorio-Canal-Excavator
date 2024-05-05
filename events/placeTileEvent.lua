@@ -5,13 +5,6 @@ local dig_manager = require("digManager")
 local tile_mined_event = require("tileMinedEvent")
 local util = require("util")
 
-local function get_conflicting_entities(surface, bbox)
-    return surface.find_entities_filtered{
-        area = bbox,
-        name = {"canal-excavator", "rsc-canal-marker"},
-        invert = true
-    }
-end
 
 local function find_entities_in_radius(centerTile, radius, surface, name)
     -- Calculate the center position by adding 0.5 to both x and y
@@ -58,10 +51,12 @@ local function place_tile_event(event)
             end
 
             -- Mark entities on tile for deconstruction
-            local bbox = flib_bounding_box.from_position(tile.position, true)
-            local non_excavators = get_conflicting_entities(surface, bbox)
-            for _, ent in pairs(non_excavators) do
-                ent.order_deconstruction(placer.force)
+            if event.player_index ~= nil
+            and settings.get_player_settings(event.player_index)["auto-deconstruct"].value then
+                local non_excavators = ore_manager.get_colliding_entities(surface, tile.position)
+                for _, ent in pairs(non_excavators) do
+                    ent.order_deconstruction(placer.force)
+                end
             end
         end
     end
