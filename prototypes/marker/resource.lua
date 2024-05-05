@@ -1,7 +1,7 @@
 local marker = {
     type = "resource",
     name = "rsc-canal-marker",
-    localised_name  = "rsc-canal-marker",
+    localised_name  = {"entity-name.rsc-canal-marker"},
     icon = "__canal_excavator__/graphics/icons/marker.png",
     icon_size = 32,
     flags = {"placeable-player", "player-creation", "not-repairable", "not-flammable"},
