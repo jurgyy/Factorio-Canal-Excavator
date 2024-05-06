@@ -6,6 +6,7 @@ local place_tile_event = require("events.placeTileEvent")
 local tile_mined_event = require("events.tileMinedEvent")
 local research_finished_event = require("events.researchFinishedEvent")
 local entity_destroyed_event = require("events.entityDestroyedEvent")
+local surface_deleted_event = require("events.surfaceDeletedEvent")
 
 -- Place markers to mark where to dig
 -- Place excavators to dig the area
@@ -53,8 +54,7 @@ script.on_event(defines.events.on_robot_mined_tile, tile_mined_event)
 script.on_event(defines.events.on_built_entity, entity_built_event)
 script.on_event(defines.events.on_research_finished, research_finished_event)
 script.on_event(defines.events.on_entity_destroyed, entity_destroyed_event)
--- TODO
---script.on_event(defines.events.on_surface_deleted, surface_deleted_event)
+script.on_event(defines.events.on_surface_deleted, surface_deleted_event)
 
 script.on_nth_tick(dig_manager.check_interval, dig_manager.periodic_check_dug_event)
 
