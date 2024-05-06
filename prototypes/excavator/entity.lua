@@ -2,6 +2,17 @@ local hit_effects = require ("__base__.prototypes.entity.hit-effects")
 local sounds = require("__base__.prototypes.entity.sounds")
 local graphicsFunc = require ("__canal_excavator__/prototypes/excavator/animations")
 
+circuit_connector_definitions["canal-excavator"] = circuit_connector_definitions.create
+(
+    universal_connector_template,
+    {
+        { variation = 24, main_offset = util.by_pixel(-44, -132), shadow_offset = util.by_pixel(-50.5, -110), show_shadow = false },
+        { variation = 26, main_offset = util.by_pixel(120, 0), shadow_offset = util.by_pixel(120, 19), show_shadow = true },
+        { variation = 26, main_offset = util.by_pixel(40, 105), shadow_offset = util.by_pixel(43, 111), show_shadow = true },
+        { variation = 26, main_offset = util.by_pixel(-124, -14), shadow_offset = util.by_pixel(-96, 22), show_shadow = true }
+    }
+)
+
 return 
 {
     type = "mining-drill",
@@ -72,9 +83,8 @@ return
     },
     monitor_visualization_tint = {r=78, g=173, b=255},
     fast_replaceable_group = nil,
-
-    circuit_wire_connection_points = circuit_connector_definitions["electric-mining-drill"].points, -- TODO
-    circuit_connector_sprites = circuit_connector_definitions["electric-mining-drill"].sprites,
+    circuit_wire_connection_points = circuit_connector_definitions["canal-excavator"].points,
+    circuit_connector_sprites = circuit_connector_definitions["canal-excavator"].sprites,
     circuit_wire_max_distance = default_circuit_wire_max_distance,
 
     water_reflection =
