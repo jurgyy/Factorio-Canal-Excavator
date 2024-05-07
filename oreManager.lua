@@ -71,7 +71,7 @@ function ore_manager.clear_stored_ore_amount()
     count = #global.remaining_ore
   end
   
-  game.print("Resetting " .. count .. " partially dug tiles")
+  game.print("Resetting partially dug tiles")
   global.remaining_ore = {}
 end
 
