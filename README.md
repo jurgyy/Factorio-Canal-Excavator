@@ -21,7 +21,9 @@ This mod was created with Space Exploration in mind. Other water mods often allo
 The size of the Excavator was decided such that it streches the complete width of a canal that fits the cargo ships nicely.
 
 **Other mods**
-This mod should be compatible with most other mods since it only adds new objects and doesn't modify any existing ones. 
+This mod should be compatible with most other mods since it only adds new objects and doesn't modify any existing ones. Though this mod does add two tile prototypes and currently Factorio has a hard limit of 255. If you run multiple mods that add a lot of types, you might encounter this limit. For this reason there is a world setting called "Don't introduce new tiles". By default this is off but when enabled it reuses the "Yellow Refined Concrete" and "Brown Refined Concrete" that are already in the base game. If the mods you are using don't touch these two, you can enable this setting without any problems.
+
+If a mod adds new water tiles, this mod probably won't recognize them when checking if a dug tile touches water. If you encounter such issue, please contact me with the info about which mods you are using and I'll fix it.
 
 ## Future Plans
 Currently I'm still finishing up the main functionality of the mod. After the initial release I'm thinking about further compatibilty with Space Exploration. Since not all planets are stone rich, I want to modify the dug resource by the planet it's on. The exact implementation of this idea has yet to be decided.

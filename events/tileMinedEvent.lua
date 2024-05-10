@@ -1,5 +1,6 @@
 local ore_manager = require("oreManager")
 local resource_granularity = require("resourceGranularity")
+local digableTileName = require("getTileNames").digable
 
 local function generate_marker_list()
   local markerList = {"rsc-canal-marker"}
@@ -13,7 +14,7 @@ local marker_names = generate_marker_list()
 local function tile_mined_event(event)
   local surface = game.surfaces[event.surface_index]
   for _, tile in ipairs(event.tiles) do
-    if tile.old_tile.name == "tile-canal-marker" then
+    if tile.old_tile.name == digableTileName then
       local ores = surface.find_entities_filtered{
         position = {x = tile.position.x + 0.5, y = tile.position.y + 0.5},
         type = "resource",

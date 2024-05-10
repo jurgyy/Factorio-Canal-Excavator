@@ -2,6 +2,7 @@ local flib_bounding_box = require("__flib__/bounding-box")
 
 local util = require("util")
 local grid_spiral = require("gridSpiral")
+local dug_tile_name = require("getTileNames").dug
 
 local dig_manager = {}
 
@@ -9,7 +10,6 @@ local last_nth_tick = nil
 dig_manager.check_interval = 15 -- If this value ever gets changed between mod versions, make sure all the registered transitions still fire
 
 local water_tile_names = {"deepwater", "deepwater-green", "water", "water-green", "water-mud", "water-shallow", "water-wube"}
-local dug_tile_name = "tile-dug"
 
 local function is_any_neighbour_named(surface, center, tile_names)
   local surrounding = {
