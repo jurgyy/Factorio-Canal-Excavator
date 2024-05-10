@@ -29,23 +29,23 @@ local marker = {
     map_color = { r = 0.181, g = 0.104, b = 0.075},
     mining_visualisation_tint = {r = 0.490, g = 0.304, b = 0.0245, a = 1.000},
 
-    stages = {
-      sheet = {
-        -- Replace the following lines to make them visible for debugging purposes
-        -- filename = "__canal_excavator__/graphics/canal-marker-vis.png",
-        filename = "__canal_excavator__/graphics/canal-marker.png",
-        size = 64,
-        variation_count = 1
-      }
-    },
-    stage_counts = {0}
-    -- stages = data.raw.resource["stone"].stages,
-    -- stage_counts = {32, 28, 24, 12, 8, 4, 2, 1},
+    -- stages = {
+    --   sheet = {
+    --     -- Replace the following lines to make them visible for debugging purposes
+    --     -- filename = "__canal_excavator__/graphics/canal-marker-vis.png",
+    --     filename = "__canal_excavator__/graphics/canal-marker.png",
+    --     size = 64,
+    --     variation_count = 1
+    --   }
+    -- },
+    --stage_counts = {0}
+    stages = data.raw.resource["stone"].stages,
+    stage_counts = {32, 28, 24, 12, 8, 4, 2, 1},
 }
 
--- local tint = { r = 0.300, g = 0.300, b = 0.03,   a = 0.5 }
--- marker.stages.sheet.tint = tint
--- marker.stages.sheet.hr_version.tint = tint
+local tint = { r = 0.1, g = 0.1, b = 0.1, a = 0.5 }
+marker.stages.sheet.tint = tint
+marker.stages.sheet.hr_version.tint = tint
 
 
 local markers = {marker}
@@ -53,7 +53,6 @@ local resource_granularity = require("resourceGranularity")
 
 for i = 1, resource_granularity do
     local reducedResource = table.deepcopy(marker)
-    log(">>> Localised name: " .. tostring(marker.localised_name))
 
     reducedResource.name = marker.name .. "-" .. i
     reducedResource.minable.results[1].probability = i / resource_granularity
