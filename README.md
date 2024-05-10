@@ -31,7 +31,7 @@ Currently I'm still finishing up the main functionality of the mod. After the in
 ## Known Issues
 
  * The excavator can't be placed on shallow water. Unfortunatly, without messing with the collision mask of all entities, this is impossible.  
- * Items don't get picked up when an excavator gets build on top of it. I can't add the "item-layer" collision mask to the excavator's mask, since water tiles have that layer as well.
+ * Items don't get picked up when an excavator gets build on top of it. I can't add the "item-layer" collision mask to the excavator's mask, since water tiles have that layer as well which would prevent the excavator from being placable on water and it will be destroyed when a water tile gets created under it.
 
 ## Q&A
 
