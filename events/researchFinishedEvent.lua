@@ -11,10 +11,8 @@ end
 local function update_ores()
   -- Get all the keys before iterating so you don't modify the key list while iterating.
   local keys = get_keys(global.resources)
-  game.print("Updating " .. #keys .. " ores")
   
   for _, key in ipairs(keys) do
-    game.print(key)
     local old_ore = global.resources[key]
     if old_ore.valid then
 

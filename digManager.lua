@@ -222,7 +222,6 @@ function dig_manager.transition_dug()
         
         local count = 0
         for tick, _ in pairs(global.dug_to_water) do
-            game.print(tick)
             count = count + 1
             transition_tick(tick)
         end
