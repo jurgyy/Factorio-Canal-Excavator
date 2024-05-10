@@ -2,7 +2,7 @@ local flib_bounding_box = require("__flib__/bounding-box")
 
 local ore_manager = require("oreManager")
 local dig_manager = require("digManager")
-local tile_mined_event = require("tileMinedEvent")
+local tile_mined_event = require("events.tileMinedEvent")
 local util = require("util")
 
 
