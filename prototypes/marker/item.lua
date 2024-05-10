@@ -2,7 +2,6 @@ return
 {
     type = "item",
     name = "item-canal-marker",
-    --place_result = "rsc-canal-marker",
     place_as_tile =
     {
       result = "tile-canal-marker",
