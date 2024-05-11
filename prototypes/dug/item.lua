@@ -1,7 +1,7 @@
 -- Not meant to be used, just for debugging
 return {
     type = "item",
-    name = "canal-sand",
+    name = "canex-dug",
     place_as_tile =
     {
       result = "tile-dug",

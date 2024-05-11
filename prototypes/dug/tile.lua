@@ -1,5 +1,5 @@
 return {
-    name = "tile-dug",
+    name = "canex-tile-dug",
     type = "tile",
     order = "e[canal][dug]",
     

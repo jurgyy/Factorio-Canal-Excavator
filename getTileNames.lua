@@ -5,6 +5,6 @@ if settings.startup["no-tiles"].value then
     }
 end
 return {
-    digable = "tile-canal-marker",
-    dug = "tile-dug"
+    digable = "canex-tile-digable",
+    dug = "canex-tile-dug"
 }

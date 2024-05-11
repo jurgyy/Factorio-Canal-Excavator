@@ -1,6 +1,6 @@
 return {
     type = "recipe",
-    name = "canal-excavator",
+    name = "canex-excavator",
     normal =
     {
         energy_required = 10,
@@ -10,7 +10,7 @@ return {
             {"concrete", 25},
             {"iron-gear-wheel", 10}
         },
-        result = "canal-excavator"
+        result = "canex-excavator"
     },
     expensive =
     {
@@ -21,6 +21,6 @@ return {
             {"concrete", 50},
             {"iron-gear-wheel", 20}
         },
-        result = "canal-excavator"
+        result = "canex-excavator"
     }
 }

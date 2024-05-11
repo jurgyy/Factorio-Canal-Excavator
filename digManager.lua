@@ -201,7 +201,7 @@ function dig_manager.periodic_check_dug_event(event)
 end
 
 function dig_manager.resource_depleted_event(event)
-    if string.sub(event.entity.name, 1, 16) ~= "rsc-canal-marker" then
+    if string.sub(event.entity.name, 1, 17) ~= "canex-rsc-digable" then
         return
     end
 

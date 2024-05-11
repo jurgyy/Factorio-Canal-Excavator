@@ -1,10 +1,10 @@
 return
 {
     type = "item",
-    name = "item-canal-marker",
+    name = "canex-item-digable",
     place_as_tile =
     {
-      result = "tile-canal-marker",
+      result = "canex-tile-digable",
       condition_size = 1,
       condition = { "water-tile" }
     },

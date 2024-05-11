@@ -1,23 +1,21 @@
 return
 {
     type = "recipe",
-    name = "rec-canal-marker",
+    name = "canex-rec-digable",
     normal =
     {
         energy_required = 2,
         ingredients =
         {
-            --{"iron-plate", 10}
         },
-        result = "item-canal-marker"
+        result = "canex-item-digable"
     },
     expensive =
     {
         energy_required = 2,
         ingredients =
         {
-            --{"iron-plate", 20}
         },
-        result = "item-canal-marker"
+        result = "canex-item-digable"
     }
 }

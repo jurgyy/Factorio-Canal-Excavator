@@ -13,7 +13,7 @@ local function get_resource_entity_current_name()
   if index < 1 then
       index = 1
   end
-  return "rsc-canal-marker-" .. index
+  return "canex-rsc-digable-" .. index
 end
 
 local function pop_stored_ore_amount(surface, x, y)
@@ -97,7 +97,7 @@ end
 function ore_manager.get_colliding_entities(surface, position)
   return surface.find_entities_filtered{
     area = flib_bounding_box.from_position(position, true),
-    name = {"canal-excavator"},
+    name = {"canex-excavator"},
     invert = true
   }
 end

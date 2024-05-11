@@ -2,7 +2,7 @@ local hit_effects = require ("__base__.prototypes.entity.hit-effects")
 local sounds = require("__base__.prototypes.entity.sounds")
 local graphicsFunc = require ("__canal_excavator__/prototypes/excavator/animations")
 
-circuit_connector_definitions["canal-excavator"] = circuit_connector_definitions.create
+circuit_connector_definitions["canex-excavator"] = circuit_connector_definitions.create
 (
     universal_connector_template,
     {
@@ -16,17 +16,17 @@ circuit_connector_definitions["canal-excavator"] = circuit_connector_definitions
 return 
 {
     type = "mining-drill",
-    name = "canal-excavator",
+    name = "canex-excavator",
     icon = "__canal_excavator__/graphics/icons/excavator-64.png",
     icon_size = 64,
     icon_mipmaps = 0,
     minable =
     {
         mining_time = 0.1,
-        result = "canal-excavator"
+        result = "canex-excavator"
     },
     max_health = 500,
-    resource_categories = {"ent-canal-marker"},
+    resource_categories = {"canex-rsc-cat-digable"},
     corpse = "electric-mining-drill-remnants", -- TODO
     dying_explosion = "electric-mining-drill-explosion",
     
@@ -83,8 +83,8 @@ return
     },
     monitor_visualization_tint = {r=78, g=173, b=255},
     fast_replaceable_group = nil,
-    circuit_wire_connection_points = circuit_connector_definitions["canal-excavator"].points,
-    circuit_connector_sprites = circuit_connector_definitions["canal-excavator"].sprites,
+    circuit_wire_connection_points = circuit_connector_definitions["canex-excavator"].points,
+    circuit_connector_sprites = circuit_connector_definitions["canex-excavator"].sprites,
     circuit_wire_max_distance = default_circuit_wire_max_distance,
 
     water_reflection =

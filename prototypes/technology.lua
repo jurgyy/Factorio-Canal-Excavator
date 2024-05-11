@@ -1,16 +1,16 @@
 local tech = {
     type = "technology",
-    name = "canal-excavator",
+    name = "canex-excavator",
     icon_size = 256,
     icon = "__canal_excavator__/graphics/tech.png",
     effects = {
         {
             type = "unlock-recipe",
-            recipe = "canal-excavator"
+            recipe = "canex-excavator"
         },
         {
             type = "unlock-recipe",
-            recipe = "rec-canal-marker"
+            recipe = "canex-rec-digable"
         }
     },
     prerequisites = {"utility-science-pack"},

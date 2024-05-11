@@ -19,13 +19,13 @@ local function find_entities_in_radius(centerTile, radius, surface, name)
 end
 
 local function place_tile_event(event)
-    if event.item.name ~= "item-canal-marker" then
-        -- Call tile_mined_event in case the new tile is placed ontop of a canal marker
+    if event.item.name ~= "canex-item-digable" then
+        -- Call tile_mined_event in case the new tile is placed ontop of a digable tile
         tile_mined_event(event)
         return
     end
 
-    local radius = game.entity_prototypes["canal-excavator"].mining_drill_radius - 1
+    local radius = game.entity_prototypes["canex-excavator"].mining_drill_radius - 1
     local surface = game.surfaces[event.surface_index]
     local placer
     if event.player_index == nil then
@@ -45,7 +45,7 @@ local function place_tile_event(event)
             ore_manager.create_ore(surface, tile.position)
 
             -- Wake-up idle excavators
-            local excavators = find_entities_in_radius(tile, radius, surface, "canal-excavator")
+            local excavators = find_entities_in_radius(tile, radius, surface, "canex-excavator")
             for _, excavator in ipairs(excavators) do
                 excavator.active = true
             end

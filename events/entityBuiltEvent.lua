@@ -3,8 +3,8 @@ local ore_manager = require("oreManager")
 local digableTileName = require("getTileNames").digable
 
 local function is_excavator(entity)
-  return entity.name == "canal-excavator"
-  or entity.is_registered_for_construction() and entity.ghost_prototype.name == "canal-excavator"
+  return entity.name == "canex-excavator"
+  or entity.is_registered_for_construction() and entity.ghost_prototype.name == "canex-excavator"
 end
 
 local function is_digable(entity)

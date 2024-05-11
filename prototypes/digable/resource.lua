@@ -1,11 +1,11 @@
-local marker = {
+local resource = {
     type = "resource",
-    name = "rsc-canal-marker",
-    localised_name  = {"entity-name.rsc-canal-marker"},
+    name = "canex-rsc-digable",
+    localised_name  = {"entity-name.canex-rsc-digable"},
     icon = "__canal_excavator__/graphics/icons/marker.png",
     icon_size = 32,
     flags = {"placeable-player", "player-creation", "not-repairable", "not-flammable"},
-    category = "ent-canal-marker",
+    category = "canex-rsc-cat-digable",
     order = "e[canal-marker]",
     highlight = false,
     minimum = 0,
@@ -44,26 +44,26 @@ local marker = {
 }
 
 local tint = { r = 0.1, g = 0.1, b = 0.1, a = 0.5 }
-marker.stages.sheet.tint = tint
-marker.stages.sheet.hr_version.tint = tint
+resource.stages.sheet.tint = tint
+resource.stages.sheet.hr_version.tint = tint
 
 
-local markers = {marker}
+local resources = {resource}
 local resource_granularity = require("resourceGranularity")
 
 for i = 1, resource_granularity do
-    local reducedResource = table.deepcopy(marker)
+    local reducedResource = table.deepcopy(resource)
 
-    reducedResource.name = marker.name .. "-" .. i
+    reducedResource.name = resource.name .. "-" .. i
     reducedResource.minable.results[1].probability = i / resource_granularity
 
     -- local color = { r = 1/i, g = 1/i, b = 1/i,   a = 0.5 }
     -- reducedResource.stages.sheet.tint = color
     -- reducedResource.stages.sheet.hr_version.tint = color
 
-    table.insert(markers, reducedResource)
+    table.insert(resources, reducedResource)
 end
 
-marker.name = marker.name .. "-" .. resource_granularity
+resource.name = resource.name .. "-" .. resource_granularity
 
-return markers
+return resources
