@@ -2,7 +2,7 @@ local resource = {
     type = "resource",
     name = "canex-rsc-digable",
     localised_name  = {"entity-name.canex-rsc-digable"},
-    icon = "__canal_excavator__/graphics/icons/marker.png",
+    icon = "__canal-excavator__/graphics/icons/marker.png",
     icon_size = 32,
     flags = {"placeable-player", "player-creation", "not-repairable", "not-flammable"},
     category = "canex-rsc-cat-digable",
@@ -32,8 +32,8 @@ local resource = {
     -- stages = {
     --   sheet = {
     --     -- Replace the following lines to make them visible for debugging purposes
-    --     -- filename = "__canal_excavator__/graphics/canal-marker-vis.png",
-    --     filename = "__canal_excavator__/graphics/canal-marker.png",
+    --     -- filename = "__canal-excavator__/graphics/canal-marker-vis.png",
+    --     filename = "__canal-excavator__/graphics/canal-marker.png",
     --     size = 64,
     --     variation_count = 1
     --   }

@@ -1,6 +1,6 @@
 local hit_effects = require ("__base__.prototypes.entity.hit-effects")
 local sounds = require("__base__.prototypes.entity.sounds")
-local graphicsFunc = require ("__canal_excavator__/prototypes/excavator/animations")
+local graphicsFunc = require ("__canal-excavator__/prototypes/excavator/animations")
 
 circuit_connector_definitions["canex-excavator"] = circuit_connector_definitions.create
 (
@@ -17,7 +17,7 @@ return
 {
     type = "mining-drill",
     name = "canex-excavator",
-    icon = "__canal_excavator__/graphics/icons/excavator-64.png",
+    icon = "__canal-excavator__/graphics/icons/excavator-64.png",
     icon_size = 64,
     icon_mipmaps = 0,
     minable =
@@ -91,7 +91,7 @@ return
     {
       pictures =
       {
-        filename = "__canal_excavator__/graphics/sprites/reflections.png",
+        filename = "__canal-excavator__/graphics/sprites/reflections.png",
         priority = "extra-high",
         width = 66,
         height = 71,

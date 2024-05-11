@@ -1,4 +1,4 @@
-local recipe = require("__canal_excavator__/prototypes/excavator/recipe")
+local recipe = require("__canal-excavator__/prototypes/excavator/recipe")
 
 recipe.normal.ingredients = {
     {"steel-plate", 50},

@@ -2,7 +2,7 @@ local tech = {
     type = "technology",
     name = "canex-excavator",
     icon_size = 256,
-    icon = "__canal_excavator__/graphics/tech.png",
+    icon = "__canal-excavator__/graphics/tech.png",
     effects = {
         {
             type = "unlock-recipe",
