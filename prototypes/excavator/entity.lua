@@ -69,6 +69,7 @@ return
     
     resource_searching_radius = 2.49,
     vector_to_place_result = {0, -6},
+    allowed_effects = {"consumption", "speed", "pollution"},
     module_specification =
     {
         module_slots = 5,
