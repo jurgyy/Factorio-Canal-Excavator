@@ -3,7 +3,7 @@ The Canal Excavator Mod is a mod for the game Factorio. This mod introduces a wa
 
 ## Key Features
 1. **The Canal Excavator**
-The centerpiece of this mod is the Canal Excavator: A large 8x10 structure that serves as tool for digging canals. This  machine can be placed on special tiles and once powered will begin excavating the designated area.
+The centerpiece of this mod is the Canal Excavator: A large 7x3 structure that serves as tool for digging canals. This machine can be placed on special tiles and once powered will begin excavating the designated area.
 
 2. **Excavatable Tiles**
 To facilitate the creation of canals, the mod introduces special excavatable tiles. These tiles be placed like any other tiles, but unlike other tiles, they can be mined for stone. 
@@ -30,7 +30,7 @@ Currently I'm still finishing up the main functionality of the mod. After the in
 
 ## Known Issues
 
- * The excavator can't be placed on shallow water. Unfortunatly, without messing with the collision mask of all entities, this is impossible.  
+ * In vanilla, the excavator can't be placed on shallow water. Unfortunatly, without messing with the collision mask of all entities, this is impossible. If a mod, as Alien Biomes does, changes the collision mask to not collide with the object-layer it will work.  
  * Items don't get picked up when an excavator gets build on top of it. I can't add the "item-layer" collision mask to the excavator's mask, since water tiles have that layer as well which would prevent the excavator from being placable on water and it will be destroyed when a water tile gets created under it.
 
 ## Q&A
