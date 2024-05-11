@@ -30,6 +30,7 @@ end
 
 local function entity_built_event(event)
   local entity = event.created_entity
+  game.print("entity created: " .. entity.name)
   if entity.valid then
     if is_excavator(entity) then
       entity.rotatable = false
@@ -40,4 +41,20 @@ local function entity_built_event(event)
   end
 end
 
-return entity_built_event
+return {
+  event = entity_built_event,
+  filter = {
+    {filter = "name", name = "canex-excavator"},
+    {filter = "type", type = "mining-drill", mode = "and"},
+  
+    {filter = "name", name = "entity-ghost", mode = "or"},
+    {filter = "type", type = "entity-ghost", mode = "and"},
+    
+    {filter = "name", name = "tile-ghost", mode = "or"},
+    {filter = "type", type = "tile-ghost", mode = "and"},
+    -- TODO Bug in 1.1.17: https://forums.factorio.com/viewtopic.php?f=7&t=113438
+    -- Change when Wube has fixed it.
+    --{filter = "ghost_name", name = "tile-ghost", mode = "and"},--require("getTileNames").digable, mode = "and"},
+    --{filter = "ghost_type", type = "tile-ghost", mode = "and"}--"tile", mode = "and"}
+  }
+}
