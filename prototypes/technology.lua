@@ -1,30 +1,46 @@
-data:extend({
-    {
-        type = "technology",
-        name = "canal-excavator",
-        icon_size = 256,
-        icon = "__canal_excavator__/graphics/tech.png",
-        effects = {
-            {
-                type = "unlock-recipe",
-                recipe = "canal-excavator"
-            },
-            {
-                type = "unlock-recipe",
-                recipe = "rec-canal-marker"
-            }
+local tech = {
+    type = "technology",
+    name = "canal-excavator",
+    icon_size = 256,
+    icon = "__canal_excavator__/graphics/tech.png",
+    effects = {
+        {
+            type = "unlock-recipe",
+            recipe = "canal-excavator"
         },
-        prerequisites = {"utility-science-pack"},
-        unit = {
-            count = 250,
-            ingredients = {
-                {"automation-science-pack", 1},
-                {"logistic-science-pack", 1},
-                {"chemical-science-pack", 1},
-                {"utility-science-pack", 1}
-            },
-            time = 30
+        {
+            type = "unlock-recipe",
+            recipe = "rec-canal-marker"
+        }
+    },
+    prerequisites = {"utility-science-pack"},
+    unit = {
+        count = 250,
+        ingredients = {
+            {"automation-science-pack", 1},
+            {"logistic-science-pack", 1},
+            {"chemical-science-pack", 1},
+            {"utility-science-pack", 1}
         },
-        order = "c-k-c"
+        time = 30
+    },
+    order = "c-k-c"
+}
+
+if mods["space-exploration"] then
+    tech.prerequisites = { "se-rocket-science-pack" }
+    tech.unit = {
+        count = 150,
+        ingredients = {
+            {"automation-science-pack", 1},
+            {"logistic-science-pack", 1},
+            {"chemical-science-pack", 1},
+            {"se-rocket-science-pack", 1}
+        },
+        time = 30
     }
+end
+
+data:extend({
+    tech
 })
