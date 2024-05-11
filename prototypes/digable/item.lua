@@ -16,7 +16,7 @@ return
     {
         { size = 64, filename = "__canal-excavator__/graphics/icons/marker.png",   scale = 0.25, mipmap_count = 4 }
     },
-    subgroup = "raw-resource",
-    order = "e[canal-marker]",
+    subgroup = "terrain",
+    order = "c[landfill]-b[canal]",
     stack_size = 50
 }
