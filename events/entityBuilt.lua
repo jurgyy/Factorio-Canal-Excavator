@@ -30,7 +30,6 @@ end
 
 local function entity_built_event(event)
   local entity = event.created_entity
-  game.print("entity created: " .. entity.name)
   if entity.valid then
     if is_excavator(entity) then
       entity.rotatable = false
