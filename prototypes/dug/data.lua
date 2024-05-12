@@ -8,6 +8,6 @@ if settings.startup["no-tiles"].value then
         end
     end
 else
-    local item = require("__canal-excavator__/prototypes/dug/item")
-    data:extend{tile, item}
+    --data:extend{require("__canal-excavator__/prototypes/dug/item")}
+    data:extend{tile}
 end

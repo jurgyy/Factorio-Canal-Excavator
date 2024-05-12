@@ -4,7 +4,7 @@ return {
     name = "canex-dug",
     place_as_tile =
     {
-      result = "tile-dug",
+      result = "canex-tile-dug",
       condition_size = 1,
       condition = { "water-tile" }
     },
@@ -14,10 +14,6 @@ return {
     }},
     icon_size = 64,
     icon_mipmaps = 4,
-    pictures =
-    {
-        { size = 64, filename = "__base__/graphics/icons/info.png",   scale = 0.25, mipmap_count = 4 }
-    },
     subgroup = "raw-resource",
     order = "e[canal-marker]",
     stack_size = 50

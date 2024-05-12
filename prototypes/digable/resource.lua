@@ -29,16 +29,6 @@ local resource = {
     map_color = { r = 0.181, g = 0.104, b = 0.075},
     mining_visualisation_tint = {r = 0.490, g = 0.304, b = 0.0245, a = 1.000},
 
-    -- stages = {
-    --   sheet = {
-    --     -- Replace the following lines to make them visible for debugging purposes
-    --     -- filename = "__canal-excavator__/graphics/canal-marker-vis.png",
-    --     filename = "__canal-excavator__/graphics/canal-marker.png",
-    --     size = 64,
-    --     variation_count = 1
-    --   }
-    -- },
-    --stage_counts = {0}
     stages = data.raw.resource["stone"].stages,
     stage_counts = {32, 28, 24, 12, 8, 4, 2, 1},
 }
@@ -56,10 +46,6 @@ for i = 1, resource_granularity do
 
     reducedResource.name = resource.name .. "-" .. i
     reducedResource.minable.results[1].probability = i / resource_granularity
-
-    -- local color = { r = 1/i, g = 1/i, b = 1/i,   a = 0.5 }
-    -- reducedResource.stages.sheet.tint = color
-    -- reducedResource.stages.sheet.hr_version.tint = color
 
     table.insert(resources, reducedResource)
 end
