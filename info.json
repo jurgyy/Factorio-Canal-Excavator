@@ -7,5 +7,5 @@
     "contact": "Jurgy or Jurgyy on most socials",
     "homepage": "https://github.com/jurgyy/Factorio-Canal-Excavator",
     "description": "Introduces a machine that can excavate tiles, extracting stone, and transforms them into water when the dug tile touches another water source",
-    "dependencies": ["base", "flib >= 0.12.5"]
+    "dependencies": ["base", "flib >= 0.12.5", "canal-excavator-graphics = 0.0.2"]
 }

@@ -17,7 +17,7 @@ return
 {
     type = "mining-drill",
     name = "canex-excavator",
-    icon = "__canal-excavator__/graphics/icons/excavator-64.png",
+    icon = "__canal-excavator-graphics__/graphics/icons/excavator-64.png",
     icon_size = 64,
     icon_mipmaps = 0,
     minable =
@@ -92,7 +92,7 @@ return
     {
       pictures =
       {
-        filename = "__canal-excavator__/graphics/sprites/reflections.png",
+        filename = "__canal-excavator-graphics__/graphics/sprites/reflections.png",
         priority = "extra-high",
         width = 66,
         height = 71,
