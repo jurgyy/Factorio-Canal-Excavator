@@ -4,7 +4,7 @@ return
     name = "canex-rec-digable",
     normal =
     {
-        energy_required = 2,
+        energy_required = 0.5,
         ingredients =
         {
         },
@@ -12,7 +12,7 @@ return
     },
     expensive =
     {
-        energy_required = 2,
+        energy_required = 0.5,
         ingredients =
         {
         },
