@@ -1,0 +1,6 @@
+---------------------------------------------------------------------------------------------------
+Version: 1.0.0
+Date: 2024-05-13
+  Bugfixes:
+    - main -> master branch
+    - Modified branch to master instead of main
