@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.3
+Date: 2024-05-13
+  Bugfixes:
+    - Fixed player sometimes dying when water created under them and no long move player when shallow water is placed.
+---------------------------------------------------------------------------------------------------
 Version: 1.0.2
 Date: 2024-05-13
   Bugfixes:
