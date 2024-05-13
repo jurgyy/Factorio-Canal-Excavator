@@ -115,7 +115,6 @@ end
 
 function dig_manager.set_water(surface, position)
     global.dug[surface.index][math.floor(position.x)][math.floor(position.y)] = nil
-    --util.highlight_position(surface, position, {r = 0, g = 0, b = 1.0})
 
     local bbox = flib_bounding_box.from_position(position, true)
     die_water_colliding_entities(surface, bbox)
