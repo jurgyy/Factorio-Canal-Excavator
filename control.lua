@@ -43,8 +43,6 @@ script.on_configuration_changed(function(configurationChangedData)
   global.ore_starting_amount = get_landfill_stone_cost()
   
   -- In case alien-biomes get disabled but the setting is still on
-  game.print(not script.active_mods["alien-biomes"])
-  game.print(settings.global["place-shallow-water"].value)
   if not script.active_mods["alien-biomes"] and settings.global["place-shallow-water"].value then
     game.print("Disabling shallow water")
     settings.global["place-shallow-water"] = { value = false }
