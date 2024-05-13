@@ -8,8 +8,8 @@ grid_spiral.__index = grid_spiral
 function grid_spiral.new(centerX, centerY)
     local self = setmetatable({}, grid_spiral)
     self.layer = 1
-    self.leg = 0
-    self.x = 0
+    self.leg = 1
+    self.x = 1
     self.y = 0
     self.centerX = centerX or 0
     self.centerY = centerY or 0
