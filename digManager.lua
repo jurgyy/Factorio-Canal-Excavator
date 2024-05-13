@@ -74,7 +74,9 @@ end
 local function find_nearest_safe_tile(surface, entity, max_steps)
     max_steps = max_steps or 100
 
-    local spiral = grid_spiral.new(entity.position.x, entity.position.y)
+    local x = math.floor(entity.position.x) + .5
+    local y = math.floor(entity.position.y) + .5
+    local spiral = grid_spiral.new(x, y)
     for _ = 1, max_steps do
         local pos = spiral:Position()
         if not surface.entity_prototype_collides(entity, pos, false, entity.direction) then
@@ -110,12 +112,12 @@ function dig_manager.set_water(surface, position)
     local bbox = flib_bounding_box.from_position(position, true)
     die_water_colliding_entities(surface, bbox)
     destroy_corpses(surface, bbox)
-    move_players(surface, bbox)
-
+    
     if settings.global["place-shallow-water"].value then
         -- Setting currently hidden due to collision masks problem
         surface.set_tiles({{name="water-shallow", position=position}})
     else
+        move_players(surface, bbox)
         surface.set_tiles({{name="water", position=position}})
     end
 end
