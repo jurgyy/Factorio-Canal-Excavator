@@ -32,13 +32,21 @@ local function is_any_neighbour_named(surface, center, tile_names)
 end
 
 local function die_water_colliding_entities(surface, bbox)
+    local mask
+    if settings.global["place-shallow-water"].value then
+        mask = game.tile_prototypes["water-shallow"].collision_mask
+    else
+        mask = game.tile_prototypes["water"].collision_mask
+    end
     local entities = surface.find_entities_filtered{
         area = bbox,
-        collision_mask = "water-tile"
+        collision_mask = mask
     }
 
     for _, entity in pairs(entities) do
-        entity.die()
+        if entity.name ~= "character" then
+            entity.die()
+        end
     end
 end
 
@@ -92,7 +100,7 @@ end
 local function move_players(surface, bbox)
     local players = surface.find_entities_filtered{
         area = bbox,
-        collision_mask = "player-layer"
+        name = "character"
     }
 
     for _, player in pairs(players) do
@@ -112,9 +120,8 @@ function dig_manager.set_water(surface, position)
     local bbox = flib_bounding_box.from_position(position, true)
     die_water_colliding_entities(surface, bbox)
     destroy_corpses(surface, bbox)
-    
+
     if settings.global["place-shallow-water"].value then
-        -- Setting currently hidden due to collision masks problem
         surface.set_tiles({{name="water-shallow", position=position}})
     else
         move_players(surface, bbox)
