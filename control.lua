@@ -1,6 +1,8 @@
 local dig_manager = require("digManager")
 local ore_manager = require("oreManager")
 
+local util = require("util")
+
 local entity_built = require("events.entityBuilt")
 local place_tile_event = require("events.placeTileEvent")
 local tile_mined_event = require("events.tileMinedEvent")
@@ -30,13 +32,13 @@ end
 script.on_init(function()
   -- TODO: dug_to_water and dug has the same data, use metatables to not store it more than once
   -- dug_to_water contains all dug tiles that have yet to be transformed into water. Indexed by the tick they will transform
-  global.dug_to_water = {}
+  global.dug_to_water = {}  --[[@as Dictionary<integer, {surface: LuaSurface, position: MapPosition}>]]
   -- dug contains all tiles that have been dug that have yet to be transformed into water. Indexed by [surface.index][x][y]
-  global.dug = {}
+  global.dug = {}           --[[@as Dictionary<integer, Dictionary<integer, Dictionary<integer, boolean>>>]]
   -- remaining_ore contains all tiles that were started, have since been removed. Indexed by [surface.index][x][y]
-  global.remaining_ore = {}
+  global.remaining_ore = {} --[[@as Dictionary<integer, Dictionary<integer, Dictionary<integer, integer>>>]]
   -- List of all place resources. Indexed by the entity's on_entity_destroyed registration_number
-  global.resources = {}
+  global.resources = {}     --[[@as Dictionary<integer, data.ResourceEntityPrototype>]]
 
   global.ore_starting_amount = get_landfill_stone_cost()
 end)
