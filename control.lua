@@ -51,14 +51,7 @@ script.on_configuration_changed(function(configurationChangedData)
   end
 end)
 
--- local function canalDebug()
---   game.player.insert{name = "canex-excavator", count = 50}
---   game.player.insert{name = "canex-item-digable", count = 250}
--- end
-
-commands.add_command("transition-dug", nil, dig_manager.transition_dug)
-commands.add_command("reset-partially-dug", nil, ore_manager.clear_stored_ore_amount)
--- commands.add_command("canal-debug", nil, canalDebug)
+commands.add_command("canex-debug", nil, util.canalDebug)
 
 script.on_event(defines.events.on_resource_depleted, dig_manager.resource_depleted_event)
 script.on_event(defines.events.on_player_built_tile, place_tile_event)
