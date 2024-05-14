@@ -156,7 +156,7 @@ end
 
 --- Is the tile registered as dug
 ---@param surface LuaSurface
----@param position MapPosition
+---@param position MapPosition|TilePosition
 ---@return boolean
 function dig_manager.is_dug(surface, position)
     if global.dug[surface.index] == nil then
