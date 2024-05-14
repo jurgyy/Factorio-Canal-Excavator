@@ -51,6 +51,8 @@ script.on_configuration_changed(function(configurationChangedData)
   end
 end)
 
+commands.add_command("canex-transition-dug", nil, dig_manager.transition_dug)
+commands.add_command("canex-reset-partially-dug", nil, ore_manager.clear_stored_ore_amount)
 commands.add_command("canex-debug", nil, util.canalDebug)
 
 script.on_event(defines.events.on_resource_depleted, dig_manager.resource_depleted_event)
