@@ -6,18 +6,107 @@ local tile_mined_event = require("events.tileMinedEvent")
 local util = require("util")
 
 
-local function find_entities_in_radius(centerTile, radius, surface, name)
-    -- Calculate the center position by adding 0.5 to both x and y
-    local centerX = centerTile.position.x + 0.5
-    local centerY = centerTile.position.y + 0.5
+--- Return all entities of a certain name in an area given a position, radius. The function will center the position on a tile
+---@param surface LuaSurface
+---@param position MapPosition
+---@param radius number
+---@param name string
+---@return LuaEntity[]
+local function find_entities_in_radius(surface, position, radius, name)
+    -- Calculate the center position by adding 0.5 to both x and y floor
+    local centerX = math.floor(position.x) + 0.5
+    local centerY = math.floor(position.y) + 0.5
 
     local dim = 2 * radius
     local bbox = flib_bounding_box.from_dimensions( { x = centerX, y = centerY }, dim, dim )
-    --util.highlight_bbox(surface, bbox)
 
     return surface.find_entities_filtered{area = bbox, name = name}
 end
 
+--- Mark all entities colliding with the excavator for deconstruction given a position
+---@param surface LuaSurface
+---@param force string|integer|LuaForce
+---@param position MapPosition
+local function mark_for_deconstruction(surface, position, force)
+    local non_excavators = ore_manager.get_colliding_entities(surface, position)
+    for _, ent in pairs(non_excavators) do
+        ent.order_deconstruction(force)
+    end
+end
+
+--- Set active to true on all excavators in a radius of a position
+---@param surface LuaSurface
+---@param position MapPosition
+---@param radius number
+local function wake_up_excavators(surface, position, radius)
+    local excavators = find_entities_in_radius(surface, position, radius, "canex-excavator")
+    for _, excavator in ipairs(excavators) do
+        excavator.active = true
+    end
+end
+
+--- Undo a place tile event
+---@param surface LuaSurface
+---@param old_tile OldTileAndPosition
+---@param item any
+local function undo_set_tile(surface, old_tile, item)
+    local pos = {old_tile.position.x + 0.80, old_tile.position.y + 0.80}
+
+    surface.spill_item_stack(pos, {name=item.name}, false, "neutral", true)
+    surface.set_tiles({{name=old_tile.old_tile.name, position=old_tile.position}})
+end
+
+--- Event handler for on_robot_built_tile event
+---@param event EventData.on_robot_built_tile
+local function place_tile_as_robot(event)
+    local surface = game.surfaces[event.surface_index]
+    local radius = game.entity_prototypes["canex-excavator"].mining_drill_radius - 1
+
+    for _, tile in ipairs(event.tiles) do
+        local position = tile.position --[[@as MapPosition]]
+        if dig_manager.is_dug(surface, tile.position) then
+                undo_set_tile(surface, tile, event.item)
+        else
+            local ore = ore_manager.create_ore(surface, position)
+            if ore == nil then
+                undo_set_tile(surface, tile, event.item)
+            else
+                wake_up_excavators(surface, position, radius)
+            end
+        end
+    end
+end
+
+--- Event handler for on_player_built_tile
+---@param event EventData.on_player_built_tile
+local function place_tile_as_player(event)
+    local surface = game.surfaces[event.surface_index]
+    local player = game.players[event.player_index]
+    local radius = game.entity_prototypes["canex-excavator"].mining_drill_radius - 1
+
+    for _, tile in ipairs(event.tiles) do
+        local lua_tile = surface.get_tile(tile.position.x, tile.position.y)
+        if dig_manager.is_dug(surface, tile.position) then
+            player.mine_tile(lua_tile)
+            player.create_local_flying_text{text = {"story.canex-already-dug"}, position = {tile.position.x + 1.15, tile.position.y + 0.75}, time_to_live = 150, speed=2.85 }
+        else
+            local position = tile.position --[[@as MapPosition]]
+            local ore = ore_manager.create_ore(surface, position)
+            if ore == nil then
+                player.mine_tile(lua_tile)
+            else
+                wake_up_excavators(surface, position, radius)
+
+                if settings.get_player_settings(event.player_index)["auto-deconstruct"].value then
+                    mark_for_deconstruction(surface, position, player.force)
+                end
+            end
+        end
+    end
+end
+
+--- Combined event handler for on_player_built_tile and on_robot_built_tile
+---@param event EventData.on_player_built_tile|EventData.on_robot_built_tile
 local function place_tile_event(event)
     if event.item.name ~= "canex-item-digable" then
         -- Call tile_mined_event in case the new tile is placed ontop of a digable tile
@@ -25,40 +114,12 @@ local function place_tile_event(event)
         return
     end
 
-    local radius = game.entity_prototypes["canex-excavator"].mining_drill_radius - 1
-    local surface = game.surfaces[event.surface_index]
-    local placer
     if event.player_index == nil then
-        placer = event.robot
+        place_tile_as_robot(event --[[@as EventData.on_robot_built_tile]])
+        return
     else
-        placer = game.get_player(event.player_index)
-    end
-
-    for _, tile in ipairs(event.tiles) do
-        if dig_manager.is_dug(surface, tile.position) then
-            local lua_tile = surface.get_tile(tile.position)
-
-            if event.player_index ~= nil then
-                placer.mine_tile(lua_tile)
-            end
-        else
-            ore_manager.create_ore(surface, tile.position)
-
-            -- Wake-up idle excavators
-            local excavators = find_entities_in_radius(tile, radius, surface, "canex-excavator")
-            for _, excavator in ipairs(excavators) do
-                excavator.active = true
-            end
-
-            -- Mark entities on tile for deconstruction
-            if event.player_index ~= nil
-            and settings.get_player_settings(event.player_index)["auto-deconstruct"].value then
-                local non_excavators = ore_manager.get_colliding_entities(surface, tile.position)
-                for _, ent in pairs(non_excavators) do
-                    ent.order_deconstruction(placer.force)
-                end
-            end
-        end
+        place_tile_as_player(event --[[@as EventData.on_player_built_tile]])
+        return
     end
 end
 
