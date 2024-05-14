@@ -16,6 +16,8 @@ local surface_deleted_event = require("events.surfaceDeletedEvent")
 --   random delay [15, 90) ticks to turn into water
 --   Notify surrounding dug tiles
 
+--- Get the amount of stone landfill costs or if none, 20
+---@return integer
 local function get_landfill_stone_cost()
   for _, ingredient in ipairs(game.recipe_prototypes["landfill"].ingredients) do
     if ingredient.name == "stone" then
