@@ -9,7 +9,7 @@ The centerpiece of this mod is the Canal Excavator: A large 7x3 structure that s
 To facilitate the creation of canals, the mod introduces special excavatable tiles. These tiles be placed like any other tiles, but unlike other tiles, they can be mined for stone. 
 
 3. **Water Transition**
-After an excavatable tile has been depleted by the Canal Excavator, the tile transitions into a _dug_ state. If the tile is connected to a water tile, the dug tile changes in a water tile as well. It then checks if other neighbouring tiles are dug which will transitioned as well. 
+After an excavatable tile has been depleted by the Canal Excavator, the tile transitions into a _dug_ state. If the tile is connected to a water tile, the dug tile changes in a water tile as well. It then checks if other neighbouring tiles are dug which in turn will transitioned as well. 
 
 
 ## Mod Compatibility
@@ -18,7 +18,7 @@ After an excavatable tile has been depleted by the Canal Excavator, the tile tra
 This mod was created with Space Exploration in mind. Other water mods often allow you to create water on planets where no source exists. This mod limits you to only create water nearby existing bodies of water.
 
 **Cargo Ships**
-The size of the Excavator was decided such that it streches the complete width of a canal that fits the cargo ships nicely.
+The size of the Excavator was decided such that it stretches the complete width of a canal that fits the cargo ships nicely.
 
 **Other mods**
 This mod should be compatible with most other mods since it only adds new objects and doesn't modify any existing ones. Though this mod does add two tile prototypes and currently Factorio has a hard limit of 255. If you run multiple mods that add a lot of types, you might encounter this limit. For this reason there is a world setting called "Don't introduce new tiles". By default this is off but when enabled it reuses the "Yellow Refined Concrete" and "Brown Refined Concrete" that are already in the base game. If the mods you are using don't touch these two, you can enable this setting without any problems.
@@ -26,11 +26,11 @@ This mod should be compatible with most other mods since it only adds new object
 If a mod adds new water tiles, this mod probably won't recognize them when checking if a dug tile touches water. If you encounter such issue, please contact me with the info about which mods you are using and I'll fix it.
 
 ## Future Plans
-Currently I'm still finishing up the main functionality of the mod. After the initial release I'm thinking about further compatibilty with Space Exploration. Since not all planets are stone rich, I want to modify the dug resource by the planet it's on. The exact implementation of this idea has yet to be decided.
+Currently I'm still finishing up the main functionality of the mod. After the initial release I'm thinking about further compatibility with Space Exploration. Since not all planets are stone rich, I want to modify the dug resource by the planet it's on. The exact implementation of this idea has yet to be decided.
 
 ## Known Issues
 
- * In vanilla, the excavator can't be placed on shallow water. Unfortunatly, without messing with the collision mask of all entities, this is impossible. If a mod, as Alien Biomes does, changes the collision mask to not collide with the object-layer it will work.  
+ * In vanilla, the excavator can't be placed on shallow water. Unfortunately, without messing with the collision mask of all entities, this is impossible. If a mod, as Alien Biomes does, changes the collision mask to not collide with the object-layer it will work.  
  * Items don't get picked up when an excavator gets build on top of it. I can't add the "item-layer" collision mask to the excavator's mask, since water tiles have that layer as well which would prevent the excavator from being placable on water and it will be destroyed when a water tile gets created under it.
 
 ## Q&A
@@ -39,4 +39,4 @@ Currently I'm still finishing up the main functionality of the mod. After the in
 *A:* Open console with the ` button and type "/transition-dug" without the quotes and press enter. Did it transition? If not, please contact me at the Github page bellow.
 
 ## Encountering an issue or have a suggestion?
-If you do encounter any issue, due to mod compatibilty or otherwise, please open an issue [on the Github page](https://github.com/jurgyy/Factorio-Canal-Excavator/issues). If you have a suggestion for new features and such, please open a thread [on the mod's discussion page](https://mods.factorio.com/mod/Canal-Excavator/discussion). Want to help translating, please open a pull request with the added locale files.
+If you do encounter any issue, due to mod compatibility or otherwise, please open an issue [on the Github page](https://github.com/jurgyy/Factorio-Canal-Excavator/issues). If you have a suggestion for new features and such, please open a thread [on the mod's discussion page](https://mods.factorio.com/mod/canal-excavator/discussion). Want to help translating, please open a pull request with the added locale files.

@@ -74,9 +74,17 @@ function ore_manager.clear_stored_ore_amount()
   global.remaining_ore = {}
 end
 
+---@param surface LuaSurface
+---@param position MapPosition
+---@return LuaEntity | nil
 function ore_manager.create_ore(surface, position)
   local name = get_resource_entity_current_name()
   local resource = surface.create_entity{name=name, position=position, force=game.forces.player}
+
+  if resource == nil or not resource.valid then
+    game.print("Canal Excavator: Unable to create resource if this happens regularly, please notify the mod creator")
+    return
+  end
 
   if global.resources == nil then
     global.resources = {}

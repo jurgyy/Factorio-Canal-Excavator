@@ -1,6 +1,8 @@
 local dig_manager = require("digManager")
 local ore_manager = require("oreManager")
 
+local util = require("util")
+
 local entity_built = require("events.entityBuilt")
 local place_tile_event = require("events.placeTileEvent")
 local tile_mined_event = require("events.tileMinedEvent")
@@ -16,6 +18,8 @@ local surface_deleted_event = require("events.surfaceDeletedEvent")
 --   random delay [15, 90) ticks to turn into water
 --   Notify surrounding dug tiles
 
+--- Get the amount of stone landfill costs or if none, 20
+---@return integer
 local function get_landfill_stone_cost()
   for _, ingredient in ipairs(game.recipe_prototypes["landfill"].ingredients) do
     if ingredient.name == "stone" then
@@ -28,13 +32,13 @@ end
 script.on_init(function()
   -- TODO: dug_to_water and dug has the same data, use metatables to not store it more than once
   -- dug_to_water contains all dug tiles that have yet to be transformed into water. Indexed by the tick they will transform
-  global.dug_to_water = {}
+  global.dug_to_water = {}  --[[@as Dictionary<integer, {surface: LuaSurface, position: MapPosition}>]]
   -- dug contains all tiles that have been dug that have yet to be transformed into water. Indexed by [surface.index][x][y]
-  global.dug = {}
+  global.dug = {}           --[[@as Dictionary<integer, Dictionary<integer, Dictionary<integer, boolean>>>]]
   -- remaining_ore contains all tiles that were started, have since been removed. Indexed by [surface.index][x][y]
-  global.remaining_ore = {}
+  global.remaining_ore = {} --[[@as Dictionary<integer, Dictionary<integer, Dictionary<integer, integer>>>]]
   -- List of all place resources. Indexed by the entity's on_entity_destroyed registration_number
-  global.resources = {}
+  global.resources = {}     --[[@as Dictionary<integer, data.ResourceEntityPrototype>]]
 
   global.ore_starting_amount = get_landfill_stone_cost()
 end)
@@ -49,14 +53,9 @@ script.on_configuration_changed(function(configurationChangedData)
   end
 end)
 
--- local function canalDebug()
---   game.player.insert{name = "canex-excavator", count = 50}
---   game.player.insert{name = "canex-item-digable", count = 250}
--- end
-
-commands.add_command("transition-dug", nil, dig_manager.transition_dug)
-commands.add_command("reset-partially-dug", nil, ore_manager.clear_stored_ore_amount)
--- commands.add_command("canal-debug", nil, canalDebug)
+commands.add_command("canex-transition-dug", nil, dig_manager.transition_dug)
+commands.add_command("canex-reset-partially-dug", nil, ore_manager.clear_stored_ore_amount)
+commands.add_command("canex-debug", nil, util.canalDebug)
 
 script.on_event(defines.events.on_resource_depleted, dig_manager.resource_depleted_event)
 script.on_event(defines.events.on_player_built_tile, place_tile_event)

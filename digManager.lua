@@ -11,6 +11,11 @@ dig_manager.check_interval = 15 -- If this value ever gets changed between mod v
 
 local water_tile_names = {"deepwater", "deepwater-green", "water", "water-green", "water-mud", "water-shallow", "water-wube"}
 
+--- is any of the directly neighbouring tiles named tile_name
+---@param surface LuaSurface
+---@param center MapPosition
+---@param tile_names string[]
+---@return boolean
 local function is_any_neighbour_named(surface, center, tile_names)
   local surrounding = {
     {x = center.x - 1, y = center.y},
@@ -31,6 +36,9 @@ local function is_any_neighbour_named(surface, center, tile_names)
   return false
 end
 
+--- Calls die() on all entities that collide with a water tile (or shallow water, as per the mod settings) in a given bounding box
+---@param surface LuaSurface
+---@param bbox BoundingBox
 local function die_water_colliding_entities(surface, bbox)
     local mask
     if settings.global["place-shallow-water"].value then
@@ -50,6 +58,9 @@ local function die_water_colliding_entities(surface, bbox)
     end
 end
 
+--- Calls destroy on all entities of type corpse in a given bounding box
+--- @param surface LuaSurface
+--- @param bbox BoundingBox
 local function destroy_corpses(surface, bbox)
     local remnants = surface.find_entities_filtered{
         area = bbox,
@@ -61,11 +72,14 @@ local function destroy_corpses(surface, bbox)
     end
 end
 
+--- Set change tile on the given location to water
+---@param surface LuaSurface
+---@param position MapPosition
 local function set_dug(surface, position)
   if global.dug[surface.index] == nil then
     global.dug[surface.index] = {}
   end
-  
+ 
   local xfloor = math.floor(position.x)
   local yfloor = math.floor(position.y)
   if global.dug[surface.index][xfloor] == nil then
@@ -79,6 +93,11 @@ local function set_dug(surface, position)
   })
 end
 
+--- Find the nearest center tile position by checking in a spiral pattern that doesn't collide with the given entity
+---@param surface LuaSurface
+---@param entity LuaEntity
+---@param max_steps integer
+---@return MapPosition | nil
 local function find_nearest_safe_tile(surface, entity, max_steps)
     max_steps = max_steps or 100
 
@@ -97,6 +116,9 @@ local function find_nearest_safe_tile(surface, entity, max_steps)
     return nil
 end
 
+--- Teleport all players in a given bounding box to a safe position. If no safe tile is found, the player is killed.
+---@param surface LuaSurface
+---@param bbox BoundingBox
 local function move_players(surface, bbox)
     local players = surface.find_entities_filtered{
         area = bbox,
@@ -113,6 +135,10 @@ local function move_players(surface, bbox)
     end
 end
 
+
+--- Change a tile to water and first die all colliding entities, destroy their corpses and move any players.
+---@param surface LuaSurface
+---@param position MapPosition
 function dig_manager.set_water(surface, position)
     global.dug[surface.index][math.floor(position.x)][math.floor(position.y)] = nil
 
@@ -127,7 +153,11 @@ function dig_manager.set_water(surface, position)
         surface.set_tiles({{name="water", position=position}})
     end
 end
-  
+
+--- Is the tile registered as dug
+---@param surface LuaSurface
+---@param position MapPosition|TilePosition
+---@return boolean
 function dig_manager.is_dug(surface, position)
     if global.dug[surface.index] == nil then
         return false
@@ -146,16 +176,19 @@ function dig_manager.is_dug(surface, position)
 
     return global.dug[surface.index][xfloor][yfloor]
 end
-  
-function dig_manager.recursive_create_water(surface, center)
-    dig_manager.set_water(surface, center)
+
+--- Transform the tile to water and register a transition for any neighbouring tiles that are dug
+---@param surface LuaSurface 
+---@param position MapPosition
+function dig_manager.recursive_create_water(surface, position)
+    dig_manager.set_water(surface, position)
 
     -- If a neighbouring tile is dug, register it for a delayed transition into water
     local surrounding = {
-        {x = center.x - 1, y = center.y},
-        {x = center.x + 1, y = center.y},
-        {x = center.x, y = center.y - 1},
-        {x = center.x, y = center.y + 1}
+        {x = position.x - 1, y = position.y},
+        {x = position.x + 1, y = position.y},
+        {x = position.x, y = position.y - 1},
+        {x = position.x, y = position.y + 1}
     }
 
     for _, pos in ipairs(surrounding) do
@@ -164,10 +197,12 @@ function dig_manager.recursive_create_water(surface, center)
         end
     end
 end
-  
+
+--- Register a transition for a given tile on a later tick
+---@param surface LuaSurface
+---@param position MapPosition
+---@param mult integer | nil optional multiplier for the check interval. If 0 or less the transition will be registered for the next check. If nil, a random integer multiplier between 1 and 6 will be chosen.
 function dig_manager.register_delayed_transition(surface, position, mult)
-    -- Register a mined out tile to transition into a water tile after a short random delay.
-    
     -- TODO a tile can be registered twice if two water touching tiles got dug the same tick and a third adjacent tile was already dug but not touching water.
     -- This is less obvious with a small variation in check interfal, but if between the two triggers landfill get's placed, the second trigger
     -- Replaces the landfill with water again.
@@ -194,6 +229,8 @@ function dig_manager.register_delayed_transition(surface, position, mult)
     table.insert(global.dug_to_water[tick], {surface=surface, position=position})
 end
 
+--- Transition all tiles registered on the given tick
+---@param tick integer
 local function transition_tick(tick)
     if global.dug_to_water[tick] ~= nil then
         for _, transition in ipairs(global.dug_to_water[tick]) do
@@ -203,11 +240,15 @@ local function transition_tick(tick)
     end
 end
 
+--- Event handler to check if tiles should transition
+---@param event NthTickEventData 
 function dig_manager.periodic_check_dug_event(event)
     last_nth_tick = event.tick
     transition_tick(last_nth_tick)
 end
 
+--- Event handler for when the digable tile is depleted
+---@param event EventData.on_resource_depleted
 function dig_manager.resource_depleted_event(event)
     if string.sub(event.entity.name, 1, 17) ~= "canex-rsc-digable" then
         return
@@ -222,6 +263,7 @@ function dig_manager.resource_depleted_event(event)
     end
 end
 
+--- Transition all dug tiles regardless of the tick on which they were registered
 function dig_manager.transition_dug()
     if next(global.dug_to_water) == nil then
         game.print("No tiles registered for transition.")
