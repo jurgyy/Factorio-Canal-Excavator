@@ -1,4 +1,14 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.0
+Date: 2024-05-16
+  Bugfixes:
+    - Added nil checking edgecase
+  Features:
+    - Added /canex-debug showing information about the current state which might help problem solving.
+    - Added message when digable blueprint is placed on an already dug tile telling the user why it won't work.
+    - Added messages when placing digable on already dug tiles telling the user.
+    - prefixed console commands with "/canex-"
+---------------------------------------------------------------------------------------------------
 Version: 1.0.3
 Date: 2024-05-13
   Bugfixes:
