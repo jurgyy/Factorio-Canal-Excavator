@@ -29,7 +29,7 @@ local function handle_ghost_digable_tile(event)
     
     event.created_entity.destroy()
 
-  elseif settings.get_player_settings(event.player_index)["auto-deconstruct"].value then
+  elseif event.player_index and settings.get_player_settings(event.player_index)["auto-deconstruct"].value then
     -- Mark entities on ghost tile for deconstruction
     local non_excavators = ore_manager.get_colliding_entities(event.created_entity.surface, event.created_entity.position)
     for _, collidingEntity in pairs(non_excavators) do
