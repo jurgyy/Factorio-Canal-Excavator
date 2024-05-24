@@ -108,6 +108,12 @@ end
 --- Combined event handler for on_player_built_tile and on_robot_built_tile
 ---@param event EventData.on_player_built_tile|EventData.on_robot_built_tile
 local function place_tile_event(event)
+    if dig_manager.tile_is_water(event.tile.name) then
+        for _, old_tile_and_pos in ipairs(event.tiles) do
+            dig_manager.transition_surrounding_if_dug(game.surfaces[event.surface_index], old_tile_and_pos.position)
+        end
+        return
+    end
     if not event.item or event.item.name ~= "canex-item-digable" then
         -- Call tile_mined_event in case the new tile is placed ontop of a digable tile
         tile_mined_event(event)

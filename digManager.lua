@@ -11,12 +11,11 @@ dig_manager.check_interval = 15 -- If this value ever gets changed between mod v
 
 local water_tile_names = {"deepwater", "deepwater-green", "water", "water-green", "water-mud", "water-shallow", "water-wube"}
 
---- is any of the directly neighbouring tiles named tile_name
+--- Is any of the directly neighbouring tiles a water tile
 ---@param surface LuaSurface
 ---@param center MapPosition
----@param tile_names string[]
 ---@return boolean
-local function is_any_neighbour_named(surface, center, tile_names)
+local function is_next_to_water(surface, center)
   local surrounding = {
     {x = center.x - 1, y = center.y},
     {x = center.x + 1, y = center.y},
@@ -26,14 +25,25 @@ local function is_any_neighbour_named(surface, center, tile_names)
   for _, pos in ipairs(surrounding) do
     local tile = surface.get_tile(pos.x, pos.y)
 
-    for _, tile_name in ipairs(tile_names) do
-      if tile.name == tile_name then
+    local is_water = dig_manager.tile_is_water(tile.name)
+    if is_water then
         return true
-      end
     end
   end
 
   return false
+end
+
+---Returns true if the given tile name is the name of any of the known water tiles
+---@param tile_name string The name of the tile you want to check
+---@return boolean
+function dig_manager.tile_is_water(tile_name)
+    for _, water_tile_name in ipairs(water_tile_names) do
+        if tile_name == water_tile_name then
+            return true
+        end
+    end
+    return false
 end
 
 --- Calls die() on all entities that collide with a water tile (or shallow water, as per the mod settings) in a given bounding box
@@ -177,12 +187,10 @@ function dig_manager.is_dug(surface, position)
     return global.dug[surface.index][xfloor][yfloor]
 end
 
---- Transform the tile to water and register a transition for any neighbouring tiles that are dug
----@param surface LuaSurface 
----@param position MapPosition
-function dig_manager.recursive_create_water(surface, position)
-    dig_manager.set_water(surface, position)
-
+---Register a delayed transition for all the surrounding tiles that were already dug.
+---@param surface LuaSurface
+---@param position MapPosition|TilePosition
+function dig_manager.transition_surrounding_if_dug(surface, position)
     -- If a neighbouring tile is dug, register it for a delayed transition into water
     local surrounding = {
         {x = position.x - 1, y = position.y},
@@ -196,6 +204,14 @@ function dig_manager.recursive_create_water(surface, position)
             dig_manager.register_delayed_transition(surface, pos)
         end
     end
+end
+
+--- Transform the tile to water and register a transition for any neighbouring tiles that are dug
+---@param surface LuaSurface 
+---@param position MapPosition
+function dig_manager.recursive_create_water(surface, position)
+    dig_manager.set_water(surface, position)
+    dig_manager.transition_surrounding_if_dug(surface, position)
 end
 
 --- Register a transition for a given tile on a later tick
@@ -258,7 +274,7 @@ function dig_manager.resource_depleted_event(event)
     local surface = event.entity.surface
 
     set_dug(surface, position)
-    if is_any_neighbour_named(surface, position, water_tile_names) then
+    if is_next_to_water(surface, position) then
         dig_manager.register_delayed_transition(surface, position, 1)
     end
 end
