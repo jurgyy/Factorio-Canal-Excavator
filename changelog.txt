@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.1
+Date: 2024-05-24
+  Bugfixes:
+    - Fixed crash when tiles were placed in editor mode
+    - Fixed missing text telling player tile is already dug.
+    - Fixed possible crash when ghost tile placed
+    - Fixed tiles not transitioning if water tiles were placed manually (such as via the editor).
+---------------------------------------------------------------------------------------------------
 Version: 1.1.0
 Date: 2024-05-16
   Bugfixes:
