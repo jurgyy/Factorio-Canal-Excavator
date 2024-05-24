@@ -16,7 +16,15 @@ local function handle_ghost_digable_tile(event)
   if dig_manager.is_dug(event.created_entity.surface, event.created_entity.position) then
     if event.player_index ~= nil then
       local player = game.players[event.player_index]
-      player.create_local_flying_text{text = {"story.canex-already-dug"}, position = {event.created_entity.position.x, event.created_entity.position.y}, time_to_live = 150, speed=2.85 }
+      player.create_local_flying_text{text = {"story.canex-already-dug"}, position = event.created_entity.position, time_to_live = 150, speed=2.85 }
+    else
+      event.created_entity.surface.create_entity{
+          name = "flying-text",
+          position = event.created_entity.position,
+          text = {"story.canex-already-dug"},
+          time_to_live = 150,
+          speed=2.85
+      }
     end
     
     event.created_entity.destroy()
