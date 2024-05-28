@@ -29,8 +29,8 @@ local resource = {
     map_color = { r = 0.181, g = 0.104, b = 0.075},
     mining_visualisation_tint = {r = 0.490, g = 0.304, b = 0.0245, a = 1.000},
 
-    stages = data.raw.resource["stone"].stages,
-    stage_counts = {32, 28, 24, 12, 8, 4, 2, 1},
+    stages = table.deepcopy(data.raw.resource["stone"].stages),
+    stage_counts = data.raw.resource["stone"].stage_counts,
 }
 
 local tint = { r = 0.1, g = 0.1, b = 0.1, a = 0.5 }
