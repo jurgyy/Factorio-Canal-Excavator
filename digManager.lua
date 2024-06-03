@@ -62,7 +62,7 @@ local function die_water_colliding_entities(surface, bbox)
     }
 
     for _, entity in pairs(entities) do
-        if entity.name ~= "character" then
+        if entity.valid and entity.name ~= "character" then
             entity.die()
         end
     end
@@ -78,7 +78,9 @@ local function destroy_corpses(surface, bbox)
     }
 
     for _, entity in pairs(remnants) do
-        entity.destroy()
+        if entity.valid then
+            entity.destroy()
+        end
     end
 end
 
