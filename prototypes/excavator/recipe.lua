@@ -9,5 +9,5 @@ return {
         {"concrete", 25},
         {"iron-gear-wheel", 10}
     },
-    result = "canex-excavator"
+    result = "canex-excavator",
 }
