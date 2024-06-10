@@ -68,7 +68,7 @@ return
     energy_usage = "180kW",
     
     resource_searching_radius = 2.49,
-    vector_to_place_result = {0, -6},
+    vector_to_place_result = {0, -5.9},
     allowed_effects = {"consumption", "speed", "pollution"},
     module_specification =
     {
