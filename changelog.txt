@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.4
+Date: 2024-06-09
+  Bugfixes:
+    - Fixed recipe being unlocked at the start despite having a recipe.
+    - Fixed recipe being unlocked at the start despite having a recipe.
+---------------------------------------------------------------------------------------------------
 Version: 1.1.3
 Date: 2024-06-03
   Bugfixes:
