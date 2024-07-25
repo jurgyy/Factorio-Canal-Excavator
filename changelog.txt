@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.6
+Date: 2024-07-25
+  Bugfixes:
+    - Fixed rare crash when a digable tile is placed on a already dug tile by a robot
+    - Fixed scripts not firing when excavator or excavatable surface tiles were placed by another mod
+---------------------------------------------------------------------------------------------------
 Version: 1.1.5
 Date: 2024-06-10
   Bugfixes:
