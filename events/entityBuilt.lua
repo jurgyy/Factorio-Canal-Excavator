@@ -27,7 +27,7 @@ local function handle_ghost_digable_tile(event)
       }
     end
     
-    event.created_entity.destroy()
+    entity.destroy()
 
   elseif event.player_index and settings.get_player_settings(event.player_index)["auto-deconstruct"].value then
     -- Mark entities on ghost tile for deconstruction
