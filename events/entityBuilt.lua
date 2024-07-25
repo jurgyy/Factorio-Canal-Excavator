@@ -13,14 +13,15 @@ local function is_digable(entity)
 end
 
 local function handle_ghost_digable_tile(event)
-  if dig_manager.is_dug(event.created_entity.surface, event.created_entity.position) then
+  local entity = event.created_entity or event.entity
+  if dig_manager.is_dug(entity.surface, entity.position) then
     if event.player_index ~= nil then
       local player = game.players[event.player_index]
-      player.create_local_flying_text{text = {"story.canex-already-dug"}, position = event.created_entity.position, time_to_live = 150, speed=2.85 }
+      player.create_local_flying_text{text = {"story.canex-already-dug"}, position = entity.position, time_to_live = 150, speed=2.85 }
     else
-      event.created_entity.surface.create_entity{
+      entity.surface.create_entity{
           name = "flying-text",
-          position = event.created_entity.position,
+          position = entity.position,
           text = {"story.canex-already-dug"},
           time_to_live = 150,
           speed=2.85
@@ -41,8 +42,9 @@ local function handle_ghost_digable_tile(event)
   end
 end
 
+---@param event EventData.on_built_entity|EventData.on_robot_built_entity|EventData.script_raised_built
 local function entity_built_event(event)
-  local entity = event.created_entity
+  local entity = event.created_entity or event.entity
   if entity.valid then
     if is_excavator(entity) then
       entity.rotatable = false
@@ -64,8 +66,8 @@ return {
     
     {filter = "name", name = "tile-ghost", mode = "or"},
     {filter = "type", type = "tile-ghost", mode = "and"},
-    -- TODO Bug in 1.1.17: https://forums.factorio.com/viewtopic.php?f=7&t=113438
-    -- Change when Wube has fixed it.
+    -- TODO Bug in 1.1.x: https://forums.factorio.com/viewtopic.php?f=7&t=113438
+    -- Change when 2.0 is released:
     --{filter = "ghost_name", name = "tile-ghost", mode = "and"},--require("getTileNames").digable, mode = "and"},
     --{filter = "ghost_type", type = "tile-ghost", mode = "and"}--"tile", mode = "and"}
   }

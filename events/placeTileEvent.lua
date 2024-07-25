@@ -47,13 +47,20 @@ end
 
 --- Undo a place tile event
 ---@param surface LuaSurface
----@param old_tile OldTileAndPosition
----@param item any
-local function undo_set_tile(surface, old_tile, item)
-    local pos = {old_tile.position.x + 0.80, old_tile.position.y + 0.80}
+---@param tile OldTileAndPosition|Tile
+---@param item_name string?
+local function undo_set_tile(surface, tile, item_name)
+    local pos = {tile.position.x + 0.80, tile.position.y + 0.80}
 
-    surface.spill_item_stack(pos, {name=item.name}, false, "neutral", true)
-    surface.set_tiles({{name=old_tile.old_tile.name, position=old_tile.position}})
+    if item_name then
+        surface.spill_item_stack(pos, {name=item_name}, false, "neutral", true)
+    end
+
+    local old_tile_name = (tile.old_tile and tile.old_tile.name) or surface.get_hidden_tile(pos)
+    if not old_tile_name then
+        error("Couldn't retrieve old_tile_name")
+    end
+    surface.set_tiles({{name=old_tile_name, position=tile.position}})
 end
 
 --- Event handler for on_robot_built_tile event
@@ -65,11 +72,57 @@ local function place_tile_as_robot(event)
     for _, tile in ipairs(event.tiles) do
         local position = tile.position --[[@as MapPosition]]
         if dig_manager.is_dug(surface, tile.position) then
-                undo_set_tile(surface, tile, event.item)
+                undo_set_tile(surface, tile, event.item.name)
         else
             local ore = ore_manager.create_ore(surface, position)
             if ore == nil then
-                undo_set_tile(surface, tile, event.item)
+                undo_set_tile(surface, tile, event.item.name)
+            else
+                wake_up_excavators(surface, position, radius)
+            end
+        end
+    end
+end
+
+local script_tile_refund_map = {}
+
+---Find the item that places a given tile
+---@param tile Tile Placed tile
+---@return string? name Refund item name
+local function find_script_tile_refund_item(tile)
+    local tile_name = tile.name
+    local name = script_tile_refund_map[tile_name]
+    if name then
+        return name
+    end
+
+    for _, item_prototype in pairs(game.get_filtered_item_prototypes({{filter = "place-as-tile"}})) do
+        local place_result = item_prototype.place_as_tile_result
+        if place_result then
+            name = place_result.result.name
+            if name == tile_name then
+                script_tile_refund_map[tile_name] = name
+                return name
+            end
+        end
+    end
+    error("Could not find item that places " .. tile_name)
+    return
+end
+
+--- Event handler for script_raised_set_tiles event
+---@param event EventData.script_raised_set_tiles
+local function place_tile_as_script(event)
+    local surface = game.surfaces[event.surface_index]
+    local radius = game.entity_prototypes["canex-excavator"].mining_drill_radius - 1
+    for _, tile in ipairs(event.tiles) do
+        local position = tile.position --[[@as MapPosition]]
+        if dig_manager.is_dug(surface, tile.position) then
+            undo_set_tile(surface, tile, find_script_tile_refund_item(tile))
+        else
+            local ore = ore_manager.create_ore(surface, position)
+            if ore == nil then
+                undo_set_tile(surface, tile, find_script_tile_refund_item(tile))
             else
                 wake_up_excavators(surface, position, radius)
             end
@@ -105,6 +158,16 @@ local function place_tile_as_player(event)
     end
 end
 
+---@param event EventData.script_raised_set_tiles
+local function script_place_tile_event(event)
+    for _, tile in pairs(event.tiles) do
+        if dig_manager.tile_is_water(tile.name) then
+            dig_manager.transition_surrounding_if_dug(game.surfaces[event.surface_index], tile.position)
+        end
+    end
+    place_tile_as_script(event)
+end
+
 --- Combined event handler for on_player_built_tile and on_robot_built_tile
 ---@param event EventData.on_player_built_tile|EventData.on_robot_built_tile
 local function place_tile_event(event)
@@ -129,4 +192,7 @@ local function place_tile_event(event)
     end
 end
 
-return place_tile_event
+return {
+    place_tile_event = place_tile_event,
+    script_place_tile_event = script_place_tile_event
+}
