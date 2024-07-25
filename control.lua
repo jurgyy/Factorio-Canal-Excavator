@@ -32,13 +32,13 @@ end
 script.on_init(function()
   -- TODO: dug_to_water and dug has the same data, use metatables to not store it more than once
   -- dug_to_water contains all dug tiles that have yet to be transformed into water. Indexed by the tick they will transform
-  global.dug_to_water = {}  --[[@as Dictionary<integer, {surface: LuaSurface, position: MapPosition}>]]
+  global.dug_to_water = {}  --[[@as table<integer, {surface: LuaSurface, position: MapPosition}>]]
   -- dug contains all tiles that have been dug that have yet to be transformed into water. Indexed by [surface.index][x][y]
-  global.dug = {}           --[[@as Dictionary<integer, Dictionary<integer, Dictionary<integer, boolean>>>]]
+  global.dug = {}           --[[@as table<integer, table<integer, table<integer, boolean>>>]]
   -- remaining_ore contains all tiles that were started, have since been removed. Indexed by [surface.index][x][y]
-  global.remaining_ore = {} --[[@as Dictionary<integer, Dictionary<integer, Dictionary<integer, integer>>>]]
+  global.remaining_ore = {} --[[@as table<integer, table<integer, table<integer, integer>>>]]
   -- List of all place resources. Indexed by the entity's on_entity_destroyed registration_number
-  global.resources = {}     --[[@as Dictionary<integer, data.ResourceEntityPrototype>]]
+  global.resources = {}     --[[@as table<integer, data.ResourceEntityPrototype>]]
 
   global.ore_starting_amount = get_landfill_stone_cost()
 end)
