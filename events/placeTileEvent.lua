@@ -91,18 +91,19 @@ local script_tile_refund_map = {}
 ---@return string? name Refund item name
 local function find_script_tile_refund_item(tile)
     local tile_name = tile.name
-    local name = script_tile_refund_map[tile_name]
-    if name then
-        return name
+    local item_name = script_tile_refund_map[tile_name]
+    if item_name then
+        return item_name
     end
 
     for _, item_prototype in pairs(game.get_filtered_item_prototypes({{filter = "place-as-tile"}})) do
         local place_result = item_prototype.place_as_tile_result
         if place_result then
-            name = place_result.result.name
-            if name == tile_name then
-                script_tile_refund_map[tile_name] = name
-                return name
+            local place_result_name = place_result.result.name
+            if place_result_name == tile_name then
+                item_name = item_prototype.name
+                script_tile_refund_map[tile_name] = item_name
+                return item_name
             end
         end
     end
@@ -116,17 +117,29 @@ local function place_tile_as_script(event)
     local surface = game.surfaces[event.surface_index]
     local radius = game.entity_prototypes["canex-excavator"].mining_drill_radius - 1
     for _, tile in ipairs(event.tiles) do
-        local position = tile.position --[[@as MapPosition]]
-        if dig_manager.is_dug(surface, tile.position) then
-            undo_set_tile(surface, tile, find_script_tile_refund_item(tile))
-        else
-            local ore = ore_manager.create_ore(surface, position)
-            if ore == nil then
-                undo_set_tile(surface, tile, find_script_tile_refund_item(tile))
+        if tile.name == "canex-tile-digable" then
+            local position = tile.position --[[@as MapPosition]]
+            local is_dug = dig_manager.is_dug(surface, position)
+            local item_name = find_script_tile_refund_item(tile)
+            if not item_name then error("Unable to retrieve item that places tile " .. tile.name) end
+            if item_name ~= "canex-item-digable" then goto continue end
+            
+            if is_dug then
+                undo_set_tile(surface, tile, item_name)
             else
-                wake_up_excavators(surface, position, radius)
+                local ore = ore_manager.create_ore(surface, position)
+                if ore == nil then
+                    undo_set_tile(surface, tile, find_script_tile_refund_item(tile))
+                else
+                    wake_up_excavators(surface, position, radius)
+                end
             end
+        --else
+           -- TODO check if the tile was excavatable_surface and then remove the ore.
+           -- OldTileAndPosition[] isn't exposed in this event so have to find a workaround unless Wube
+           -- implements it: https://forums.factorio.com/viewtopic.php?f=28&t=114555
         end
+        ::continue::
     end
 end
 
