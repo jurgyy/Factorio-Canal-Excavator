@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.7
+Date: 2024-07-30
+  Bugfixes:
+    - Fixed resources always spawning when tiles are set by a script (such as Repair Turrets). There is a known issue where removing the Excavatable Surface by script leaves the ore/stone behind. The current workaround is to place the tiles again and remove them by hand or by using bots.
+---------------------------------------------------------------------------------------------------
 Version: 1.1.6
 Date: 2024-07-25
   Bugfixes:
