@@ -32,6 +32,7 @@ Currently I'm still finishing up the main functionality of the mod. After the in
 
  * In vanilla, the excavator can't be placed on shallow water. Unfortunately, without messing with the collision mask of all entities, this is impossible. If a mod, as Alien Biomes does, changes the collision mask to not collide with the object-layer it will work.  
  * Items don't get picked up when an excavator gets build on top of it. I can't add the "item-layer" collision mask to the excavator's mask, since water tiles have that layer as well which would prevent the excavator from being placable on water and it will be destroyed when a water tile gets created under it.
+ * When the Excavatable Surface is removed by another mod, it leaves the ore/stone behind. A workaround is to place the tiles again and remove them by hand or by using bots. After 2.0 releases I want to look into fixing this.
 
 ## Q&A
 
