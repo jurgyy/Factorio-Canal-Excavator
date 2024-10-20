@@ -88,17 +88,17 @@ end
 ---@param surface LuaSurface
 ---@param position MapPosition
 local function set_dug(surface, position)
-  if global.dug[surface.index] == nil then
-    global.dug[surface.index] = {}
+  if storage.dug[surface.index] == nil then
+    storage.dug[surface.index] = {}
   end
  
   local xfloor = math.floor(position.x)
   local yfloor = math.floor(position.y)
-  if global.dug[surface.index][xfloor] == nil then
-    global.dug[surface.index][xfloor] = {}
+  if storage.dug[surface.index][xfloor] == nil then
+    storage.dug[surface.index][xfloor] = {}
   end
 
-  global.dug[surface.index][xfloor][yfloor] = true
+  storage.dug[surface.index][xfloor][yfloor] = true
 
   surface.set_tiles({
     {name=dug_tile_name, position={position.x, position.y}},
@@ -152,7 +152,7 @@ end
 ---@param surface LuaSurface
 ---@param position MapPosition
 function dig_manager.set_water(surface, position)
-    global.dug[surface.index][math.floor(position.x)][math.floor(position.y)] = nil
+    storage.dug[surface.index][math.floor(position.x)][math.floor(position.y)] = nil
 
     local bbox = flib_bounding_box.from_position(position, true)
     die_water_colliding_entities(surface, bbox)
@@ -171,22 +171,22 @@ end
 ---@param position MapPosition|TilePosition
 ---@return boolean
 function dig_manager.is_dug(surface, position)
-    if global.dug[surface.index] == nil then
+    if storage.dug[surface.index] == nil then
         return false
     end
 
     local xfloor = math.floor(position.x)
 
-    if global.dug[surface.index][xfloor] == nil then
+    if storage.dug[surface.index][xfloor] == nil then
         return false
     end
 
     local yfloor = math.floor(position.y)
-    if global.dug[surface.index][xfloor][yfloor] == nil then
+    if storage.dug[surface.index][xfloor][yfloor] == nil then
         return false
     end
 
-    return global.dug[surface.index][xfloor][yfloor]
+    return storage.dug[surface.index][xfloor][yfloor]
 end
 
 ---Register a delayed transition for all the surrounding tiles that were already dug.
@@ -240,21 +240,21 @@ function dig_manager.register_delayed_transition(surface, position, mult)
         tick = last_nth_tick + dig_manager.check_interval * mult 
     end
 
-    if global.dug_to_water[tick] == nil then
-        global.dug_to_water[tick] = {}
+    if storage.dug_to_water[tick] == nil then
+        storage.dug_to_water[tick] = {}
     end
 
-    table.insert(global.dug_to_water[tick], {surface=surface, position=position})
+    table.insert(storage.dug_to_water[tick], {surface=surface, position=position})
 end
 
 --- Transition all tiles registered on the given tick
 ---@param tick integer
 local function transition_tick(tick)
-    if global.dug_to_water[tick] ~= nil then
-        for _, transition in ipairs(global.dug_to_water[tick]) do
+    if storage.dug_to_water[tick] ~= nil then
+        for _, transition in ipairs(storage.dug_to_water[tick]) do
             dig_manager.recursive_create_water(transition.surface, transition.position)
         end
-        global.dug_to_water[tick] = nil
+        storage.dug_to_water[tick] = nil
     end
 end
 
@@ -283,13 +283,13 @@ end
 
 --- Transition all dug tiles regardless of the tick on which they were registered
 function dig_manager.transition_dug()
-    if next(global.dug_to_water) == nil then
+    if next(storage.dug_to_water) == nil then
         game.print("No tiles registered for transition.")
     else
         game.print("Force transitioning all tiles that are dug and touching water.")
         
         local count = 0
-        for tick, _ in pairs(global.dug_to_water) do
+        for tick, _ in pairs(storage.dug_to_water) do
             count = count + 1
             transition_tick(tick)
         end

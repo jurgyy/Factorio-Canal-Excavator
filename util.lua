@@ -32,8 +32,8 @@ end
 function util.canalDebug()
     --game.player.insert{name = "canex-excavator", count = 50}
     --game.player.insert{name = "canex-item-digable", count = 250}
-    game.print("dug: " .. game.table_to_json(global.dug))
-    for surfaceIndex, surfaceData in pairs(global.dug) do
+    game.print("dug: " .. game.table_to_json(storage.dug))
+    for surfaceIndex, surfaceData in pairs(storage.dug) do
       for x, column in pairs(surfaceData) do
           for y, dug in pairs(column) do
               if dug then
@@ -43,8 +43,8 @@ function util.canalDebug()
           end
       end
     end
-    game.print("remaining_ore: " .. game.table_to_json(global.remaining_ore))
-    for surfaceIndex, surfaceData in pairs(global.remaining_ore) do
+    game.print("remaining_ore: " .. game.table_to_json(storage.remaining_ore))
+    for surfaceIndex, surfaceData in pairs(storage.remaining_ore) do
       for x, column in pairs(surfaceData) do
           for y, value in pairs(column) do
               -- Call the create_local_flying_text function
@@ -55,8 +55,8 @@ function util.canalDebug()
       end
     end
   
-    game.print("dug_to_water: " .. game.table_to_json(global.dug_to_water))
-    for tick, entries in pairs(global.dug_to_water) do
+    game.print("dug_to_water: " .. game.table_to_json(storage.dug_to_water))
+    for tick, entries in pairs(storage.dug_to_water) do
       for _, entry in pairs(entries) do
           -- Call the highlight_position function
           local surface = entry.surface

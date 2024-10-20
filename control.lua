@@ -32,19 +32,19 @@ end
 script.on_init(function()
   -- TODO: dug_to_water and dug has the same data, use metatables to not store it more than once
   -- dug_to_water contains all dug tiles that have yet to be transformed into water. Indexed by the tick they will transform
-  global.dug_to_water = {}  --[[@as table<integer, {surface: LuaSurface, position: MapPosition}>]]
+  storage.dug_to_water = {}  --[[@as table<integer, {surface: LuaSurface, position: MapPosition}>]]
   -- dug contains all tiles that have been dug that have yet to be transformed into water. Indexed by [surface.index][x][y]
-  global.dug = {}           --[[@as table<integer, table<integer, table<integer, boolean>>>]]
+  storage.dug = {}           --[[@as table<integer, table<integer, table<integer, boolean>>>]]
   -- remaining_ore contains all tiles that were started, have since been removed. Indexed by [surface.index][x][y]
-  global.remaining_ore = {} --[[@as table<integer, table<integer, table<integer, integer>>>]]
+  storage.remaining_ore = {} --[[@as table<integer, table<integer, table<integer, integer>>>]]
   -- List of all place resources. Indexed by the entity's on_entity_destroyed registration_number
-  global.resources = {}     --[[@as table<integer, data.ResourceEntityPrototype>]]
+  storage.resources = {}     --[[@as table<integer, data.ResourceEntityPrototype>]]
 
-  global.ore_starting_amount = get_landfill_stone_cost()
+  storage.ore_starting_amount = get_landfill_stone_cost()
 end)
 
 script.on_configuration_changed(function(configurationChangedData)
-  global.ore_starting_amount = get_landfill_stone_cost()
+  storage.ore_starting_amount = get_landfill_stone_cost()
   
   -- In case alien-biomes get disabled but the setting is still on
   if not script.active_mods["alien-biomes"] and settings.global["place-shallow-water"].value then
