@@ -22,7 +22,7 @@ local function excavatorGrahpics()
           {
             { -- Machine animation
               priority = "high",
-              filename = "__canal-excavator-graphics__/graphics/sprites/hr/north/machine.png",
+              filename = "__canal-excavator-graphics__/graphics/sprites/north/machine.png",
               line_length = 8,
               width = 174,
               height = 526,
@@ -36,7 +36,7 @@ local function excavatorGrahpics()
             },
             { -- Shadows
               priority = "high",
-              filename = "__canal-excavator-graphics__/graphics/sprites/hr/north/shadows.png",
+              filename = "__canal-excavator-graphics__/graphics/sprites/north/shadows.png",
               line_length = 8,
               width = 514,
               height = 330,
@@ -56,7 +56,7 @@ local function excavatorGrahpics()
           {
             { -- Machine animation
               priority = "high",
-              filename = "__canal-excavator-graphics__/graphics/sprites/hr/east/machine.png",
+              filename = "__canal-excavator-graphics__/graphics/sprites/east/machine.png",
               line_length = 8,
               width = 466,
               height = 368,
@@ -70,7 +70,7 @@ local function excavatorGrahpics()
             },
             { -- Shadows
               priority = "high",
-              filename = "__canal-excavator-graphics__/graphics/sprites/hr/east/shadows.png",
+              filename = "__canal-excavator-graphics__/graphics/sprites/east/shadows.png",
               line_length = 8,
               width = 743,
               height = 124,
@@ -90,7 +90,7 @@ local function excavatorGrahpics()
           {
             { -- Machine animation
               priority = "high",
-              filename = "__canal-excavator-graphics__/graphics/sprites/hr/south/machine.png",
+              filename = "__canal-excavator-graphics__/graphics/sprites/south/machine.png",
               line_length = 8,
               width = 174,
               height = 402,
@@ -104,7 +104,7 @@ local function excavatorGrahpics()
             },
             { -- Shadows
               priority = "high",
-              filename = "__canal-excavator-graphics__/graphics/sprites/hr/south/shadows.png",
+              filename = "__canal-excavator-graphics__/graphics/sprites/south/shadows.png",
               line_length = 8,
               width = 520,
               height = 330,
@@ -124,7 +124,7 @@ local function excavatorGrahpics()
           {
             { -- Machine animation
               priority = "high",
-              filename = "__canal-excavator-graphics__/graphics/sprites/hr/west/machine.png",
+              filename = "__canal-excavator-graphics__/graphics/sprites/west/machine.png",
               line_length = 8,
               width = 466,
               height = 365,
@@ -138,7 +138,7 @@ local function excavatorGrahpics()
             },
             { -- Shadows
               priority = "high",
-              filename = "__canal-excavator-graphics__/graphics/sprites/hr/west/shadows.png",
+              filename = "__canal-excavator-graphics__/graphics/sprites/west/shadows.png",
               line_length = 8,
               width = 568,
               height = 124,
@@ -161,7 +161,7 @@ local function excavatorGrahpics()
           north_animation = 
           {
             priority = "high",
-            filename = "__canal-excavator-graphics__/graphics/sprites/hr/north/hopperDust.png",
+            filename = "__canal-excavator-graphics__/graphics/sprites/north/hopperDust.png",
             line_length = 8,
             width = 124,
             height = 185,
@@ -176,7 +176,7 @@ local function excavatorGrahpics()
           east_animation =
           {
             priority = "high",
-            filename = "__canal-excavator-graphics__/graphics/sprites/hr/east/hopperDust.png",
+            filename = "__canal-excavator-graphics__/graphics/sprites/east/hopperDust.png",
             line_length = 8,
             width = 109,
             height = 217,
@@ -190,7 +190,7 @@ local function excavatorGrahpics()
           },
           south_animation = {
             priority = "high",
-            filename = "__canal-excavator-graphics__/graphics/sprites/hr/south/hopperDust.png",
+            filename = "__canal-excavator-graphics__/graphics/sprites/south/hopperDust.png",
             line_length = 8,
             width = 124,
             height = 222,
@@ -205,7 +205,7 @@ local function excavatorGrahpics()
           west_animation = 
           {
             priority = "high",
-            filename = "__canal-excavator-graphics__/graphics/sprites/hr/west/hopperDust.png",
+            filename = "__canal-excavator-graphics__/graphics/sprites/west/hopperDust.png",
             line_length = 8,
             width = 109,
             height = 219,
@@ -224,7 +224,7 @@ local function excavatorGrahpics()
           north_animation =
           {
             priority = "high",
-            filename = "__canal-excavator-graphics__/graphics/sprites/hr/north/floorDust.png",
+            filename = "__canal-excavator-graphics__/graphics/sprites/north/floorDust.png",
             line_length = 8,
             width = 192,
             height = 157,
@@ -239,7 +239,7 @@ local function excavatorGrahpics()
           east_animation =
           {
             priority = "high",
-            filename = "__canal-excavator-graphics__/graphics/sprites/hr/east/floorDust.png",
+            filename = "__canal-excavator-graphics__/graphics/sprites/east/floorDust.png",
             line_length = 8,
             width = 195,
             height = 153,
@@ -253,7 +253,7 @@ local function excavatorGrahpics()
           },
           south_animation = {
             priority = "high",
-            filename = "__canal-excavator-graphics__/graphics/sprites/hr/south/floorDust.png",
+            filename = "__canal-excavator-graphics__/graphics/sprites/south/floorDust.png",
             line_length = 8,
             width = 197,
             height = 149,
@@ -268,7 +268,7 @@ local function excavatorGrahpics()
           west_animation =
           {
             priority = "high",
-            filename = "__canal-excavator-graphics__/graphics/sprites/hr/west/floorDust.png",
+            filename = "__canal-excavator-graphics__/graphics/sprites/west/floorDust.png",
             line_length = 8,
             width = 208,
             height = 126,
