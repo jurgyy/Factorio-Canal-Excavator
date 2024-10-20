@@ -3,7 +3,7 @@ return {
     type = "tile",
     order = "e[canal][dug]",
     
-    collision_mask = {"ground-tile"},
+    collision_mask = {layers = {ground_tile = true}},
     variants = data.raw.tile["landfill"].variants,
     transitions = data.raw.tile["landfill"].transitions,
     transitions_between_transitions = data.raw.tile["landfill"].transitions_between_transitions,

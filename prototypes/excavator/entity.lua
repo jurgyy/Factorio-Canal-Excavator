@@ -30,7 +30,7 @@ return
     corpse = "electric-mining-drill-remnants", -- TODO
     dying_explosion = "electric-mining-drill-explosion",
     
-    collision_mask = {"train-layer", "object-layer" }, -- object-layer unfortunatly collides with shallow water
+    collision_mask = {layers = {train_layer = true, object_layer = true}}, -- object-layer unfortunatly collides with shallow water
     collision_box = {{ -1.29, -5.39}, {1.29, 1.49}},
     selection_box = {{ -1.5, -5.5}, {1.5, 1.5}},
     drawing_box = {{ -1.5, -5.5}, {1.5, 1.5}},
