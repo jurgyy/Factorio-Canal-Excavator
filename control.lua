@@ -37,7 +37,7 @@ script.on_init(function()
   storage.dug = {}           --[[@as table<integer, table<integer, table<integer, boolean>>>]]
   -- remaining_ore contains all tiles that were started, have since been removed. Indexed by [surface.index][x][y]
   storage.remaining_ore = {} --[[@as table<integer, table<integer, table<integer, integer>>>]]
-  -- List of all place resources. Indexed by the entity's on_entity_destroyed registration_number
+  -- List of all place resources. Indexed by the entity's on_object_destroyed registration_number
   storage.resources = {}     --[[@as table<integer, data.ResourceEntityPrototype>]]
 
   storage.ore_starting_amount = get_landfill_stone_cost()
@@ -72,7 +72,7 @@ script.on_event(defines.events.script_raised_built, entity_built.event, entity_b
 script.on_event(defines.events.script_raised_revive, entity_built.event, entity_built.filter)
 
 script.on_event(defines.events.on_research_finished, research_finished_event)
-script.on_event(defines.events.on_entity_destroyed, entity_destroyed_event)
+script.on_event(defines.events.on_object_destroyed, entity_destroyed_event)
 script.on_event(defines.events.on_surface_deleted, surface_deleted_event)
 
 script.on_nth_tick(dig_manager.check_interval, dig_manager.periodic_check_dug_event)

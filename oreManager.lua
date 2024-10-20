@@ -89,7 +89,7 @@ function ore_manager.create_ore(surface, position)
   if storage.resources == nil then
     storage.resources = {}
   end
-  local uid = script.register_on_entity_destroyed(resource)
+  local uid = script.register_on_object_destroyed(resource)
   storage.resources[uid] = resource
 
   resource.amount = ore_manager.pop_stored_ore_amount(surface, position)
