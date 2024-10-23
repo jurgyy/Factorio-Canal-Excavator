@@ -113,8 +113,8 @@ end
 local function find_nearest_safe_tile(surface, entity, max_steps)
     max_steps = max_steps or 100
 
-    local x = math.floor(entity.position.x) + .5
-    local y = math.floor(entity.position.y) + .5
+    local x = math.floor(entity.position.x)
+    local y = math.floor(entity.position.y)
     local spiral = grid_spiral.new(x, y)
     for _ = 1, max_steps do
         local pos = spiral:Position()
