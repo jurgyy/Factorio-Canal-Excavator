@@ -10,10 +10,10 @@ end
 
 local function update_ores()
   -- Get all the keys before iterating so you don't modify the key list while iterating.
-  local keys = get_keys(global.resources)
+  local keys = get_keys(storage.resources)
   
   for _, key in ipairs(keys) do
-    local old_ore = global.resources[key]
+    local old_ore = storage.resources[key]
     if old_ore.valid then
 
       local new_ore = ore_manager.create_ore(old_ore.surface, old_ore.position)

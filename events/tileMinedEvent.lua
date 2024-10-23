@@ -25,7 +25,7 @@ local function tile_mined_event(event)
       for _, ore in pairs(ores) do
         -- TODO all entities are at the same pos so in the case of multiple entities they overwrite eachother
         -- Does that ever happen? Will trigger print in insert function.
-        if ore.amount < global.ore_starting_amount then
+        if ore.amount < storage.ore_starting_amount then
           ore_manager.insert_stored_ore_amount(surface, tile.position, ore.amount)
         end
 

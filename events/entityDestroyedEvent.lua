@@ -1,6 +1,6 @@
 local function entity_destroyed_event(event)
-    if global.resources[event.registration_number] ~= nil then
-      global.resources[event.registration_number] = nil
+    if storage.resources[event.registration_number] ~= nil then
+      storage.resources[event.registration_number] = nil
     end
 end
 
