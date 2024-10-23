@@ -10,15 +10,12 @@ local resource = {
     highlight = false,
     minimum = 0,
     normal = 1,
-    walking_sound =
-    {
-        filename = "__base__/sound/walking/resources/ore-01.ogg",
-        volume = 0.7
-    },
+    walking_sound = sound_variations("__base__/sound/walking/resources/ore", 10, 0.7)[1],
     minable =
     {
       mining_time = 1,
       results = {{
+        type = "item",
         name = "stone",
         probability = 1,
         amount = 1
@@ -35,7 +32,6 @@ local resource = {
 
 local tint = { r = 0.1, g = 0.1, b = 0.1, a = 0.5 }
 resource.stages.sheet.tint = tint
-resource.stages.sheet.hr_version.tint = tint
 
 
 local resources = {resource}

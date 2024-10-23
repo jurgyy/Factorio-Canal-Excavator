@@ -6,7 +6,7 @@ return
     {
       result = "canex-tile-digable",
       condition_size = 1,
-      condition = { "water-tile" }
+      condition = { layers = { water_tile = true }}
     },
     icon = "__canal-excavator-graphics__/graphics/icons/marker.png",
     tint = {r=0.49, g=0.49, b=0.49, a=0.2},
