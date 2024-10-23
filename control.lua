@@ -21,7 +21,7 @@ local surface_deleted_event = require("events.surfaceDeletedEvent")
 --- Get the amount of stone landfill costs or if none, 20
 ---@return integer
 local function get_landfill_stone_cost()
-  for _, ingredient in ipairs(game.recipe_prototypes["landfill"].ingredients) do
+  for _, ingredient in ipairs(prototypes.recipe["landfill"].ingredients) do
     if ingredient.name == "stone" then
       return ingredient.amount
     end

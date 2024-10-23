@@ -67,7 +67,7 @@ end
 ---@param event EventData.on_robot_built_tile
 local function place_tile_as_robot(event)
     local surface = game.surfaces[event.surface_index]
-    local radius = game.entity_prototypes["canex-excavator"].mining_drill_radius - 1
+    local radius = prototypes.entity["canex-excavator"].mining_drill_radius - 1
 
     for _, tile in ipairs(event.tiles) do
         local position = tile.position --[[@as MapPosition]]
@@ -96,7 +96,7 @@ local function find_script_tile_refund_item(tile)
         return item_name
     end
 
-    for _, item_prototype in pairs(game.get_filtered_item_prototypes({{filter = "place-as-tile"}})) do
+    for _, item_prototype in pairs(prototypes.get_item_filtered({{filter = "place-as-tile"}})) do
         local place_result = item_prototype.place_as_tile_result
         if place_result then
             local place_result_name = place_result.result.name
@@ -115,7 +115,7 @@ end
 ---@param event EventData.script_raised_set_tiles
 local function place_tile_as_script(event)
     local surface = game.surfaces[event.surface_index]
-    local radius = game.entity_prototypes["canex-excavator"].mining_drill_radius - 1
+    local radius = prototypes.entity["canex-excavator"].mining_drill_radius - 1
     for _, tile in ipairs(event.tiles) do
         if tile.name == "canex-tile-digable" then
             local position = tile.position --[[@as MapPosition]]
@@ -148,7 +148,7 @@ end
 local function place_tile_as_player(event)
     local surface = game.surfaces[event.surface_index]
     local player = game.players[event.player_index]
-    local radius = game.entity_prototypes["canex-excavator"].mining_drill_radius - 1
+    local radius = prototypes.entity["canex-excavator"].mining_drill_radius - 1
 
     for _, tile in ipairs(event.tiles) do
         local lua_tile = surface.get_tile(tile.position.x, tile.position.y)

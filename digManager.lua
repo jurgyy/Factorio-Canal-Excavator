@@ -52,9 +52,9 @@ end
 local function die_water_colliding_entities(surface, bbox)
     local mask
     if settings.global["place-shallow-water"].value then
-        mask = game.tile_prototypes["water-shallow"].collision_mask
+        mask = prototypes.tile["water-shallow"].collision_mask.layers
     else
-        mask = game.tile_prototypes["water"].collision_mask
+        mask = prototypes.tile["water"].collision_mask.layers
     end
     local entities = surface.find_entities_filtered{
         area = bbox,
