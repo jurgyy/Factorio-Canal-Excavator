@@ -36,6 +36,7 @@ local function mark_for_deconstruction(surface, position, force)
 end
 
 --- Set active to true on all excavators in a radius of a position
+--- TODO doesn't work currently
 ---@param surface LuaSurface
 ---@param position MapPosition
 ---@param radius number
@@ -153,7 +154,10 @@ local function place_tile_as_script(event)
                     wake_up_excavators(surface, position, radius)
                 end
             end
-        --else
+        else
+            -- if surface.find_entities_filtered{area = flib_bounding_box.from_position(tile.position, true), name="canex-rsc-digable"} then
+            --     game.print("was ore")
+            -- end
            -- TODO check if the tile was excavatable_surface and then remove the ore.
            -- OldTileAndPosition[] isn't exposed in this event so have to find a workaround unless Wube
            -- implements it: https://forums.factorio.com/viewtopic.php?f=28&t=114555

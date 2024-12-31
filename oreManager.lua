@@ -3,17 +3,7 @@ local flib_bounding_box = require("__flib__/bounding-box")
 local ore_manager = {}
 
 local function get_resource_entity_current_name()
-  local resource_steps = 10
-  local productivity = 1 + game.forces["player"].mining_drill_productivity_bonus
-  if productivity < 1 then
-      game.print("Productivity lower than one not supported. Falling back as if productivity is equal to 1.")
-      productivity = 1
-  end
-  local index = math.floor(resource_steps / productivity)
-  if index < 1 then
-      index = 1
-  end
-  return "canex-rsc-digable-" .. index
+  return "canex-rsc-digable"
 end
 
 local function pop_stored_ore_amount(surface, x, y)

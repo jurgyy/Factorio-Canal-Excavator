@@ -268,7 +268,7 @@ end
 --- Event handler for when the digable tile is depleted
 ---@param event EventData.on_resource_depleted
 function dig_manager.resource_depleted_event(event)
-    if string.sub(event.entity.name, 1, 17) ~= "canex-rsc-digable" then
+    if event.entity.name ~= "canex-rsc-digable" then
         return
     end
 
