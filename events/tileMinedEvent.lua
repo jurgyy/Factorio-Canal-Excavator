@@ -3,7 +3,7 @@ local resource_granularity = require("resourceGranularity")
 local digableTileName = require("getTileNames").digable
 
 local function generate_resource_list()
-  local resourceList = {"canex-rsc-digable"}
+  local resourceList = {}
   for i = 1, resource_granularity do
       table.insert(resourceList, "canex-rsc-digable-" .. i)
   end

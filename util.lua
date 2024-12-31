@@ -32,7 +32,7 @@ end
 function util.canalDebug()
     --game.player.insert{name = "canex-excavator", count = 50}
     --game.player.insert{name = "canex-item-digable", count = 250}
-    game.print("dug: " .. game.table_to_json(storage.dug))
+    game.print("dug: " .. helpers.table_to_json(storage.dug))
     for surfaceIndex, surfaceData in pairs(storage.dug) do
       for x, column in pairs(surfaceData) do
           for y, dug in pairs(column) do
@@ -43,7 +43,7 @@ function util.canalDebug()
           end
       end
     end
-    game.print("remaining_ore: " .. game.table_to_json(storage.remaining_ore))
+    game.print("remaining_ore: " .. helpers.table_to_json(storage.remaining_ore))
     for surfaceIndex, surfaceData in pairs(storage.remaining_ore) do
       for x, column in pairs(surfaceData) do
           for y, value in pairs(column) do
@@ -55,7 +55,7 @@ function util.canalDebug()
       end
     end
   
-    game.print("dug_to_water: " .. game.table_to_json(storage.dug_to_water))
+    game.print("dug_to_water: " .. helpers.table_to_json(storage.dug_to_water))
     for tick, entries in pairs(storage.dug_to_water) do
       for _, entry in pairs(entries) do
           -- Call the highlight_position function
@@ -67,6 +67,55 @@ function util.canalDebug()
           game.player.create_local_flying_text{text = {"story.canex-dug", tick - game.tick}, position = position, speed = 0, time_to_live = 300}
       end
     end
+end
+
+
+---Is the surface on a valid planet? i.e. only Nauvis and alike planets. Returns true if space age isn't installed
+---@param surface LuaSurface
+---@return boolean
+function util.surface_is_valid(surface)
+    if not script.active_mods["space-age"] then
+        return true
+    end
+    local planet = surface.planet
+    if not planet then
+        return false
+    end
+    local surface_properties = planet.prototype.surface_properties
+    if not surface_properties then
+        return false
+    end
+    
+    local pressure = surface_properties["pressure"]
+    return pressure == game.planets["nauvis"].prototype.surface_properties["pressure"]
+end
+
+---Draw text
+---@param text string
+---@param surface LuaSurface
+---@param position MapPosition
+function util.show_error(text, surface, position)
+    rendering.draw_text{
+        text = text,
+        surface = surface,
+        target = position,
+        color = {1, 1, 1, 1},
+        time_to_live = 150,
+        scale_with_zoom = true,
+    }
+end
+
+---Is a position landfilled
+---@param surface LuaSurface
+---@param position MapPosition
+function util.is_position_landfilled(surface, position)
+    local tiles = surface.find_tiles_filtered{position = position, radius = 0.1}
+    for _, tile in pairs(tiles) do
+      if tile.name == "landfill" or tile.hidden_tile == "landfill" then
+        return true
+      end
+    end
+    return false
 end
 
 return util

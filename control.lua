@@ -38,7 +38,7 @@ script.on_init(function()
   -- remaining_ore contains all tiles that were started, have since been removed. Indexed by [surface.index][x][y]
   storage.remaining_ore = {} --[[@as table<integer, table<integer, table<integer, integer>>>]]
   -- List of all place resources. Indexed by the entity's on_object_destroyed registration_number
-  storage.resources = {}     --[[@as table<integer, data.ResourceEntityPrototype>]]
+  storage.resources = {}     --[[@as table<integer, LuaEntity>]]
 
   storage.ore_starting_amount = get_landfill_stone_cost()
 end)

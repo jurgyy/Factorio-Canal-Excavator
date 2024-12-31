@@ -81,8 +81,8 @@ function ore_manager.create_ore(surface, position)
   local name = get_resource_entity_current_name()
   local resource = surface.create_entity{name=name, position=position, force=game.forces.player}
 
-  if resource == nil or not resource.valid then
-    game.print("Canal Excavator: Unable to create resource if this happens regularly, please notify the mod creator")
+  if not resource or not resource.valid then
+    game.print("Canal Excavator: Unable to create resource. Please notify the mod creator when this happens")
     return
   end
 
@@ -103,8 +103,14 @@ function ore_manager.delete_ore(entity)
 end
 
 function ore_manager.get_colliding_entities(surface, position)
+  local area = flib_bounding_box.from_position(position, true)
+  area.left_top.x = area.left_top.x + 0.01
+  area.left_top.y = area.left_top.y + 0.01
+  area.right_bottom.x = area.right_bottom.x - 0.01
+  area.right_bottom.y = area.right_bottom.y - 0.01
+
   return surface.find_entities_filtered{
-    area = flib_bounding_box.from_position(position, true),
+    area = area,
     name = {"canex-excavator"},
     invert = true
   }
