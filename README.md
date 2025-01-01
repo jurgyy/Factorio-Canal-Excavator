@@ -34,10 +34,11 @@ Currently I'm still finishing up the main functionality of the mod. After the in
  * Items don't get picked up when an excavator gets build on top of it. I can't add the "item-layer" collision mask to the excavator's mask, since water tiles have that layer as well which would prevent the excavator from being placable on water and it will be destroyed when a water tile gets created under it.
  * When the Excavatable Surface is removed by another mod, it leaves the ore/stone behind. A workaround is to place the tiles again and remove them by hand or by using bots. After 2.0 releases I want to look into fixing this.
 
+
 ## Q&A
 
 *Q: A tile won't transition into water even though it is touching another water tile*  
-*A:* Open console with the ` button and type "/transition-dug" without the quotes and press enter. Did it transition? If not, please contact me at the Github page bellow.
+*A:* Open console with the ` button and type "/canex-transition-dug" without the quotes and press enter. Did it transition? If not, please contact me at the Github page bellow.
 
 ## Encountering an issue or have a suggestion?
 If you do encounter any issue, due to mod compatibility or otherwise, please open an issue [on the Github page](https://github.com/jurgyy/Factorio-Canal-Excavator/issues). If you have a suggestion for new features and such, please open a thread [on the mod's discussion page](https://mods.factorio.com/mod/canal-excavator/discussion). Want to help translating, please open a pull request with the added locale files.
