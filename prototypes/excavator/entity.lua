@@ -2,7 +2,7 @@ local hit_effects = require ("__base__.prototypes.entity.hit-effects")
 local sounds = require("__base__.prototypes.entity.sounds")
 local graphicsFunc = require ("__canal-excavator__/prototypes/excavator/animations")
 
-circuit_connector_definitions["canex-excavator"] = circuit_connector_definitions.create
+circuit_connector_definitions["canex-excavator"] = circuit_connector_definitions.create_vector
 (
     universal_connector_template,
     {
@@ -13,8 +13,7 @@ circuit_connector_definitions["canex-excavator"] = circuit_connector_definitions
     }
 )
 
-return 
-{
+local entity = {
     type = "mining-drill",
     name = "canex-excavator",
     icon = "__canal-excavator-graphics__/graphics/icons/excavator-64.png",
@@ -30,7 +29,7 @@ return
     corpse = "electric-mining-drill-remnants", -- TODO
     dying_explosion = "electric-mining-drill-explosion",
     
-    collision_mask = {"train-layer", "object-layer" }, -- object-layer unfortunatly collides with shallow water
+    collision_mask = {layers = {train = true, object = true}}, -- object-layer unfortunatly collides with shallow water
     collision_box = {{ -1.29, -5.39}, {1.29, 1.49}},
     selection_box = {{ -1.5, -5.5}, {1.5, 1.5}},
     drawing_box = {{ -1.5, -5.5}, {1.5, 1.5}},
@@ -62,7 +61,7 @@ return
     energy_source =
     {
       type = "electric",
-      emissions_per_minute = 20,
+      emissions_per_minute = {pollution = 20},
       usage_priority = "secondary-input"
     },
     energy_usage = "180kW",
@@ -70,12 +69,14 @@ return
     resource_searching_radius = 2.49,
     vector_to_place_result = {0, -5.9},
     allowed_effects = {"consumption", "speed", "pollution"},
-    module_specification =
-    {
-        module_slots = 5,
-        module_info_max_icons_per_row  = 5,
-        module_info_icon_shift = {0, -0.25}
-    },
+    module_slots = 5,
+    icons_positioning =
+    {{
+        inventory_index = defines.inventory.mining_drill_modules,
+        shift = {0, -0.25},
+        max_icons_per_row = 3,
+        max_icon_rows = 2
+    }},
     radius_visualisation_picture =
     {
       filename = "__base__/graphics/entity/electric-mining-drill/electric-mining-drill-radius-visualization.png",
@@ -84,8 +85,7 @@ return
     },
     monitor_visualization_tint = {r=78, g=173, b=255},
     fast_replaceable_group = nil,
-    circuit_wire_connection_points = circuit_connector_definitions["canex-excavator"].points,
-    circuit_connector_sprites = circuit_connector_definitions["canex-excavator"].sprites,
+    circuit_connector = circuit_connector_definitions["canex-excavator"],
     circuit_wire_max_distance = default_circuit_wire_max_distance,
 
     water_reflection =
@@ -104,3 +104,13 @@ return
       orientation_to_variation = true
     }
 }
+
+if mods["space-age"] then
+  entity.surface_conditions = {{
+    property = "pressure",
+    min = 1000,
+    max = 1000
+  }}
+end
+
+return entity

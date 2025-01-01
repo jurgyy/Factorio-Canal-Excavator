@@ -5,9 +5,9 @@ return {
     energy_required = 10,
     ingredients =
     {
-        {"steel-plate", 50},
-        {"concrete", 25},
-        {"iron-gear-wheel", 10}
+        {type = "item", name = "steel-plate", amount = 50},
+        {type = "item", name= "concrete", amount = 25},
+        {type = "item", name = "iron-gear-wheel", amount = 10}
     },
-    result = "canex-excavator",
+    results = {{type = "item", name = "canex-excavator", amount = 1}},
 }

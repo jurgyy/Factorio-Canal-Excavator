@@ -3,31 +3,21 @@ local flib_bounding_box = require("__flib__/bounding-box")
 local ore_manager = {}
 
 local function get_resource_entity_current_name()
-  local resource_steps = 10
-  local productivity = 1 + game.forces["player"].mining_drill_productivity_bonus
-  if productivity < 1 then
-      game.print("Productivity lower than one not supported. Falling back as if productivity is equal to 1.")
-      productivity = 1
-  end
-  local index = math.floor(resource_steps / productivity)
-  if index < 1 then
-      index = 1
-  end
-  return "canex-rsc-digable-" .. index
+  return "canex-rsc-digable"
 end
 
 local function pop_stored_ore_amount(surface, x, y)
   -- Retrieve the stored remaining_ore value and set index to nil
-  local amount = global.remaining_ore[surface.index][x][y]
+  local amount = storage.remaining_ore[surface.index][x][y]
   -- game.print("Found existing amount: " .. amount)
-  global.remaining_ore[surface.index][x][y] = nil
+  storage.remaining_ore[surface.index][x][y] = nil
   return amount
 end
 
 function ore_manager.is_tile_started(surface, position)
-  return global.remaining_ore[surface.index] ~= nil
-     and global.remaining_ore[surface.index][position.x] ~= nil
-     and global.remaining_ore[surface.index][position.x][position.y] ~= nil
+  return storage.remaining_ore[surface.index] ~= nil
+     and storage.remaining_ore[surface.index][position.x] ~= nil
+     and storage.remaining_ore[surface.index][position.x][position.y] ~= nil
 end
 
 function ore_manager.pop_stored_ore_amount(surface, position)
@@ -38,40 +28,40 @@ function ore_manager.pop_stored_ore_amount(surface, position)
   if ore_manager.is_tile_started(surface, position) then
     return pop_stored_ore_amount(surface, x, y)
   end
-  return global.ore_starting_amount
+  return storage.ore_starting_amount
 end
   
 function ore_manager.insert_stored_ore_amount(surface, position, amount)
-  -- If an ore tile is removed, add the remaining amount to the global.remaining_ore table
+  -- If an ore tile is removed, add the remaining amount to the storage.remaining_ore table
   local x = math.floor(position.x)
   local y = math.floor(position.y)
 
   -- game.print("Setting (" .. idx_x .. ", " .. idx_y .. ") to " .. amount)
-  if global.remaining_ore[surface.index] == nil then
-    global.remaining_ore[surface.index] = {}
+  if storage.remaining_ore[surface.index] == nil then
+    storage.remaining_ore[surface.index] = {}
   end
 
-  if global.remaining_ore[surface.index][x] == nil then
-    global.remaining_ore[surface.index][x] = {}
+  if storage.remaining_ore[surface.index][x] == nil then
+    storage.remaining_ore[surface.index][x] = {}
   end
 
-  if global.remaining_ore[surface.index][x][y] ~= nil then
+  if storage.remaining_ore[surface.index][x][y] ~= nil then
     game.print("Overwriting existing value. This shouldn't be happening. Please submit a bug report on the Canal Excavator Github page and try to explain what you did.")
   end
 
-  global.remaining_ore[surface.index][x][y] = amount
+  storage.remaining_ore[surface.index][x][y] = amount
 end
 
 function ore_manager.clear_stored_ore_amount()
   local count
-  if global.remaining_ore == nil then
+  if storage.remaining_ore == nil then
     count = 0
   else
-    count = #global.remaining_ore
+    count = #storage.remaining_ore
   end
   
   game.print("Resetting partially dug tiles")
-  global.remaining_ore = {}
+  storage.remaining_ore = {}
 end
 
 ---@param surface LuaSurface
@@ -81,16 +71,16 @@ function ore_manager.create_ore(surface, position)
   local name = get_resource_entity_current_name()
   local resource = surface.create_entity{name=name, position=position, force=game.forces.player}
 
-  if resource == nil or not resource.valid then
-    game.print("Canal Excavator: Unable to create resource if this happens regularly, please notify the mod creator")
+  if not resource or not resource.valid then
+    game.print("Canal Excavator: Unable to create resource. Please notify the mod creator when this happens")
     return
   end
 
-  if global.resources == nil then
-    global.resources = {}
+  if storage.resources == nil then
+    storage.resources = {}
   end
-  local uid = script.register_on_entity_destroyed(resource)
-  global.resources[uid] = resource
+  local uid = script.register_on_object_destroyed(resource)
+  storage.resources[uid] = resource
 
   resource.amount = ore_manager.pop_stored_ore_amount(surface, position)
   return resource
@@ -103,8 +93,14 @@ function ore_manager.delete_ore(entity)
 end
 
 function ore_manager.get_colliding_entities(surface, position)
+  local area = flib_bounding_box.from_position(position, true)
+  area.left_top.x = area.left_top.x + 0.01
+  area.left_top.y = area.left_top.y + 0.01
+  area.right_bottom.x = area.right_bottom.x - 0.01
+  area.right_bottom.y = area.right_bottom.y - 0.01
+
   return surface.find_entities_filtered{
-    area = flib_bounding_box.from_position(position, true),
+    area = area,
     name = {"canex-excavator"},
     invert = true
   }

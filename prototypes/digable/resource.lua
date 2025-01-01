@@ -10,15 +10,12 @@ local resource = {
     highlight = false,
     minimum = 0,
     normal = 1,
-    walking_sound =
-    {
-        filename = "__base__/sound/walking/resources/ore-01.ogg",
-        volume = 0.7
-    },
+    walking_sound = sound_variations("__base__/sound/walking/resources/ore", 10, 0.7)[1],
     minable =
     {
       mining_time = 1,
       results = {{
+        type = "item",
         name = "stone",
         probability = 1,
         amount = 1
@@ -35,21 +32,5 @@ local resource = {
 
 local tint = { r = 0.1, g = 0.1, b = 0.1, a = 0.5 }
 resource.stages.sheet.tint = tint
-resource.stages.sheet.hr_version.tint = tint
 
-
-local resources = {resource}
-local resource_granularity = require("resourceGranularity")
-
-for i = 1, resource_granularity do
-    local reducedResource = table.deepcopy(resource)
-
-    reducedResource.name = resource.name .. "-" .. i
-    reducedResource.minable.results[1].probability = i / resource_granularity
-
-    table.insert(resources, reducedResource)
-end
-
-resource.name = resource.name .. "-" .. resource_granularity
-
-return resources
+return {resource}
