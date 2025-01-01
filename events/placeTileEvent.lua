@@ -183,15 +183,20 @@ local function player_undo_set_tile(player, surface, tile)
         and undo_item.previous_tile ~= dugTileName
         and tile.position.x == undo_item.position.x
         and tile.position.y == undo_item.position.y then
-            local item_name = find_script_tile_refund_item(undo_item.previous_tile)
-            if item_name then
-                player.remove_item{name=item_name, count=1}
-                surface.set_tiles{
-                    tiles = {name = undo_item.previous_tile, position = undo_item.position}
-                }
-                undo_redo_stack.remove_undo_action(1, i)
-                break
+            if undo_item.previous_tile ~= "landfill" then
+                -- Remove previous tile from player's inventory
+                local item_name = find_script_tile_refund_item(undo_item.previous_tile)
+                if item_name then
+                    player.remove_item{name=item_name, count=1}
+                end
             end
+            -- Place the previous tile
+            surface.set_tiles{
+                tiles = {name = undo_item.previous_tile, position = undo_item.position}
+            }
+
+            undo_redo_stack.remove_undo_action(1, i)
+            break
         end
     end
 end
