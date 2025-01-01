@@ -208,7 +208,7 @@ local function place_tile_as_player(event)
     for _, tile in ipairs(event.tiles) do
         local lua_tile = surface.get_tile(tile.position.x, tile.position.y)
         if not valid then
-            player.mine_tile(lua_tile)
+            player_undo_set_tile(player, surface, lua_tile)
             if not shown_error then
                 util.show_error({"story.canex-invalid-surface"}, surface, {tile.position.x + 0.65, tile.position.y + 0.40})
                 shown_error = true
