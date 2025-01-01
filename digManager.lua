@@ -208,6 +208,12 @@ function dig_manager.transition_surrounding_if_dug(surface, position)
     end
 end
 
+function dig_manager.check_should_transition(surface, position)
+    if is_next_to_water(surface, position) then
+        dig_manager.transition_surrounding_if_dug(surface, position)
+    end
+end
+
 --- Transform the tile to water and register a transition for any neighbouring tiles that are dug
 ---@param surface LuaSurface 
 ---@param position MapPosition

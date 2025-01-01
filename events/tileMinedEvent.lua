@@ -1,4 +1,5 @@
 local ore_manager = require("oreManager")
+local dig_manager = require("digManager")
 local digableTileName = require("getTileNames").digable
 
 
@@ -22,6 +23,9 @@ local function tile_mined_event(event)
 
         ore_manager.delete_ore(ore)
       end
+    end
+    if tile.old_tile.name == "landfill" then
+      dig_manager.check_should_transition(surface, tile.position)
     end
   end
 end

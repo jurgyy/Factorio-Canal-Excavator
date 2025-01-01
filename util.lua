@@ -109,11 +109,9 @@ end
 ---@param surface LuaSurface
 ---@param position MapPosition
 function util.is_position_landfilled(surface, position)
-    local tiles = surface.find_tiles_filtered{position = position, radius = 0.1}
-    for _, tile in pairs(tiles) do
-      if tile.name == "landfill" or tile.hidden_tile == "landfill" then
-        return true
-      end
+    local tile = surface.get_tile(position.x, position.y)
+    if tile.name == "landfill" or tile.hidden_tile == "landfill" then
+    return true
     end
     return false
 end
