@@ -85,7 +85,10 @@ local function handle_ghost_digable_tile(event)
       for _, collidingEntity in pairs(non_excavators) do
         if not collidingEntity.is_registered_for_construction()
         or collidingEntity.ghost_prototype.name ~= digableTileName then
-          collidingEntity.order_deconstruction(game.get_player(event.player_index).force)
+          local player = game.get_player(event.player_index)
+          if player then
+            collidingEntity.order_deconstruction(player.force, player, 1)
+          end
         end
       end
     end
