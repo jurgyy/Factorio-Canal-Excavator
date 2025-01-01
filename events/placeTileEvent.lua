@@ -176,17 +176,21 @@ local function player_undo_set_tile(player, surface, tile)
     local undo_redo_stack = player.undo_redo_stack
     local undo_items = undo_redo_stack.get_undo_item(1)
     
-    for _, undo_item in pairs(undo_items) do
-        if undo_item.previous_tile ~= "landfill" and undo_item.previous_tile ~= dugTileName then
+    for i, undo_item in pairs(undo_items) do
+        if undo_item.previous_tile
+        and undo_item.previous_tile ~= dugTileName
+        and tile.position.x == undo_item.position.x
+        and tile.position.y == undo_item.position.y then
             local item_name = find_script_tile_refund_item(undo_item.previous_tile)
 
             player.remove_item{name=item_name, count=1}
             surface.set_tiles{
                 tiles = {name = undo_item.previous_tile, position = undo_item.position}
             }
+            undo_redo_stack.remove_undo_action(1, i)
+            break
         end
     end
-    undo_redo_stack.remove_undo_item(1)
 end
 
 --- Event handler for on_player_built_tile
