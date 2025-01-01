@@ -43,7 +43,7 @@ end
 local function wake_up_excavators(surface, position, radius)
     local excavators = find_entities_in_radius(surface, position, radius, "canex-excavator")
     for _, excavator in ipairs(excavators) do
-        excavator.active = true
+        excavator.update_connections()
     end
 end
 
