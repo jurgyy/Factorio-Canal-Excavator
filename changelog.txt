@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.2.2
+Date: 2025-01-01
+  Bugfixes:
+    - Fixed crash when placing excavatable tiles next to landfill
+    - Fixed dug tiles not transitioning in water when landfill next to it was mined.
+---------------------------------------------------------------------------------------------------
 Version: 1.2.1
 Date: 2025-01-01
   Bugfixes:
