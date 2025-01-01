@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.2.0
+Date: 2025-01-01
+  Bugfixes:
+    - Fixed bug where water spawned underneath the character didn't teleport the character to a safe position
+  Features:
+    - [Space Age] Only planets similar to Nauvis (same pressure) can be dug. I will later look into supporting the other planets.
+    - The excavator now actually benefits from productivity bonuses. Previously this was counteracted so you couldn't infinitely generate stone by crafting landfill, placing it and excavating it. But now landfill can be mined by hand this isn't necessary anymore and simplifies the mod logic.
+    - When ghost excavatable tiles aren't able to be placed for any reason the place-ghost events should now be removed from the player's undo-stack as if nothing happened.
+---------------------------------------------------------------------------------------------------
 Version: 1.1.7
 Date: 2024-07-30
   Bugfixes:
@@ -18,7 +27,6 @@ Date: 2024-06-10
 Version: 1.1.4
 Date: 2024-06-09
   Bugfixes:
-    - Fixed recipe being unlocked at the start despite having a recipe.
     - Fixed recipe being unlocked at the start despite having a recipe.
 ---------------------------------------------------------------------------------------------------
 Version: 1.1.3
