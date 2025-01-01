@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.2.3
+Date: 2025-01-01
+  Bugfixes:
+    - [Spage Age] Fixed undo-stack not properly being cleared when placing tiles on forbidden planet
+    - Fixed landfill being consumed from a player's inventory when digable tiles were placed on landfill.
+---------------------------------------------------------------------------------------------------
 Version: 1.2.2
 Date: 2025-01-01
   Bugfixes:
