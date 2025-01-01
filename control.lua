@@ -6,7 +6,6 @@ local util = require("util")
 local entity_built = require("events.entityBuilt")
 local place_tile_events = require("events.placeTileEvent")
 local tile_mined_event = require("events.tileMinedEvent")
-local research_finished_event = require("events.researchFinishedEvent")
 local entity_destroyed_event = require("events.entityDestroyedEvent")
 local surface_deleted_event = require("events.surfaceDeletedEvent")
 
@@ -71,7 +70,6 @@ script.on_event(defines.events.on_robot_built_entity, entity_built.event, entity
 script.on_event(defines.events.script_raised_built, entity_built.event, entity_built.filter)
 script.on_event(defines.events.script_raised_revive, entity_built.event, entity_built.filter)
 
-script.on_event(defines.events.on_research_finished, research_finished_event)
 script.on_event(defines.events.on_object_destroyed, entity_destroyed_event)
 script.on_event(defines.events.on_surface_deleted, surface_deleted_event)
 
