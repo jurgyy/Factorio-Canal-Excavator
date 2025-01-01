@@ -101,7 +101,7 @@ local script_tile_refund_map = {}
 
 ---Find the item that places a given tile
 ---@param tile Tile|string Placed tile
----@return string name Refund item name
+---@return string? name Refund item name
 local function find_script_tile_refund_item(tile)
     local tile_name = tile.name or tile
     local item_name = script_tile_refund_map[tile_name]
@@ -120,7 +120,7 @@ local function find_script_tile_refund_item(tile)
             end
         end
     end
-    error("Could not find item that places " .. tile_name)
+    --error("Could not find item that places " .. tile_name)
 end
 
 --- Event handler for script_raised_set_tiles event
@@ -184,13 +184,14 @@ local function player_undo_set_tile(player, surface, tile)
         and tile.position.x == undo_item.position.x
         and tile.position.y == undo_item.position.y then
             local item_name = find_script_tile_refund_item(undo_item.previous_tile)
-
-            player.remove_item{name=item_name, count=1}
-            surface.set_tiles{
-                tiles = {name = undo_item.previous_tile, position = undo_item.position}
-            }
-            undo_redo_stack.remove_undo_action(1, i)
-            break
+            if item_name then
+                player.remove_item{name=item_name, count=1}
+                surface.set_tiles{
+                    tiles = {name = undo_item.previous_tile, position = undo_item.position}
+                }
+                undo_redo_stack.remove_undo_action(1, i)
+                break
+            end
         end
     end
 end
