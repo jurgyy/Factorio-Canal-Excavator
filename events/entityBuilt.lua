@@ -90,11 +90,11 @@ local function handle_ghost_digable_tile(event)
       end
     end
 
-    if undone and event.player_index then
-      player = game.players[event.player_index]
-      if player then
-        clear_undo_stack(player)
-      end
+  end
+  if undone and event.player_index then
+    player = game.players[event.player_index]
+    if player then
+      clear_undo_stack(player)
     end
   end
 end

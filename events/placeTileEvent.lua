@@ -26,12 +26,14 @@ end
 
 --- Mark all entities colliding with the excavator for deconstruction given a position
 ---@param surface LuaSurface
----@param force string|integer|LuaForce
+---@param player LuaPlayer
 ---@param position MapPosition
-local function mark_for_deconstruction(surface, position, force)
-    local non_excavators = ore_manager.get_colliding_entities(surface, position)
-    for _, ent in pairs(non_excavators) do
-        ent.order_deconstruction(force)
+local function mark_for_deconstruction(surface, position, player)
+    local entities = ore_manager.get_colliding_entities(surface, position)
+    for _, entity in pairs(entities) do
+        if entity.name ~= "canex-rsc-digable" then
+            entity.order_deconstruction(player.force, player, 1)
+        end
     end
 end
 
@@ -225,7 +227,7 @@ local function place_tile_as_player(event)
                 wake_up_excavators(surface, position, radius)
 
                 if settings.get_player_settings(event.player_index)["auto-deconstruct"].value then
-                    mark_for_deconstruction(surface, position, player.force)
+                    mark_for_deconstruction(surface, position, player)
                 end
             end
         end
