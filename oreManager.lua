@@ -1,4 +1,5 @@
 local flib_bounding_box = require("__flib__/bounding-box")
+local planets_manager = require("planetsManager")
 
 local ore_manager = {}
 
@@ -28,7 +29,9 @@ function ore_manager.pop_stored_ore_amount(surface, position)
   if ore_manager.is_tile_started(surface, position) then
     return pop_stored_ore_amount(surface, x, y)
   end
-  return storage.ore_starting_amount
+  
+  local planet_config = planets_manager.get_planet_config(surface)
+  return planet_config.oreStartingAmount
 end
   
 function ore_manager.insert_stored_ore_amount(surface, position, amount)
