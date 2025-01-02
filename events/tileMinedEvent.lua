@@ -27,7 +27,8 @@ local function tile_mined_event(event)
         ore_manager.delete_ore(ore)
       end
     end
-    if tile.old_tile.name == "landfill" then
+
+    if tile.old_tile.is_foundation then
       dig_manager.check_should_transition(surface, tile.position)
     end
   end
