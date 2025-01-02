@@ -105,13 +105,19 @@ function util.show_error(text, surface, position)
     }
 end
 
----Is a position landfilled
+---Is a position landfilled with any type of foundation
 ---@param surface LuaSurface
 ---@param position MapPosition
 function util.is_position_landfilled(surface, position)
     local tile = surface.get_tile(position.x, position.y)
-    if tile.name == "landfill" or tile.hidden_tile == "landfill" then
-    return true
+    if tile.prototype.is_foundation then
+        return true
+    end
+    if tile.hidden_tile then
+        local prototype = prototypes.tile[tile.hidden_tile]
+        if prototype then
+            return prototype.is_foundation
+        end
     end
     return false
 end
