@@ -17,16 +17,6 @@ local surface_deleted_event = require("events.surfaceDeletedEvent")
 --   random delay [15, 90) ticks to turn into water
 --   Notify surrounding dug tiles
 
---- Get the amount of stone landfill costs or if none, 20
----@return integer
-local function get_landfill_stone_cost()
-  for _, ingredient in ipairs(prototypes.recipe["landfill"].ingredients) do
-    if ingredient.name == "stone" then
-      return ingredient.amount
-    end
-  end
-  return 20
-end
 
 script.on_init(function()
   -- TODO: dug_to_water and dug has the same data, use metatables to not store it more than once
@@ -38,13 +28,9 @@ script.on_init(function()
   storage.remaining_ore = {} --[[@as table<integer, table<integer, table<integer, integer>>>]]
   -- List of all place resources. Indexed by the entity's on_object_destroyed registration_number
   storage.resources = {}     --[[@as table<integer, LuaEntity>]]
-
-  storage.ore_starting_amount = get_landfill_stone_cost()
 end)
 
 script.on_configuration_changed(function(configurationChangedData)
-  storage.ore_starting_amount = get_landfill_stone_cost()
-  
   -- In case alien-biomes get disabled but the setting is still on
   if not script.active_mods["alien-biomes"] and settings.global["place-shallow-water"].value then
     game.print("Disabling shallow water")
