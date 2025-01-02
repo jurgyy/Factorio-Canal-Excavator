@@ -185,7 +185,8 @@ local function player_undo_set_tile(player, surface, tile)
         and undo_item.previous_tile ~= dugTileName
         and tile.position.x == undo_item.position.x
         and tile.position.y == undo_item.position.y then
-            if undo_item.previous_tile ~= "landfill" then
+            local previous_tile_prototype = prototypes.tile[undo_item.previous_tile]
+            if not previous_tile_prototype.is_foundation then
                 -- Remove previous tile from player's inventory
                 local item_name = find_script_tile_refund_item(undo_item.previous_tile)
                 if item_name then
