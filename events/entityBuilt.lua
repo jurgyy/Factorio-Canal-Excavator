@@ -34,7 +34,7 @@ local function is_on_ghost_landfill(surface, entity)
     type = "tile-ghost"
   }
   for _, tile_ghost in pairs(entities) do
-    if tile_ghost.ghost_name == "landfill" then
+    if tile_ghost.ghost_prototype.is_foundation then
       return true
     end
   end
