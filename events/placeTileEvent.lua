@@ -2,6 +2,8 @@ local flib_bounding_box = require("__flib__/bounding-box")
 
 local ore_manager = require("oreManager")
 local dig_manager = require("digManager")
+local planets_manager = require("planetsManager")
+
 local tile_mined_event = require("events.tileMinedEvent")
 local util = require("util")
 local dugTileName = require("getTileNames").dug
@@ -242,9 +244,12 @@ end
 
 ---@param event EventData.script_raised_set_tiles
 local function script_place_tile_event(event)
+    local surface = game.surfaces[event.surface_index]
+    local planet_config = planets_manager.get_planet_config(surface)
+
     for _, tile in pairs(event.tiles) do
-        if dig_manager.tile_is_water(tile.name) then
-            dig_manager.transition_surrounding_if_dug(game.surfaces[event.surface_index], tile.position)
+        if planets_manager.is_tile_water(planet_config, tile.name) then
+            dig_manager.transition_surrounding_if_dug(surface, tile.position)
         end
     end
     place_tile_as_script(event)
@@ -253,9 +258,12 @@ end
 --- Combined event handler for on_player_built_tile and on_robot_built_tile
 ---@param event EventData.on_player_built_tile|EventData.on_robot_built_tile
 local function place_tile_event(event)
-    if dig_manager.tile_is_water(event.tile.name) then
+    local surface = game.surfaces[event.surface_index]
+    local planet_config = planets_manager.get_planet_config(surface)
+
+    if planets_manager.is_tile_water(planet_config, event.tile.name) then
         for _, old_tile_and_pos in ipairs(event.tiles) do
-            dig_manager.transition_surrounding_if_dug(game.surfaces[event.surface_index], old_tile_and_pos.position)
+            dig_manager.transition_surrounding_if_dug(surface, old_tile_and_pos.position)
         end
         return
     end
