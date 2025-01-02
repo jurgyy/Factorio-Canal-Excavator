@@ -1,21 +1,20 @@
 local flib_bounding_box = require("__flib__/bounding-box")
 
-local util = require("util")
 local grid_spiral = require("gridSpiral")
 local dug_tile_name = require("getTileNames").dug
+local planets_manager = require("planetsManager")
 
 local dig_manager = {}
 
 local last_nth_tick = nil
 dig_manager.check_interval = 15 -- If this value ever gets changed between mod versions, make sure all the registered transitions still fire
 
-local water_tile_names = {"deepwater", "deepwater-green", "water", "water-green", "water-mud", "water-shallow", "water-wube"}
-
 --- Is any of the directly neighbouring tiles a water tile
+---@param planetConfig CanexPlanetConfig
 ---@param surface LuaSurface
 ---@param center MapPosition
 ---@return boolean
-local function is_next_to_water(surface, center)
+local function is_next_to_water(planetConfig, surface, center)
   local surrounding = {
     {x = center.x - 1, y = center.y},
     {x = center.x + 1, y = center.y},
@@ -25,7 +24,7 @@ local function is_next_to_water(surface, center)
   for _, pos in ipairs(surrounding) do
     local tile = surface.get_tile(pos.x, pos.y)
 
-    local is_water = dig_manager.tile_is_water(tile.name)
+    local is_water = planets_manager.is_tile_water(planetConfig, tile.name)
     if is_water then
         return true
     end
@@ -34,28 +33,12 @@ local function is_next_to_water(surface, center)
   return false
 end
 
----Returns true if the given tile name is the name of any of the known water tiles
----@param tile_name string The name of the tile you want to check
----@return boolean
-function dig_manager.tile_is_water(tile_name)
-    for _, water_tile_name in ipairs(water_tile_names) do
-        if tile_name == water_tile_name then
-            return true
-        end
-    end
-    return false
-end
-
 --- Calls die() on all entities that collide with a water tile (or shallow water, as per the mod settings) in a given bounding box
+---@param planetConfig CanexPlanetConfig
 ---@param surface LuaSurface
 ---@param bbox BoundingBox
-local function die_water_colliding_entities(surface, bbox)
-    local mask
-    if settings.global["place-shallow-water"].value then
-        mask = prototypes.tile["water-shallow"].collision_mask.layers
-    else
-        mask = prototypes.tile["water"].collision_mask.layers
-    end
+local function die_water_colliding_entities(planetConfig, surface, bbox)
+    local mask = prototypes.tile[planetConfig.excavateResult].collision_mask.layers
     local entities = surface.find_entities_filtered{
         area = bbox,
         collision_mask = mask
@@ -149,20 +132,19 @@ end
 
 
 --- Change a tile to water and first die all colliding entities, destroy their corpses and move any players.
+---@param planetConfig CanexPlanetConfig
 ---@param surface LuaSurface
 ---@param position MapPosition
-function dig_manager.set_water(surface, position)
+function dig_manager.set_water(planetConfig, surface, position)
     storage.dug[surface.index][math.floor(position.x)][math.floor(position.y)] = nil
 
     local bbox = flib_bounding_box.from_position(position, true)
-    die_water_colliding_entities(surface, bbox)
+    die_water_colliding_entities(planetConfig, surface, bbox)
     destroy_corpses(surface, bbox)
 
-    if settings.global["place-shallow-water"].value then
-        surface.set_tiles({{name="water-shallow", position=position}})
-    else
+    surface.set_tiles({{name=planetConfig.excavateResult, position=position}})
+    if not planetConfig.resultIsWalkable then
         move_players(surface, bbox)
-        surface.set_tiles({{name="water", position=position}})
     end
 end
 
@@ -209,7 +191,8 @@ function dig_manager.transition_surrounding_if_dug(surface, position)
 end
 
 function dig_manager.check_should_transition(surface, position)
-    if is_next_to_water(surface, position) then
+    local planetConfig = planets_manager.get_planet_config(surface)
+    if is_next_to_water(planetConfig, surface, position) then
         dig_manager.transition_surrounding_if_dug(surface, position)
     end
 end
@@ -218,7 +201,9 @@ end
 ---@param surface LuaSurface 
 ---@param position MapPosition
 function dig_manager.recursive_create_water(surface, position)
-    dig_manager.set_water(surface, position)
+    local planetConfig = planets_manager.get_planet_config(surface)
+
+    dig_manager.set_water(planetConfig, surface, position)
     dig_manager.transition_surrounding_if_dug(surface, position)
 end
 
@@ -280,9 +265,10 @@ function dig_manager.resource_depleted_event(event)
 
     local position = event.entity.position
     local surface = event.entity.surface
+    local planetConfig = planets_manager.get_planet_config(surface)
 
     set_dug(surface, position)
-    if is_next_to_water(surface, position) then
+    if is_next_to_water(planetConfig, surface, position) then
         dig_manager.register_delayed_transition(surface, position, 1)
     end
 end
