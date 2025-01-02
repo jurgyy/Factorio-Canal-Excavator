@@ -157,6 +157,7 @@ local function excavatorGrahpics()
       {
         {-- Hopper Dust
           fadeout = true,
+          apply_tint = "resource-color",
 
           north_animation = 
           {
@@ -220,6 +221,7 @@ local function excavatorGrahpics()
         },
         { -- Floor Dust
           fadeout = true,
+          apply_tint = "resource-color",
 
           north_animation =
           {
