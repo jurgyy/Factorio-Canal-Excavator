@@ -11,6 +11,18 @@ end
 ---@type table<string, CanexPlanetConfig> Table indexed by LuaSurface.name for that surface's PlanetConfig
 local surface_planet_cache = {}
 
+
+---Get a table with all the resource names for all the planets
+---@return table<string> resource_names
+local function get_all_resource_names()
+    local resource_names = {}
+    for name, _ in pairs(planetConfigs) do
+        table.insert(resource_names, "canex-rsc-digable-" .. name)
+    end
+
+    return resource_names
+end
+
 planetsManager = {}
 
 planetsManager.get_planet_config = function(surface)
