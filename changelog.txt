@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.2.5
+Date: 2025-01-03
+  Bugfixes:
+    - Internally the canal tile item and recipe now have the same name so they show up as a single page in the Factoriopedia
+---------------------------------------------------------------------------------------------------
 Version: 1.2.4
 Date: 2025-01-01
   Bugfixes:
