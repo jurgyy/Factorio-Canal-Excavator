@@ -192,8 +192,8 @@ function dig_manager.transition_surrounding_if_dug(surface, position)
 end
 
 function dig_manager.check_should_transition(surface, position)
-    local planetConfig = planets_manager.get_planet_config(surface)
-    if is_next_to_water(planetConfig, surface, position) then
+    local planet_config = planets_manager.get_planet_config(surface)
+    if is_next_to_water(planet_config, surface, position) then
         dig_manager.transition_surrounding_if_dug(surface, position)
     end
 end
@@ -202,9 +202,9 @@ end
 ---@param surface LuaSurface 
 ---@param position MapPosition
 function dig_manager.recursive_create_water(surface, position)
-    local planetConfig = planets_manager.get_planet_config(surface)
+    local planet_config = planets_manager.get_planet_config(surface)
 
-    dig_manager.set_water(planetConfig, surface, position)
+    dig_manager.set_water(planet_config, surface, position)
     dig_manager.transition_surrounding_if_dug(surface, position)
 end
 
@@ -266,10 +266,10 @@ function dig_manager.resource_depleted_event(event)
 
     local position = event.entity.position
     local surface = event.entity.surface
-    local planetConfig = planets_manager.get_planet_config(surface)
+    local planet_config = planets_manager.get_planet_config(surface)
 
     set_dug(surface, position)
-    if is_next_to_water(planetConfig, surface, position) then
+    if is_next_to_water(planet_config, surface, position) then
         dig_manager.register_delayed_transition(surface, position, 1)
     end
 end
