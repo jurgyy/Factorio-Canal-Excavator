@@ -33,14 +33,13 @@ end
 local function mark_for_deconstruction(surface, position, player)
     local entities = ore_manager.get_colliding_entities(surface, position)
     for _, entity in pairs(entities) do
-        if entity.name ~= "canex-rsc-digable" then
+        if not ore_manager.is_canex_resource_name(entity.name) then
             entity.order_deconstruction(player.force, player, 1)
         end
     end
 end
 
 --- Set active to true on all excavators in a radius of a position
---- TODO doesn't work currently
 ---@param surface LuaSurface
 ---@param position MapPosition
 ---@param radius number
