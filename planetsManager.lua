@@ -27,17 +27,24 @@ planetsManager = {}
 
 planetsManager.resource_names = get_all_resource_names()
 
----Is the planet corresponding to a given surface configured
+---Is the planet corresponding to a given surface configured.
+---Returns true if surface doesn't have a planet to stay compatible with non-space-age Nauvis
 ---@param surface LuaSurface
 ---@return boolean is_configured
 planetsManager.is_surface_configured = function(surface)
-    if not surface.planet then
-        return false
+    if surface.planet then
+        local planetName = surface.planet.name
+        return planetConfigs[planetName] ~= nil
     end
 
-    local planetName = surface.planet.name
-    return planetConfigs[planetName] ~= nil
+    return true
 end
+
+---Get the config of the planet corresponding to a given surface.
+---Returns default config if surface doesn't have a planet.
+---Errors if surface has a planet but no config
+---@param surface LuaSurface
+---@return CanexPlanetConfig
 planetsManager.get_planet_config = function(surface)
     if surface_planet_cache[surface.name] then return surface_planet_cache[surface.name] end
 
@@ -55,7 +62,8 @@ planetsManager.get_planet_config = function(surface)
     return config
 end
 
----Retrieve the name of the CanexPlanetsConfig key for a given surface. Returns the key of the default config if the surface has no planet
+---Retrieve the name of the CanexPlanetsConfig key for a given surface.
+---Returns the key of the default config if the surface has no planet
 ---@param surface LuaSurface
 ---@return string key
 planetsManager.get_planet_config_name = function(surface)
