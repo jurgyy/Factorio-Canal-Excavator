@@ -34,4 +34,9 @@ local tint = { r = 0.1, g = 0.1, b = 0.1, a = 0.5 }
 template.stages.sheet.tint = tint
 template.stages.sheet.filename = "__canal-excavator-graphics__/graphics/resource.png"
 
+template.icons = {{
+  icon = "__canal-excavator-graphics__/graphics/icons/resource.png"
+}}
+template.icon = nil
+
 return template

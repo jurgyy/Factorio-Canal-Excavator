@@ -11,5 +11,6 @@ for name, config in pairs(configs) do
     resource.map_color = config.tint
     resource.mining_visualisation_tint = config.tint
     resource.stages.sheet.tint = config.tint
+    resource.icons[1].tint = config.tint
     data:extend({resource})
 end
