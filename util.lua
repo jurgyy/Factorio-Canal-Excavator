@@ -1,4 +1,5 @@
 local flib_bounding_box = require("__flib__/bounding-box")
+local planets_manager = require("planetsManager")
 
 local util = {}
 
@@ -77,17 +78,7 @@ function util.surface_is_valid(surface)
     if not script.active_mods["space-age"] then
         return true
     end
-    local planet = surface.planet
-    if not planet then
-        return false
-    end
-    local surface_properties = planet.prototype.surface_properties
-    if not surface_properties then
-        return false
-    end
-    
-    local pressure = surface_properties["pressure"]
-    return pressure == game.planets["nauvis"].prototype.surface_properties["pressure"]
+    return planets_manager.is_surface_configured(surface)
 end
 
 ---Draw text
