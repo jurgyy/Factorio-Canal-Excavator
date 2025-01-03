@@ -2,11 +2,15 @@ local planetConfigs = require("planetConfig")
 
 ---@type CanexPlanetConfig
 local defaultConfig = nil
-for _, config in pairs(planetConfigs) do
+for name, config in pairs(planetConfigs) do
     if config.isDefault then
+        if defaultConfig ~= nil then
+            error(name .. " is already configured as default")
+        end
         defaultConfig = config
     end
 end
+if not defaultConfig then error("No default planet configured") end
 
 ---@type table<string, CanexPlanetConfig> Table indexed by LuaSurface.name for that surface's PlanetConfig
 local surface_planet_cache = {}
