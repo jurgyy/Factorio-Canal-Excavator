@@ -156,7 +156,7 @@ local function excavatorGrahpics()
       working_visualisations =
       {
         {-- Rocks
-          fadeout = false,
+          fadeout = true,
           apply_tint = "resource-color",
 
           north_animation = 
