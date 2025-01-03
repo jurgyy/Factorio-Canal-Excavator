@@ -106,11 +106,7 @@ local entity = {
 }
 
 if mods["space-age"] then
-  entity.surface_conditions = {{
-    property = "pressure",
-    min = 1000,
-    max = 1000
-  }}
+  entity.heating_energy = "200kW"
 end
 
 return entity
