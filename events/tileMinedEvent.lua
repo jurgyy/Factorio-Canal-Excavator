@@ -13,7 +13,7 @@ local function tile_mined_event(event)
       local ores = surface.find_entities_filtered{
         position = {x = tile.position.x + 0.5, y = tile.position.y + 0.5},
         type = "resource",
-        name = "canex-rsc-digable"
+        name = planets_manager.resource_names
       }
       
       --game.print("tile mined")
