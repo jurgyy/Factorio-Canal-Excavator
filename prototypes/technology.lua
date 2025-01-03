@@ -10,7 +10,7 @@ local tech = {
         },
         {
             type = "unlock-recipe",
-            recipe = "canex-rec-digable"
+            recipe = "canex-digable"
         }
     },
     prerequisites = {"utility-science-pack"},

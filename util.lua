@@ -32,7 +32,7 @@ end
 
 function util.canalDebug()
     --game.player.insert{name = "canex-excavator", count = 50}
-    --game.player.insert{name = "canex-item-digable", count = 250}
+    --game.player.insert{name = "canex-digable", count = 250}
     game.print("dug: " .. helpers.table_to_json(storage.dug))
     for surfaceIndex, surfaceData in pairs(storage.dug) do
       for x, column in pairs(surfaceData) do

@@ -138,7 +138,7 @@ local function place_tile_as_script(event)
             local is_dug = dig_manager.is_dug(surface, position)
             local item_name = find_script_tile_refund_item(tile)
             if not item_name then error("Unable to retrieve item that places tile " .. tile.name) end
-            if item_name ~= "canex-item-digable" then goto continue end
+            if item_name ~= "canex-digable" then goto continue end
             
             if not valid then
                 undo_set_tile(surface, tile, item_name)
@@ -267,7 +267,7 @@ local function place_tile_event(event)
         end
         return
     end
-    if not event.item or event.item.name ~= "canex-item-digable" then
+    if not event.item or event.item.name ~= "canex-digable" then
         -- Call tile_mined_event in case the new tile is placed ontop of a digable tile
         tile_mined_event(event)
         return
