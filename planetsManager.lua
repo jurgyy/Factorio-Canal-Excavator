@@ -27,6 +27,17 @@ planetsManager = {}
 
 planetsManager.resource_names = get_all_resource_names()
 
+---Is the planet corresponding to a given surface configured
+---@param surface LuaSurface
+---@return boolean is_configured
+planetsManager.is_surface_configured = function(surface)
+    if not surface.planet then
+        return false
+    end
+
+    local planetName = surface.planet.name
+    return planetConfigs[planetName] ~= nil
+end
 planetsManager.get_planet_config = function(surface)
     if surface_planet_cache[surface.name] then return surface_planet_cache[surface.name] end
 
