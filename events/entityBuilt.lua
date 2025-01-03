@@ -41,7 +41,7 @@ local function is_on_ghost_landfill(surface, entity)
   return false
 end
 
----Clear the undo stack of the latest place canex-tile-digable actions.
+---Clear the undo stack of the latest place canex-digable actions.
 ---Works only for ghost tiles. The tile version is in placeTileEvent.lua
 ---@param player LuaPlayer
 local function clear_undo_stack(player)
@@ -49,7 +49,7 @@ local function clear_undo_stack(player)
   local undo_items = undo_redo_stack.get_undo_item(1)
 
   -- Last undo action of first undo item should be placing digable tile
-  if undo_items[#undo_items].new_tile ~= "canex-tile-digable" then
+  if undo_items[#undo_items].new_tile ~= "canex-digable" then
     return
   end
   undo_redo_stack.remove_undo_item(1)

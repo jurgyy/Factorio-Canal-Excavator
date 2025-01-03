@@ -133,7 +133,7 @@ local function place_tile_as_script(event)
     local shown_error = false
 
     for _, tile in ipairs(event.tiles) do
-        if tile.name == "canex-tile-digable" then
+        if tile.name == "canex-digable" then
             local position = tile.position
             local is_dug = dig_manager.is_dug(surface, position)
             local item_name = find_script_tile_refund_item(tile)

@@ -1,7 +1,7 @@
 return
 {
     type = "tile",
-    name = "canex-tile-digable",
+    name = "canex-digable",
     order = "e[canal][digable]",
     collision_mask = {layers = {ground_tile = true}},
     layer = 100,

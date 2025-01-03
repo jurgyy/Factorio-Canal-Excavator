@@ -4,7 +4,7 @@ return
     name = "canex-digable",
     place_as_tile =
     {
-      result = "canex-tile-digable",
+      result = "canex-digable",
       condition_size = 1,
       condition = { layers = { water_tile = true }}
     },
