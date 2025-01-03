@@ -25,6 +25,8 @@ end
 
 planetsManager = {}
 
+planetsManager.resource_names = get_all_resource_names()
+
 planetsManager.get_planet_config = function(surface)
     if surface_planet_cache[surface.name] then return surface_planet_cache[surface.name] end
 
