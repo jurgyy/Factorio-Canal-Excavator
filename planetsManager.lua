@@ -55,6 +55,25 @@ planetsManager.get_planet_config = function(surface)
     return config
 end
 
+---Retrieve the name of the CanexPlanetsConfig key for a given surface. Returns the key of the default config if the surface has no planet
+---@param surface LuaSurface
+---@return string key
+planetsManager.get_planet_config_name = function(surface)
+    if surface.planet then
+        return surface.planet.name
+    end
+
+    if not surface.planet then
+        for name, config in pairs(planetConfigs) do
+            if config.isDefault then
+                return name
+            end
+        end
+    end
+    
+    error("No default planet configured")
+end
+
 ---Returns true if the given tile name is the name of any of the known water tiles for the given planetConfig
 ---@param planetConfig CanexPlanetConfig The config of the planet that's being checked
 ---@param tile_name string The name of the tile you want to check
