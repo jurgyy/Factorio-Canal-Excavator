@@ -2,6 +2,7 @@ local flib_bounding_box = require("__flib__/bounding-box")
 
 local grid_spiral = require("gridSpiral")
 local dug_tile_name = require("getTileNames").dug
+local ore_manager = require("oreManager")
 local planets_manager = require("planetsManager")
 
 local dig_manager = {}
@@ -259,7 +260,7 @@ end
 --- Event handler for when the digable tile is depleted
 ---@param event EventData.on_resource_depleted
 function dig_manager.resource_depleted_event(event)
-    if event.entity.name ~= "canex-rsc-digable" then
+    if not ore_manager.is_canex_resource_name(event.entity.name) then
         return
     end
 
