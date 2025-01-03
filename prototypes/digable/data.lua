@@ -1,5 +1,4 @@
 data:extend{require("__canal-excavator__/prototypes/digable/category")}
-data:extend(require("__canal-excavator__/prototypes/digable/resource"))
 data:extend{require("__canal-excavator__/prototypes/digable/recipe")}
 
 local tile = require("__canal-excavator__/prototypes/digable/tile")
