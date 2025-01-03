@@ -1,0 +1,10 @@
+{
+    "item":
+    [
+        ["canex-item-digable", "canex-digable"]
+    ],
+    "recipe":
+    [
+        ["canex-rec-digable", "canex-digable"]
+    ]
+}

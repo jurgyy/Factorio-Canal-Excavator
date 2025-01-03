@@ -1,7 +1,7 @@
 return
 {
     type = "item",
-    name = "canex-item-digable",
+    name = "canex-digable",
     place_as_tile =
     {
       result = "canex-tile-digable",
