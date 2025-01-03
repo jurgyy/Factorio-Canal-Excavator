@@ -1,5 +1,5 @@
 return {
-    name = "canex-tile-dug",
+    name = "canex-dug",
     type = "tile",
     order = "e[canal][dug]",
     
@@ -21,5 +21,5 @@ return {
     autoplace = nil,
     walking_speed_modifier = 0.6,
     tint = { r = 0.500, g = 0.500, b = 0.03,   a = 0.2 },
-
-  }
+    subgroup = "special-tiles",
+}

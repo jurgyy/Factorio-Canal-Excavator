@@ -2,5 +2,6 @@
     "tile":
     [
         ["canex-tile-digable", "canex-digable"],
+        ["canex-tile-dug", "canex-dug"]
     ]
 }
