@@ -1,6 +1,6 @@
 ---@type CanexPlanetsConfig
 local planet_configs = {}
-local prefix = require("configSettingsPrefix")
+local prefix = require("settings.configSettingsPrefix")
 local registrar = {}
 
 ---@generic k

@@ -12,7 +12,7 @@ local function validate_configs(configs)
     end
 end
 
-local prefix = require("configSettingsPrefix")
+local prefix = require("settings.configSettingsPrefix")
 
 ---Register your CanexPlanetConfig configurations by referencing a file that returns an array of them.
 ---Validates your file when called:
