@@ -1,7 +1,7 @@
 local flib_bounding_box = require("__flib__/bounding-box")
 
-local grid_spiral = require("gridSpiral")
-local dug_tile_name = require("getTileNames").dug
+local grid_spiral = require("global.gridSpiral")
+local dug_tile_name = require("prototypes.getTileNames").dug
 local ore_manager = require("control.oreManager")
 
 local dig_manager = {}

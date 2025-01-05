@@ -45,5 +45,4 @@ if (script and script.active_mods["space-age"]) or (mods and mods["space-age"]) 
     }
 end
 
-
 return config

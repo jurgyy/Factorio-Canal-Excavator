@@ -1,1 +1,1 @@
-canex_settings_register_config_file("canal-excavator", "planetConfig")
+canex_settings_register_config_file("canal-excavator", "global.planetConfig")
