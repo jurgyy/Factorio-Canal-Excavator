@@ -103,7 +103,7 @@ local function find_nearest_safe_tile(surface, entity, max_steps)
     for _ = 1, max_steps do
         local pos = spiral:Position()
         if not surface.entity_prototype_collides(entity, pos, false, entity.direction) then
-            return pos
+            return {x = pos.x + 0.5, y = pos.y + 0.5}
         end
 
         spiral:goNext()
@@ -147,10 +147,10 @@ function dig_manager.set_water(surface, position, water_tile_name)
     die_water_colliding_entities(surface, bbox)
     destroy_corpses(surface, bbox)
 
-    surface.set_tiles({{name=water_tile_name, position=position}})
-    if true then -- TODO
-        move_players(surface, bbox)
+    if prototypes.tile[water_tile_name].collision_mask["layers"]["player"] then
+        move_players(surface, flib_bounding_box.from_dimensions(position, 1.5, 1.5))
     end
+    surface.set_tiles({{name=water_tile_name, position=position}})
 end
 
 --- Is the tile registered as dug
