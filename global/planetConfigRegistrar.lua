@@ -3,17 +3,6 @@ local planet_configs = {}
 local prefix = require("settings.configSettingsPrefix")
 local registrar = {}
 
----@generic k
----@generic v
----@param t table<k, v>
----@param element v
----@return k? index
-local function get_index(t, element)
-    for idx, val in pairs(t) do
-        if val == element then return idx end
-    end
-end
-
 ---Register or overwrite the configuration of the excavator for a given planet
 ---@param planet_name string
 ---@param planet_config CanexPlanetConfig|CanexPlanetOverwriteConfig
