@@ -55,7 +55,7 @@ if (script and script.active_mods["space-age"]) or (mods and mods["space-age"]) 
         excavateResult = "wetland-blue-slime",
         resultIsWalkable = true,
         oreStartingAmount = 50,
-        tint = {r = 286, g = 196, b = 149}
+        tint = {r = 186, g = 196, b = 149}
     }
     config["aquilo"] = {
         mineResult = "ice",
