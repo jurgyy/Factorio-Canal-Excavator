@@ -1,6 +1,6 @@
-local ore_manager = require("oreManager")
-local dig_manager = require("digManager")
-local planets_manager = require("planetsManager")
+local ore_manager = require("control.oreManager")
+local dig_manager = require("control.digManager")
+local planets_manager = require("control.planetsManager")
 local digableTileName = require("getTileNames").digable
 
 

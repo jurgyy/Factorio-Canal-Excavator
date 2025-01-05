@@ -1,5 +1,5 @@
 local flib_bounding_box = require("__flib__/bounding-box")
-local planets_manager = require("planetsManager")
+local planets_manager = require("control.planetsManager")
 
 local util = {}
 

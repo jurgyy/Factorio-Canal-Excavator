@@ -1,9 +1,9 @@
 local flib_bounding_box = require("__flib__/bounding-box")
 
-local ore_manager = require("oreManager")
-local dig_manager = require("digManager")
+local ore_manager = require("control.oreManager")
+local dig_manager = require("control.digManager")
 
-local tile_mined_event = require("events.tileMinedEvent")
+local tile_mined_event = require("control.events.tileMinedEvent")
 local util = require("util")
 local dugTileName = require("getTileNames").dug
 

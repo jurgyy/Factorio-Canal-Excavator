@@ -1,5 +1,5 @@
-local dig_manager = require("digManager")
-local ore_manager = require("oreManager")
+local dig_manager = require("control.digManager")
+local ore_manager = require("control.oreManager")
 local digableTileName = require("getTileNames").digable
 local util = require("util")
 

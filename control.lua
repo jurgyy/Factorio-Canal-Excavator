@@ -1,14 +1,14 @@
-local dig_manager = require("digManager")
-local ore_manager = require("oreManager")
+local dig_manager = require("control.digManager")
+local ore_manager = require("control.oreManager")
 local planet_registrar = require("global.planetConfigRegistrar")
 
 local util = require("util")
 
-local entity_built = require("events.entityBuilt")
-local place_tile_events = require("events.placeTileEvent")
-local tile_mined_event = require("events.tileMinedEvent")
-local entity_destroyed_event = require("events.entityDestroyedEvent")
-local surface_deleted_event = require("events.surfaceDeletedEvent")
+local entity_built = require("control.events.entityBuilt")
+local place_tile_events = require("control.events.placeTileEvent")
+local tile_mined_event = require("control.events.tileMinedEvent")
+local entity_destroyed_event = require("control.events.entityDestroyedEvent")
+local surface_deleted_event = require("control.events.surfaceDeletedEvent")
 
 -- Place markers to mark where to dig
 -- Place excavators to dig the area
