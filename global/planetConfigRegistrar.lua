@@ -10,7 +10,9 @@ local function canex_register_planet_config(planet_name, planet_config)
     local existing_planet = planet_configs[planet_name]
     if existing_planet then
         ---@cast planet_config CanexPlanetOverwriteConfig
-        
+        for key, value in pairs(planet_config) do
+            planet_configs[planet_name][key] = value
+        end
     else
         ---@cast planet_config CanexPlanetConfig
         planet_configs[planet_name] = planet_config
