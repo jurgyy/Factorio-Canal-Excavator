@@ -29,7 +29,8 @@ local function tile_mined_event(event)
     end
 
     if tile.old_tile.is_foundation then
-      dig_manager.check_should_transition(surface, tile.position)
+      local new_tile = surface.get_tile(tile.position.x, tile.position.y)
+      dig_manager.transition_surrounding_if_dug(surface, tile.position, new_tile.name)
     end
   end
 end

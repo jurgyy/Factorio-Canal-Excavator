@@ -245,11 +245,10 @@ end
 ---@param event EventData.script_raised_set_tiles
 local function script_place_tile_event(event)
     local surface = game.surfaces[event.surface_index]
-    local planet_config = planets_manager.get_planet_config(surface)
 
     for _, tile in pairs(event.tiles) do
-        if planets_manager.is_tile_water(planet_config, tile.name) then
-            dig_manager.transition_surrounding_if_dug(surface, tile.position)
+        if dig_manager.is_tile_water(prototypes.tile[tile.name]) then
+            dig_manager.transition_surrounding_if_dug(surface, tile.position, tile.name)
         end
     end
     place_tile_as_script(event)
@@ -259,11 +258,10 @@ end
 ---@param event EventData.on_player_built_tile|EventData.on_robot_built_tile
 local function place_tile_event(event)
     local surface = game.surfaces[event.surface_index]
-    local planet_config = planets_manager.get_planet_config(surface)
 
-    if planets_manager.is_tile_water(planet_config, event.tile.name) then
+    if dig_manager.is_tile_water(prototypes.tile[event.tile.name]) then
         for _, old_tile_and_pos in ipairs(event.tiles) do
-            dig_manager.transition_surrounding_if_dug(surface, old_tile_and_pos.position)
+            dig_manager.transition_surrounding_if_dug(surface, old_tile_and_pos.position, event.tile.name)
         end
         return
     end
