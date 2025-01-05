@@ -1,11 +1,3 @@
-linear_animation = 
-{
-   1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16,
-  17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32,
-  33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48,
-  49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64
-}
-
 animation_speed = 0.6
 
 local function excavatorGrahpics()
@@ -29,7 +21,6 @@ local function excavatorGrahpics()
               frame_count = 64,
               shift = util.by_pixel(-6.5, -107.5), 
               animation_speed = animation_speed,
-              frame_sequence = linear_animation,
               direction_count = 1,
               repeat_count = 1,
               scale = 0.5,
@@ -43,7 +34,6 @@ local function excavatorGrahpics()
               shift = util.by_pixel(79.0, -50.5), 
               frame_count = 64,
               animation_speed = animation_speed,
-              frame_sequence = linear_animation,
               draw_as_shadow = true,
               repeat_count = 1,
               scale = 0.5
@@ -63,7 +53,6 @@ local function excavatorGrahpics()
               frame_count = 64,
               shift = util.by_pixel(59.5, -58.5), 
               animation_speed = animation_speed,
-              frame_sequence = linear_animation,
               direction_count = 1,
               repeat_count = 1,
               scale = 0.5,
@@ -76,7 +65,6 @@ local function excavatorGrahpics()
               height = 124,
               frame_count = 64,
               animation_speed = animation_speed,
-              frame_sequence = linear_animation,
               draw_as_shadow = true,
               shift = util.by_pixel(135, 5.5), 
               repeat_count = 1,
@@ -97,7 +85,6 @@ local function excavatorGrahpics()
               frame_count = 64,
               shift = util.by_pixel(-0.0, 70.0), 
               animation_speed = animation_speed,
-              frame_sequence = linear_animation,
               direction_count = 1,
               repeat_count = 1,
               scale = 0.5,
@@ -111,7 +98,6 @@ local function excavatorGrahpics()
               shift = util.by_pixel(91.0, 90.5), 
               frame_count = 64,
               animation_speed = animation_speed,
-              frame_sequence = linear_animation,
               draw_as_shadow = true,
               repeat_count = 1,
               scale = 0.5
@@ -131,7 +117,6 @@ local function excavatorGrahpics()
               frame_count = 64,
               shift = util.by_pixel(-60.0, -55.25), 
               animation_speed = animation_speed,
-              frame_sequence = linear_animation,
               direction_count = 1,
               repeat_count = 1,
               scale = 0.5,
@@ -145,7 +130,6 @@ local function excavatorGrahpics()
               shift = util.by_pixel(-31.0, 5.0), 
               frame_count = 64,
               animation_speed = animation_speed,
-              frame_sequence = linear_animation,
               draw_as_shadow = true,
               repeat_count = 1,
               scale = 0.5
@@ -156,7 +140,7 @@ local function excavatorGrahpics()
       working_visualisations =
       {
         {-- Rocks
-          fadeout = true,
+          fadeout = false,
           apply_tint = "resource-color",
 
           north_animation = 
@@ -168,7 +152,6 @@ local function excavatorGrahpics()
             height = 495,
             shift = util.by_pixel(-9.75, -98.25),
             frame_count = 64,
-            frame_sequence = linear_animation,
             animation_speed = animation_speed,
             direction_count = 1,
             repeat_count = 1,
@@ -183,7 +166,6 @@ local function excavatorGrahpics()
             height = 332,
             shift = util.by_pixel(36.0, -62.0),
             frame_count = 64,
-            frame_sequence = linear_animation,
             animation_speed = animation_speed,
             direction_count = 1,
             repeat_count = 1,
@@ -197,7 +179,6 @@ local function excavatorGrahpics()
             height = 188,
             shift = util.by_pixel(3.25, 21.0),
             frame_count = 64,
-            frame_sequence = linear_animation,
             animation_speed = animation_speed,
             direction_count = 1,
             repeat_count = 1,
@@ -212,7 +193,6 @@ local function excavatorGrahpics()
             height = 325,
             shift = util.by_pixel(-39.0, -56.75),
             frame_count = 64,
-            frame_sequence = linear_animation,
             animation_speed = animation_speed,
             direction_count = 1,
             repeat_count = 1,
@@ -232,7 +212,6 @@ local function excavatorGrahpics()
             height = 160,
             shift = util.by_pixel(-8.75, -192.5),
             frame_count = 64,
-            frame_sequence = linear_animation,
             animation_speed = animation_speed,
             direction_count = 1,
             repeat_count = 1,
@@ -247,7 +226,6 @@ local function excavatorGrahpics()
             height = 209,
             shift = util.by_pixel(135.5, -86.75),
             frame_count = 64,
-            frame_sequence = linear_animation,
             animation_speed = animation_speed,
             direction_count = 1,
             repeat_count = 1,
@@ -261,7 +239,6 @@ local function excavatorGrahpics()
             height = 202,
             shift = util.by_pixel(2.75, 50.0),
             frame_count = 64,
-            frame_sequence = linear_animation,
             animation_speed = animation_speed,
             direction_count = 1,
             repeat_count = 1,
@@ -276,7 +253,6 @@ local function excavatorGrahpics()
             height = 205,
             shift = util.by_pixel(-137.25, -84.25),
             frame_count = 64,
-            frame_sequence = linear_animation,
             animation_speed = animation_speed,
             direction_count = 1,
             repeat_count = 1,
@@ -296,7 +272,6 @@ local function excavatorGrahpics()
             height = 118,
             shift = util.by_pixel(-10.0, -169.5),
             frame_count = 64,
-            frame_sequence = linear_animation,
             animation_speed = animation_speed,
             direction_count = 1,
             repeat_count = 1,
@@ -311,7 +286,6 @@ local function excavatorGrahpics()
             height = 127,
             shift = util.by_pixel(136.25, -62.25),
             frame_count = 64,
-            frame_sequence = linear_animation,
             animation_speed = animation_speed,
             direction_count = 1,
             repeat_count = 1,
@@ -325,7 +299,6 @@ local function excavatorGrahpics()
             height = 117,
             shift = util.by_pixel(3.5, 81.25),
             frame_count = 64,
-            frame_sequence = linear_animation,
             animation_speed = animation_speed,
             direction_count = 1,
             repeat_count = 1,
@@ -340,7 +313,6 @@ local function excavatorGrahpics()
             height = 120,
             shift = util.by_pixel(-136.75, -56.0),
             frame_count = 64,
-            frame_sequence = linear_animation,
             animation_speed = animation_speed,
             direction_count = 1,
             repeat_count = 1,
@@ -360,7 +332,6 @@ local function excavatorGrahpics()
             height = 157,
             shift = util.by_pixel(-10.5, -11.25),
             frame_count = 64,
-            frame_sequence = linear_animation,
             animation_speed = animation_speed,
             direction_count = 1,
             repeat_count = 1,
@@ -375,7 +346,6 @@ local function excavatorGrahpics()
             height = 153,
             shift = util.by_pixel(-8.75, -5.25),
             frame_count = 64,
-            frame_sequence = linear_animation,
             animation_speed = animation_speed,
             direction_count = 1,
             repeat_count = 1,
@@ -389,7 +359,6 @@ local function excavatorGrahpics()
             height = 149,
             shift = util.by_pixel(4.75, 29.75),
             frame_count = 64,
-            frame_sequence = linear_animation,
             animation_speed = animation_speed,
             direction_count = 1,
             repeat_count = 1,
@@ -404,7 +373,6 @@ local function excavatorGrahpics()
             height = 126,
             shift = util.by_pixel(8.0, 5.5),
             frame_count = 64,
-            frame_sequence = linear_animation,
             animation_speed = animation_speed,
             direction_count = 1,
             repeat_count = 1,
