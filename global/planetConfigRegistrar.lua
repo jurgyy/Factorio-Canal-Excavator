@@ -17,7 +17,7 @@ local function canex_register_planet_config(planet_name, planet_config)
     end
 end
 
-registrar.register_configs_from_settings = function()
+registrar.load_configs_from_settings = function()
     for name, setting in pairs(settings.startup) do
         if name:find(prefix) then
             ---@type table<string, CanexPlanetConfig|CanexPlanetOverwriteConfig>
