@@ -9,6 +9,18 @@
 ---@field oreStartingAmount integer Amount of ore that should be placed when placing a excavatable tile
 ---@field tint Color Tint for the dust, rocks and resource
 
+---@class CanexPlanetOverwriteConfig
+---@field mineResult string?
+---@field fluidBodyTiles table<string>?
+---@field fluidBodyTilesModifier modifyOperator? How do you modify the existing fluidBodyTiles array? Defaults to "replace"
+---@field excavateResult string?
+---@field resultIsWalkable boolean? 
+---@field isDefault boolean?
+---@field oreStartingAmount integer?
+---@field tint Color?
+
+---@alias modifyOperator "add"|"replace"|"remove"
+
 ---@type CanexPlanetsConfig
 local config = {
     nauvis = {

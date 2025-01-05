@@ -1,6 +1,9 @@
-local template = require("prototypes.digable.resourceTemplate")
+local planet_registrar = require("global.planetConfigRegistrar")
 
-local configs = canex_get_planets_config()
+planet_registrar.register_configs_from_settings()
+local configs = planet_registrar.canex_get_planets_config()
+
+local template = require("prototypes.digable.resourceTemplate")
 
 for name, config in pairs(configs) do
     log("Adding Canex config for planet " .. name)

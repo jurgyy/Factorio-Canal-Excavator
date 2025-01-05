@@ -1,4 +1,7 @@
-local planetConfigs = require("planetConfig")
+local planet_registrar = require("global.planetConfigRegistrar")
+planet_registrar.register_configs_from_settings()
+
+local planetConfigs = planet_registrar.canex_get_planets_config()
 
 ---@type CanexPlanetConfig
 local defaultConfig = nil
