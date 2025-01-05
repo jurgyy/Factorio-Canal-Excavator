@@ -1,6 +1,6 @@
 local dig_manager = require("control.digManager")
 local ore_manager = require("control.oreManager")
-local digableTileName = require("getTileNames").digable
+local digableTileName = require("prototypes.getTileNames").digable
 local util = require("util")
 
 local function is_excavator(entity)

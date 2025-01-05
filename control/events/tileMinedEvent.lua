@@ -1,7 +1,7 @@
 local ore_manager = require("control.oreManager")
 local dig_manager = require("control.digManager")
 local planets_manager = require("control.planetsManager")
-local digableTileName = require("getTileNames").digable
+local digableTileName = require("prototypes.getTileNames").digable
 
 
 local function tile_mined_event(event)

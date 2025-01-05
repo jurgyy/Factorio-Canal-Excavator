@@ -5,7 +5,7 @@ local tile = require("__canal-excavator__/prototypes/digable/tile")
 local item = require("__canal-excavator__/prototypes/digable/item")
 if settings.startup["no-tiles"].value then
     log("Running with no-tiles")
-    local tileName = require("getTileNames").digable
+    local tileName = require("prototypes.getTileNames").digable
     
     for key, value in pairs(tile) do
         if key ~= "name" then

@@ -5,7 +5,7 @@ local dig_manager = require("control.digManager")
 
 local tile_mined_event = require("control.events.tileMinedEvent")
 local util = require("util")
-local dugTileName = require("getTileNames").dug
+local dugTileName = require("prototypes.getTileNames").dug
 
 
 --- Return all entities of a certain name in an area given a position, radius. The function will center the position on a tile
