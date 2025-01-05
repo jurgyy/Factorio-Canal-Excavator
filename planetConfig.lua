@@ -33,18 +33,6 @@ local config = {
     }
 }
 
-if settings and settings.global then
-    -- Set only during Runtime stage. Not known before that
-    local nauvis_water = nil
-    if settings.global["place-shallow-water"].value then
-        nauvis_water = "water-shallow"
-        config["nauvis"].resultIsWalkable = true
-    else
-        nauvis_water = "water"
-    end
-    config["nauvis"].excavateResult = nauvis_water
-end
-
 if (script and script.active_mods["space-age"]) or (mods and mods["space-age"]) then
     config["vulcanus"] = {
         mineResult = "stone",
