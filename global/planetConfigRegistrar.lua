@@ -21,35 +21,7 @@ local function canex_register_planet_config(planet_name, planet_config)
     local existing_planet = planet_configs[planet_name]
     if existing_planet then
         ---@cast planet_config CanexPlanetOverwriteConfig
-
-        for key, value in pairs(planet_config) do
-            if key == "fluidBodyTilesModifier" then goto continue end
-
-            if key == "fluidBodyTiles" then
-                local modifier = planet_config[key .. "Modifier"] or "replace"
-                if modifier == "add" then
-                    for _, v in pairs(planet_config[key]) do
-                        if get_index(existing_planet[key], v) then
-                            error(v .. " already in config " .. planet_name .. "[" .. key .. "]")
-                        end
-                        table.insert(existing_planet[key], v)
-                    end
-                elseif modifier == "remove" then
-                    for _, v in pairs(planet_config[key]) do
-                        local index = get_index(existing_planet[key], v)
-                        if not index then
-                            error(v .. " not in config " .. planet_name .. "[" .. key .. "]")
-                        end
-                        table.remove(existing_planet[key], index)
-                    end
-                elseif modifier == "replace" then
-                    existing_planet[key] = value
-                end
-            else
-                planet_configs[planet_name][key] = value
-            end
-            ::continue::
-        end
+        
     else
         ---@cast planet_config CanexPlanetConfig
         planet_configs[planet_name] = planet_config

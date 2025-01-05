@@ -6,8 +6,6 @@ local function validate_configs(configs)
         local error_template = "Missing required field in CanexPlanetConfig for "  .. name .. ": "
         if not registered[name] then
             if not config.mineResult then error(error_template .. "mineResult") end
-            if not config.fluidBodyTiles then error(error_template .. "fluidBodyTiles") end
-            if not config.excavateResult then error(error_template .. "excavateResult") end
             if not config.oreStartingAmount then error(error_template .. "oreStartingAmount") end
             if not config.tint then error(error_template .. "tint") end
         end
