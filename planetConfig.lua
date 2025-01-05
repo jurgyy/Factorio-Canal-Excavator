@@ -16,12 +16,12 @@ local config = {
         fluidBodyTiles = {"water", "deepwater", "water-green", "deepwater-green", "water-shallow", "water-mud"},
         excavateResult = "",
         oreStartingAmount = 10,
-        tint = {r = 0.400, g = 0.304, b = 0.0245, a = 1.000},
+        tint = {r = 102, g = 78, b = 6},
         isDefault = true
     }
 }
 
-if settings.global then
+if settings and settings.global then
     -- Set only during Runtime stage. Not known before that
     local nauvis_water = nil
     if settings.global["place-shallow-water"].value then
@@ -39,7 +39,7 @@ if (script and script.active_mods["space-age"]) or (mods and mods["space-age"]) 
         fluidBodyTiles = {"lava-hot", "lava"},
         excavateResult = "lava",
         oreStartingAmount = 40,
-        tint = {r = 0.471, g = 0.471, b = 0.471, a = 1.000}
+        tint = {r = 120, g = 120, b = 120}
     }
     config["fulgora"] = {
         mineResult = "scrap",
@@ -47,7 +47,7 @@ if (script and script.active_mods["space-age"]) or (mods and mods["space-age"]) 
         excavateResult = "oil-ocean-shallow",
         resultIsWalkable = true,
         oreStartingAmount = 10,
-        tint = {r = 0.678, g = 0.369, b = 0.282, a = 1.000}
+        tint = {r = 173, g = 94, b = 211}
     }
     config["gleba"] = {
         mineResult = "spoilage",
@@ -55,7 +55,7 @@ if (script and script.active_mods["space-age"]) or (mods and mods["space-age"]) 
         excavateResult = "wetland-blue-slime",
         resultIsWalkable = true,
         oreStartingAmount = 50,
-        tint = {r = 0.729, g = 0.769, b = 0.584, a = 1.000}
+        tint = {r = 286, g = 196, b = 149}
     }
     config["aquilo"] = {
         mineResult = "ice",
@@ -63,7 +63,7 @@ if (script and script.active_mods["space-age"]) or (mods and mods["space-age"]) 
         excavateResult = "brash-ice",
         resultIsWalkable = false,
         oreStartingAmount = 50,
-        tint = {r = 0.624, g = 0.758, b = 0.869, a = 1.000}
+        tint = {r = 159, g = 193, b = 222}
     }
 end
 
