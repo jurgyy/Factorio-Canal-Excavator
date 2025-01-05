@@ -18,11 +18,15 @@ local surface_deleted_event = require("events.surfaceDeletedEvent")
 --   random delay [15, 90) ticks to turn into water
 --   Notify surrounding dug tiles
 
+---@class DugToWaterTick
+---@field surface LuaSurface
+---@field position MapPosition
+---@field tile string?
 
 script.on_init(function()
   -- TODO: dug_to_water and dug has the same data, use metatables to not store it more than once
   -- dug_to_water contains all dug tiles that have yet to be transformed into water. Indexed by the tick they will transform
-  storage.dug_to_water = {}  --[[@as table<integer, {surface: LuaSurface, position: MapPosition}>]]
+  storage.dug_to_water = {}  --[[@as table<integer, table<DugToWaterTick>>]]
   -- dug contains all tiles that have been dug that have yet to be transformed into water. Indexed by [surface.index][x][y]
   storage.dug = {}           --[[@as table<integer, table<integer, table<integer, boolean>>>]]
   -- remaining_ore contains all tiles that were started, have since been removed. Indexed by [surface.index][x][y]
