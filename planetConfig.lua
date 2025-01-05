@@ -31,7 +31,7 @@ if (script and script.active_mods["space-age"]) or (mods and mods["space-age"]) 
     config["fulgora"] = {
         mineResult = "scrap",
         oreStartingAmount = 10,
-        tint = {r = 173, g = 94, b = 211}
+        tint = {r = 173, g = 94, b = 72}
     }
     config["gleba"] = {
         mineResult = "spoilage",
