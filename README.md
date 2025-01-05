@@ -25,11 +25,7 @@ The size of the Excavator was decided such that it stretches the complete width 
 **Other mods**
 This mod should be compatible with most other mods since it only adds new objects and doesn't modify any existing ones. Though this mod does add two tile prototypes and currently Factorio has a hard limit of 255. If you run multiple mods that add a lot of types, you might encounter this limit. For this reason there is a world setting called "Don't introduce new tiles". By default this is off but when enabled it reuses the "Yellow Refined Concrete" and "Brown Refined Concrete" that are already in the base game. If the mods you are using don't touch these two, you can enable this setting without any problems although it won't look as pretty.
 
-If a mod adds new water tiles, this mod probably won't recognize them when checking if a dug tile touches water. If you encounter such issue, please contact me with the info about which mods you are using and I'll add support for it.
-
-
 ## Known Issues
- * In vanilla, the excavator can't be placed on shallow water. Unfortunately, without messing with the collision mask of all entities, this is impossible. If a mod, as Alien Biomes does, changes the collision mask to not collide with the object-layer it will work.  
  * Items don't get picked up when an excavator gets build on top of it. I can't add the "item-layer" collision mask to the excavator's mask, since water tiles have that layer as well which would prevent the excavator from being placable on water and it will be destroyed when a water tile gets created under it.
  * When the Excavatable Surface is removed by another mod, it leaves the ore/stone behind. A workaround is to place the tiles again and remove them by hand or by using bots. After 2.0 releases I want to look into fixing this.
 
