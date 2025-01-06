@@ -8,8 +8,10 @@ local registrar = {}
 ---@param planet_config CanexPlanetConfig|CanexPlanetOverwriteConfig
 local function register_planet_config(planet_name, planet_config)
     local existing_planet = planet_configs[planet_name]
-    if existing_planet then
+    if planet_config.overwrite then
         ---@cast planet_config CanexPlanetOverwriteConfig
+        if not existing_planet then error("Planet " .. planet_name .. " can't be overwritten as it's not registered yet") end
+
         for key, value in pairs(planet_config) do
             planet_configs[planet_name][key] = value
         end

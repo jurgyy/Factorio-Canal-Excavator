@@ -11,6 +11,7 @@
 ---@field isDefault boolean?
 ---@field oreStartingAmount integer?
 ---@field tint Color?
+---@field overwrite boolean Set this to true to signal you want to overwrite
 
 ---@type CanexPlanetsConfig
 local config = {
