@@ -31,6 +31,7 @@ function canex_settings_register_config_file(modname, filepath)
         name = prefix .. modname,
         setting_type = "startup",
         default_value = fullpath,
+        allowed_values = {fullpath},
         hidden = true,
     }
     data:extend{setting}
