@@ -1,1 +1,1 @@
-require("settings.vanillaPlanetConfig")
+require("settings.registerVanillaPlanetConfig")
