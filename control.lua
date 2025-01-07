@@ -23,16 +23,22 @@ local surface_deleted_event = require("control.events.surfaceDeletedEvent")
 ---@field position MapPosition
 ---@field tile string?
 
+---@alias tick integer
+---@alias surfaceIndex integer
+---@alias xPosition integer
+---@alias yPosition integer
+---@alias registrationNumber integer
+
 script.on_init(function()
   -- TODO: dug_to_water and dug has the same data, use metatables to not store it more than once
   -- dug_to_water contains all dug tiles that have yet to be transformed into water. Indexed by the tick they will transform
-  storage.dug_to_water = {}  --[[@as table<integer, table<DugToWaterTick>>]]
+  storage.dug_to_water = {}  --[[@as table<tick, table<DugToWaterTick>>]]
   -- dug contains all tiles that have been dug that have yet to be transformed into water. Indexed by [surface.index][x][y]
-  storage.dug = {}           --[[@as table<integer, table<integer, table<integer, boolean>>>]]
+  storage.dug = {}           --[[@as table<surfaceIndex, table<xPosition, table<yPosition, boolean>>>]]
   -- remaining_ore contains all tiles that were started, have since been removed. Indexed by [surface.index][x][y]
-  storage.remaining_ore = {} --[[@as table<integer, table<integer, table<integer, integer>>>]]
-  -- List of all place resources. Indexed by the entity's on_object_destroyed registration_number
-  storage.resources = {}     --[[@as table<integer, LuaEntity>]]
+  storage.remaining_ore = {} --[[@as table<surfaceIndex, table<xPosition, table<yPosition, integer>>>]]
+  -- List of all placed resources. Indexed by the entity's on_object_destroyed registration_number
+  storage.resources = {}     --[[@as table<registrationNumber, LuaEntity>]]
 end)
 
 commands.add_command("canex-transition-dug", nil, dig_manager.transition_dug)
