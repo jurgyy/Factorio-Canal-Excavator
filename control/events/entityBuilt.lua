@@ -60,8 +60,6 @@ local function undo_last_create_digable_ghost(player, position)
       undo_redo_stack.remove_undo_action(1, index)
     end
   end
-
-  --undo_redo_stack.remove_undo_item(1)
 end
 
 ---@param event EventData.on_built_entity
