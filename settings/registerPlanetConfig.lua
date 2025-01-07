@@ -24,6 +24,7 @@ local prefix = require("settings.configSettingsPrefix")
 ---@param filepath string Filepath without extension. Example "interface.canal-excavator.canex-config"
 function canex_settings_register_config_file(modname, filepath)
     local fullpath = "__" .. modname .. "__." .. filepath
+    log("Registiring Canex planet config from " .. fullpath)
 
     ---@type table<string, CanexPlanetConfig|CanexPlanetOverwriteConfig>
     local configs = require(fullpath)
