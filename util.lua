@@ -71,7 +71,7 @@ function util.canalDebug()
 end
 
 
----Is the surface on a valid planet? i.e. only Nauvis and alike planets. Returns true if space age isn't installed
+---Is the surface on a configured planet? Returns true if space age isn't installed
 ---@param surface LuaSurface
 ---@return boolean
 function util.surface_is_valid(surface)
