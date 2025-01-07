@@ -1,3 +1,4 @@
+local canex_util = require("util")
 local ore_manager = require("control.oreManager")
 local dig_manager = require("control.digManager")
 local planets_manager = require("control.planetsManager")
@@ -6,6 +7,8 @@ local digableTileName = require("prototypes.getTileNames").digable
 
 local function tile_mined_event(event)
   local surface = game.surfaces[event.surface_index]
+  if not canex_util.surface_is_valid(surface) then return end
+
   local planet_config = planets_manager.get_planet_config(surface)
 
   for _, tile in ipairs(event.tiles) do
