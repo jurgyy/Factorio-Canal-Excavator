@@ -30,11 +30,21 @@ function util.highlight_bbox(surface, bbox, color)
     }
 end
 
-function util.canalDebug()
-    --game.player.insert{name = "canex-excavator", count = 50}
-    --game.player.insert{name = "canex-digable", count = 250}
-    game.print("dug: " .. helpers.table_to_json(storage.dug))
-    for surfaceIndex, surfaceData in pairs(storage.dug) do
+---@param command CustomCommandData
+function util.canalDebug(command)
+    local surfaceName = command.parameter
+    local dugs = storage.dug
+    if surfaceName then
+        local surface = game.surfaces[surfaceName]
+        if not surface then
+            game.print("Unknown surface " .. surfaceName)
+            return
+        end
+        dugs = {storage.dug[surface.index]}
+    end
+
+    game.print("dug: " .. helpers.table_to_json(dugs))
+    for surfaceIndex, surfaceData in pairs(dugs) do
         for x, column in pairs(surfaceData) do
             for y, dug in pairs(column) do
                 if dug then
