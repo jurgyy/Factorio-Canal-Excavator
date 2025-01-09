@@ -141,7 +141,24 @@ function dig_manager.set_water(surface, position, water_tile_name)
         water_tile_name = "water"
     end
 
-    storage.dug[surface.index][math.floor(position.x)][math.floor(position.y)] = nil
+    local x = math.floor(position.x)
+    local y = math.floor(position.y)
+    local index = surface.index
+
+    if not storage.dug[index] or not storage.dug[index][x] or not storage.dug[index][x][y] then
+        -- This only happens if set_water gets called twice on the same tile.
+        -- See dig_manager.register_delayed_transition for why this can happen
+        return
+    end
+
+    storage.dug[index][x][y] = nil
+
+    if next(storage.dug[index][x]) == nil then
+        storage.dug[index][x] = nil
+        if next(storage.dug[index]) == nil then
+            storage.dug[index] = nil
+        end
+    end
 
     local bbox = flib_bounding_box.from_position(position, true)
     die_water_colliding_entities(surface, bbox)
@@ -210,9 +227,9 @@ end
 ---@param water_tile_name string
 ---@param mult integer | nil optional multiplier for the check interval. If 0 or less the transition will be registered for the next check. If nil, a random integer multiplier between 1 and 6 will be chosen.
 function dig_manager.register_delayed_transition(surface, position, water_tile_name, mult)
-    -- TODO a tile can be registered twice if two water touching tiles got dug the same tick and a third adjacent tile was already dug but not touching water.
-    -- This is less obvious with a small variation in check interfal, but if between the two triggers landfill get's placed, the second trigger
-    -- Replaces the landfill with water again.
+    -- Small bug: A tile can be registered twice if two water touching tiles got dug/transitioned in the same tick interval and
+    -- there's a third dug tile adjacent to both but not water. In that case both water touching tiles register the third tile.
+    -- The bug is caught by the dig_manager.set_water method but would be better to somehow fix it from happening in the first place
 
     if last_nth_tick == nil then
         -- In the case game just loaded and before the first check interval a transition gets registered, calculate last_nth_tick manually.
