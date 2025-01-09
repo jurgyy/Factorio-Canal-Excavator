@@ -41,10 +41,10 @@ script.on_init(function()
   storage.resources = {}     --[[@as table<registrationNumber, LuaEntity>]]
 end)
 
-commands.add_command("canex-transition-dug", nil, dig_manager.transition_dug)
-commands.add_command("canex-reset-partially-dug", nil, ore_manager.clear_stored_ore_amount)
-commands.add_command("canex-debug", nil, util.canalDebug)
-commands.add_command("canex-show-planet-config", nil, planet_registrar.dump_planet_config )
+commands.add_command("canex-transition-dug", {"command.canex-transition-dug"}, dig_manager.transition_dug)
+commands.add_command("canex-reset-partially-dug", {"command.canex-reset-partially-dug"}, ore_manager.clear_stored_ore_amount)
+commands.add_command("canex-debug", {"command.canex-debug"}, util.canalDebug)
+commands.add_command("canex-show-planet-config", {"command.canex-show-planet-config"}, planet_registrar.dump_planet_config )
 
 script.on_event(defines.events.on_resource_depleted, dig_manager.resource_depleted_event)
 
