@@ -10,6 +10,6 @@
   "dependencies": [
     "base",
     "flib >= 0.15.0",
-    "canal-excavator-graphics >= 1.1.0"
+    "canal-excavator-graphics >= 1.2.0"
   ]
 }
