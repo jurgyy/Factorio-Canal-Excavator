@@ -1,4 +1,21 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.3.0
+Date: 2025-01-11
+  Bugfixes:
+    - Added tile information on the Factoriopedia page of excavated tiles
+    - Added tile information to the Factoriopedia page of the excavatable tile
+    - Fixed edge case where water could be set twice on the same tile in rapid succession
+    - Made the player move script when water is placed under them safer
+  Locale:
+    - Added help text to the four commands
+    - Renamed resource entity from "Excavatable surface" to "Excavatable resource"
+  Changes:
+    - Added optional argument surfaceName to /canex-debug command to show data from just that surface
+  Features:
+    - Added new resource icon in the Factoriopedia
+    - Added remote interface for other modders to use to add planet configuration by calling `canex_register_planet_config` during the data or data-updates stage.
+    - When transitioning to water tile, the new tile now matches the neighboring water tile. For instance if the neighboring tile is shallow water, the excavated tile will also become shallow water. Removed place-shallow-water setting.
+---------------------------------------------------------------------------------------------------
 Version: 1.2.5
 Date: 2025-01-03
   Bugfixes:
