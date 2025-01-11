@@ -29,7 +29,7 @@ local entity = {
     corpse = "electric-mining-drill-remnants", -- TODO
     dying_explosion = "electric-mining-drill-explosion",
     
-    collision_mask = {layers = {train = true, object = true}}, -- object-layer unfortunatly collides with shallow water
+    collision_mask = {layers = {train = true, object = true}},
     collision_box = {{ -1.29, -5.39}, {1.29, 1.49}},
     selection_box = {{ -1.5, -5.5}, {1.5, 1.5}},
     drawing_box = {{ -1.5, -5.5}, {1.5, 1.5}},
@@ -106,11 +106,7 @@ local entity = {
 }
 
 if mods["space-age"] then
-  entity.surface_conditions = {{
-    property = "pressure",
-    min = 1000,
-    max = 1000
-  }}
+  entity.heating_energy = "200kW"
 end
 
 return entity

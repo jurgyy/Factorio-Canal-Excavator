@@ -1,9 +1,20 @@
 local flib_bounding_box = require("__flib__/bounding-box")
+local planets_manager = require("control.planetsManager")
 
 local ore_manager = {}
 
-local function get_resource_entity_current_name()
-  return "canex-rsc-digable"
+---Get the name of the resource entity that should be placed on a given surface
+---@param surface LuaSurface
+---@return string resource_entity_name
+local function get_resource_entity_name(surface)
+  local planet_name = planets_manager.get_planet_config_name(surface)
+  return "canex-rsc-digable-" .. planet_name
+end
+
+---@param resource_name string Name of a resource entity
+---@return boolean is_canex_resource Is the resource a canex resource?
+function ore_manager.is_canex_resource_name(resource_name)
+  return string.sub(resource_name, 1, 17) == "canex-rsc-digable"
 end
 
 local function pop_stored_ore_amount(surface, x, y)
@@ -28,9 +39,11 @@ function ore_manager.pop_stored_ore_amount(surface, position)
   if ore_manager.is_tile_started(surface, position) then
     return pop_stored_ore_amount(surface, x, y)
   end
-  return storage.ore_starting_amount
+
+  local planet_config = planets_manager.get_planet_config(surface)
+  return planet_config.oreStartingAmount
 end
-  
+
 function ore_manager.insert_stored_ore_amount(surface, position, amount)
   -- If an ore tile is removed, add the remaining amount to the storage.remaining_ore table
   local x = math.floor(position.x)
@@ -68,7 +81,7 @@ end
 ---@param position MapPosition
 ---@return LuaEntity | nil
 function ore_manager.create_ore(surface, position)
-  local name = get_resource_entity_current_name()
+  local name = get_resource_entity_name(surface)
   local resource = surface.create_entity{name=name, position=position, force=game.forces.player}
 
   if not resource or not resource.valid then

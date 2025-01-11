@@ -1,13 +1,14 @@
-local dig_manager = require("digManager")
-local ore_manager = require("oreManager")
+local dig_manager = require("control.digManager")
+local ore_manager = require("control.oreManager")
+local planet_registrar = require("global.planetConfigRegistrar")
 
 local util = require("util")
 
-local entity_built = require("events.entityBuilt")
-local place_tile_events = require("events.placeTileEvent")
-local tile_mined_event = require("events.tileMinedEvent")
-local entity_destroyed_event = require("events.entityDestroyedEvent")
-local surface_deleted_event = require("events.surfaceDeletedEvent")
+local entity_built = require("control.events.entityBuilt")
+local place_tile_events = require("control.events.placeTileEvent")
+local tile_mined_event = require("control.events.tileMinedEvent")
+local entity_destroyed_event = require("control.events.entityDestroyedEvent")
+local surface_deleted_event = require("control.events.surfaceDeletedEvent")
 
 -- Place markers to mark where to dig
 -- Place excavators to dig the area
@@ -17,44 +18,33 @@ local surface_deleted_event = require("events.surfaceDeletedEvent")
 --   random delay [15, 90) ticks to turn into water
 --   Notify surrounding dug tiles
 
---- Get the amount of stone landfill costs or if none, 20
----@return integer
-local function get_landfill_stone_cost()
-  for _, ingredient in ipairs(prototypes.recipe["landfill"].ingredients) do
-    if ingredient.name == "stone" then
-      return ingredient.amount
-    end
-  end
-  return 20
-end
+---@class DugToWaterTick
+---@field surface LuaSurface
+---@field position MapPosition
+---@field tile string?
+
+---@alias tick integer
+---@alias surfaceIndex integer
+---@alias xPosition integer
+---@alias yPosition integer
+---@alias registrationNumber integer
 
 script.on_init(function()
   -- TODO: dug_to_water and dug has the same data, use metatables to not store it more than once
   -- dug_to_water contains all dug tiles that have yet to be transformed into water. Indexed by the tick they will transform
-  storage.dug_to_water = {}  --[[@as table<integer, {surface: LuaSurface, position: MapPosition}>]]
+  storage.dug_to_water = {}  --[[@as table<tick, table<DugToWaterTick>>]]
   -- dug contains all tiles that have been dug that have yet to be transformed into water. Indexed by [surface.index][x][y]
-  storage.dug = {}           --[[@as table<integer, table<integer, table<integer, boolean>>>]]
+  storage.dug = {}           --[[@as table<surfaceIndex, table<xPosition, table<yPosition, boolean>>>]]
   -- remaining_ore contains all tiles that were started, have since been removed. Indexed by [surface.index][x][y]
-  storage.remaining_ore = {} --[[@as table<integer, table<integer, table<integer, integer>>>]]
-  -- List of all place resources. Indexed by the entity's on_object_destroyed registration_number
-  storage.resources = {}     --[[@as table<integer, LuaEntity>]]
-
-  storage.ore_starting_amount = get_landfill_stone_cost()
+  storage.remaining_ore = {} --[[@as table<surfaceIndex, table<xPosition, table<yPosition, integer>>>]]
+  -- List of all placed resources. Indexed by the entity's on_object_destroyed registration_number
+  storage.resources = {}     --[[@as table<registrationNumber, LuaEntity>]]
 end)
 
-script.on_configuration_changed(function(configurationChangedData)
-  storage.ore_starting_amount = get_landfill_stone_cost()
-  
-  -- In case alien-biomes get disabled but the setting is still on
-  if not script.active_mods["alien-biomes"] and settings.global["place-shallow-water"].value then
-    game.print("Disabling shallow water")
-    settings.global["place-shallow-water"] = { value = false }
-  end
-end)
-
-commands.add_command("canex-transition-dug", nil, dig_manager.transition_dug)
-commands.add_command("canex-reset-partially-dug", nil, ore_manager.clear_stored_ore_amount)
-commands.add_command("canex-debug", nil, util.canalDebug)
+commands.add_command("canex-transition-dug", {"command.canex-transition-dug"}, dig_manager.transition_dug)
+commands.add_command("canex-reset-partially-dug", {"command.canex-reset-partially-dug"}, ore_manager.clear_stored_ore_amount)
+commands.add_command("canex-debug", {"command.canex-debug"}, util.canalDebug)
+commands.add_command("canex-show-planet-config", {"command.canex-show-planet-config"}, planet_registrar.dump_planet_config )
 
 script.on_event(defines.events.on_resource_depleted, dig_manager.resource_depleted_event)
 

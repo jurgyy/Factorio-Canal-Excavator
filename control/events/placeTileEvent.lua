@@ -1,10 +1,11 @@
 local flib_bounding_box = require("__flib__/bounding-box")
 
-local ore_manager = require("oreManager")
-local dig_manager = require("digManager")
-local tile_mined_event = require("events.tileMinedEvent")
+local ore_manager = require("control.oreManager")
+local dig_manager = require("control.digManager")
+
+local tile_mined_event = require("control.events.tileMinedEvent")
 local util = require("util")
-local dugTileName = require("getTileNames").dug
+local dugTileName = require("prototypes.getTileNames").dug
 
 
 --- Return all entities of a certain name in an area given a position, radius. The function will center the position on a tile
@@ -31,14 +32,13 @@ end
 local function mark_for_deconstruction(surface, position, player)
     local entities = ore_manager.get_colliding_entities(surface, position)
     for _, entity in pairs(entities) do
-        if entity.name ~= "canex-rsc-digable" then
+        if not ore_manager.is_canex_resource_name(entity.name) then
             entity.order_deconstruction(player.force, player, 1)
         end
     end
 end
 
 --- Set active to true on all excavators in a radius of a position
---- TODO doesn't work currently
 ---@param surface LuaSurface
 ---@param position MapPosition
 ---@param radius number
@@ -132,7 +132,7 @@ local function place_tile_as_script(event)
     local shown_error = false
 
     for _, tile in ipairs(event.tiles) do
-        if tile.name == "canex-tile-digable" then
+        if tile.name == "canex-digable" then
             local position = tile.position
             local is_dug = dig_manager.is_dug(surface, position)
             local item_name = find_script_tile_refund_item(tile)
@@ -160,9 +160,9 @@ local function place_tile_as_script(event)
             -- if surface.find_entities_filtered{area = flib_bounding_box.from_position(tile.position, true), name="canex-rsc-digable"} then
             --     game.print("was ore")
             -- end
-           -- TODO check if the tile was excavatable_surface and then remove the ore.
-           -- OldTileAndPosition[] isn't exposed in this event so have to find a workaround unless Wube
-           -- implements it: https://forums.factorio.com/viewtopic.php?f=28&t=114555
+            -- TODO check if the tile was excavatable_surface and then remove the ore.
+            -- OldTileAndPosition[] isn't exposed in this event so have to find a workaround unless Wube
+            -- implements it: https://forums.factorio.com/viewtopic.php?f=28&t=114555
         end
         ::continue::
     end
@@ -183,7 +183,8 @@ local function player_undo_set_tile(player, surface, tile)
         and undo_item.previous_tile ~= dugTileName
         and tile.position.x == undo_item.position.x
         and tile.position.y == undo_item.position.y then
-            if undo_item.previous_tile ~= "landfill" then
+            local previous_tile_prototype = prototypes.tile[undo_item.previous_tile]
+            if not previous_tile_prototype.is_foundation then
                 -- Remove previous tile from player's inventory
                 local item_name = find_script_tile_refund_item(undo_item.previous_tile)
                 if item_name then
@@ -242,9 +243,11 @@ end
 
 ---@param event EventData.script_raised_set_tiles
 local function script_place_tile_event(event)
+    local surface = game.surfaces[event.surface_index]
+
     for _, tile in pairs(event.tiles) do
-        if dig_manager.tile_is_water(tile.name) then
-            dig_manager.transition_surrounding_if_dug(game.surfaces[event.surface_index], tile.position)
+        if dig_manager.is_tile_water(prototypes.tile[tile.name]) then
+            dig_manager.transition_surrounding_if_dug(surface, tile.position, tile.name)
         end
     end
     place_tile_as_script(event)
@@ -253,9 +256,11 @@ end
 --- Combined event handler for on_player_built_tile and on_robot_built_tile
 ---@param event EventData.on_player_built_tile|EventData.on_robot_built_tile
 local function place_tile_event(event)
-    if dig_manager.tile_is_water(event.tile.name) then
+    local surface = game.surfaces[event.surface_index]
+
+    if dig_manager.is_tile_water(prototypes.tile[event.tile.name]) then
         for _, old_tile_and_pos in ipairs(event.tiles) do
-            dig_manager.transition_surrounding_if_dug(game.surfaces[event.surface_index], old_tile_and_pos.position)
+            dig_manager.transition_surrounding_if_dug(surface, old_tile_and_pos.position, event.tile.name)
         end
         return
     end

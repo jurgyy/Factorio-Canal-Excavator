@@ -1,6 +1,6 @@
-local resource = {
+local template = {
     type = "resource",
-    name = "canex-rsc-digable",
+    name = "canex-rsc-digable-",
     localised_name  = {"entity-name.canex-rsc-digable"},
     icon = "__canal-excavator-graphics__/graphics/icons/marker.png",
     icon_size = 32,
@@ -24,13 +24,19 @@ local resource = {
     collision_box = {{ -0.49, -0.49}, {0.49, 0.49}},
     selection_box = {{ -0.49, -0.49}, {0.49, 0.49}},
     map_color = { r = 0.181, g = 0.104, b = 0.075},
-    mining_visualisation_tint = {r = 0.490, g = 0.304, b = 0.0245, a = 1.000},
+    mining_visualisation_tint = {r = 0.490, g = 0.304, b = 0.5245, a = 1.000},
 
     stages = table.deepcopy(data.raw.resource["stone"].stages),
     stage_counts = data.raw.resource["stone"].stage_counts,
 }
 
 local tint = { r = 0.1, g = 0.1, b = 0.1, a = 0.5 }
-resource.stages.sheet.tint = tint
+template.stages.sheet.tint = tint
+template.stages.sheet.filename = "__canal-excavator-graphics__/graphics/resource.png"
 
-return {resource}
+template.icons = {{
+  icon = "__canal-excavator-graphics__/graphics/icons/resource.png"
+}}
+template.icon = nil
+
+return template

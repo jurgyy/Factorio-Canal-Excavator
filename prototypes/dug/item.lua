@@ -14,7 +14,7 @@ return {
     }},
     icon_size = 64,
     icon_mipmaps = 4,
-    subgroup = "raw-resource",
+    subgroup = "special-tiles",
     order = "e[canal-marker]",
     stack_size = 50
   }

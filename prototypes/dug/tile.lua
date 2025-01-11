@@ -1,5 +1,5 @@
 return {
-    name = "canex-tile-dug",
+    name = "canex-dug",
     type = "tile",
     order = "e[canal][dug]",
     
@@ -11,7 +11,6 @@ return {
     walking_sound = data.raw.tile["landfill"].walking_sound,
     map_color={r=0.063, g=0.133, b=0.149},
     scorch_mark_color = {r = 0.312, g = 0.148, b = 0.147, a = 1.000},
-    pollution_absorption_per_second = data.raw.tile["landfill"].pollution_absorption_per_second,
     vehicle_friction_modifier = data.raw.tile["landfill"].vehicle_friction_modifier,
     decorative_removal_probability = 1,
     
@@ -21,5 +20,5 @@ return {
     autoplace = nil,
     walking_speed_modifier = 0.6,
     tint = { r = 0.500, g = 0.500, b = 0.03,   a = 0.2 },
-
-  }
+    subgroup = "special-tiles",
+}

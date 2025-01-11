@@ -1,6 +1,6 @@
-local dig_manager = require("digManager")
-local ore_manager = require("oreManager")
-local digableTileName = require("getTileNames").digable
+local dig_manager = require("control.digManager")
+local ore_manager = require("control.oreManager")
+local digableTileName = require("prototypes.getTileNames").digable
 local util = require("util")
 
 local function is_excavator(entity)
@@ -34,25 +34,32 @@ local function is_on_ghost_landfill(surface, entity)
     type = "tile-ghost"
   }
   for _, tile_ghost in pairs(entities) do
-    if tile_ghost.ghost_name == "landfill" then
+    if tile_ghost.ghost_prototype.is_foundation then
       return true
     end
   end
   return false
 end
 
----Clear the undo stack of the latest place canex-tile-digable actions.
+---Clear the undo stack of the latest place canex-digable actions.
 ---Works only for ghost tiles. The tile version is in placeTileEvent.lua
 ---@param player LuaPlayer
-local function clear_undo_stack(player)
+---@param position MapPosition Position of the ghost that was removed
+local function undo_last_create_digable_ghost(player, position)
   local undo_redo_stack = player.undo_redo_stack
   local undo_items = undo_redo_stack.get_undo_item(1)
 
-  -- Last undo action of first undo item should be placing digable tile
-  if undo_items[#undo_items].new_tile ~= "canex-tile-digable" then
-    return
+  local x = math.floor(position.x)
+  local y = math.floor(position.y)
+
+  for index = #undo_items, 1, -1 do
+    local undo_item = undo_items[index]
+    if undo_item.type == "built-tile"
+    and undo_item.position.x == x
+    and undo_item.position.y == y then
+      undo_redo_stack.remove_undo_action(1, index)
+    end
   end
-  undo_redo_stack.remove_undo_item(1)
 end
 
 ---@param event EventData.on_built_entity
@@ -61,6 +68,7 @@ local function handle_ghost_digable_tile(event)
   local surface = entity.surface
   local valid = util.surface_is_valid(surface)
   local undone = false
+  local position = entity.position
 
   if not valid then
     util.show_error({"story.canex-invalid-surface"}, surface, {entity.position.x + 0.65, entity.position.y + 0.40})
@@ -97,7 +105,7 @@ local function handle_ghost_digable_tile(event)
   if undone and event.player_index then
     player = game.players[event.player_index]
     if player then
-      clear_undo_stack(player)
+      undo_last_create_digable_ghost(player, position)
     end
   end
 end

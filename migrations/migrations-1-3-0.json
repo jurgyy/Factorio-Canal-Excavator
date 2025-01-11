@@ -1,0 +1,11 @@
+{
+    "tile":
+    [
+        ["canex-tile-digable", "canex-digable"],
+        ["canex-tile-dug", "canex-dug"]
+    ],
+    "entity":
+    [
+        ["canex-rsc-digable", "canex-rsc-digable-nauvis"]
+    ]
+}
