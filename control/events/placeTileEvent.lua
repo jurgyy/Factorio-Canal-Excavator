@@ -160,9 +160,9 @@ local function place_tile_as_script(event)
             -- if surface.find_entities_filtered{area = flib_bounding_box.from_position(tile.position, true), name="canex-rsc-digable"} then
             --     game.print("was ore")
             -- end
-           -- TODO check if the tile was excavatable_surface and then remove the ore.
-           -- OldTileAndPosition[] isn't exposed in this event so have to find a workaround unless Wube
-           -- implements it: https://forums.factorio.com/viewtopic.php?f=28&t=114555
+            -- TODO check if the tile was excavatable_surface and then remove the ore.
+            -- OldTileAndPosition[] isn't exposed in this event so have to find a workaround unless Wube
+            -- implements it: https://forums.factorio.com/viewtopic.php?f=28&t=114555
         end
         ::continue::
     end
