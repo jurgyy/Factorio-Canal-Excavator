@@ -13,8 +13,8 @@ To facilitate the creation of canals, the mod introduces special excavatable til
 3. **Water Transition**
 After an excavatable tile has been depleted by the Canal Excavator, the tile transitions into a _dug_ state. If the tile is connected to a water tile, the dug tile changes in the same water tile as well. It then checks if other neighbouring tiles are dug which in turn will transitioned as well. 
 
-## Spage Age
-The mod is fully compatible with spage age. When placed on other planets a different kind of resource will be spawned corresponding to that planet. Excavating on Fulgora, for instance, will mine scrap and places the Heavy Oil tiles once fully dug. Modded planets do have to support my mod before the tiles can placed on those planets. See the Modding Interface chapter for more information on how to support your planet or how to modify the configuration for the vanilla planets.
+## Space Age
+The mod is fully compatible with space age. When placed on other planets a different kind of resource will be spawned corresponding to that planet. Excavating on Fulgora, for instance, will mine scrap and places the Heavy Oil tiles once fully dug. Modded planets do have to support my mod before the tiles can placed on those planets. See the Modding Interface chapter for more information on how to support your planet or how to modify the configuration for the vanilla planets.
 
 ## Mod Compatibility
 
