@@ -9,7 +9,7 @@
   "description": "Introduces a machine that can excavate tiles, extracting stone, and transforms them into water when the dug tile touches another water source",
   "dependencies": [
     "base",
-    "?space-age",
+    "?space-age", 
     "flib >= 0.15.0",
     "canal-excavator-graphics >= 1.2.0"
   ]
