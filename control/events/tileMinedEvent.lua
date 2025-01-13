@@ -1,4 +1,4 @@
-local canex_util = require("util")
+local canex_util = require("canex-util")
 local ore_manager = require("control.oreManager")
 local dig_manager = require("control.digManager")
 local planets_manager = require("control.planetsManager")

@@ -49,16 +49,16 @@ This mod has an interface modders can use to modify the configuration of existin
 
 Adding support for a new planet:
 
-1. Anywhere in your mod folder create a new file that returns a [`table<string, CanexPlanetConfig>`](https://github.com/jurgyy/Factorio-Canal-Excavator/blob/master/planetConfig.lua#L3) table where the keys are the `PlanetPrototype.name` of your planet(s). The file will be loaded both during the `data-final-fixes` stage as well as at the start of my `control` script in the runtime stage.
+1. Anywhere in your mod folder create a new file that returns a [`table<string, CanexPlanetConfig>`](https://github.com/jurgyy/Factorio-Canal-Excavator/blob/master/settings/vanillaPlanetConfig.lua#L3) table where the keys are the `PlanetPrototype.name` of your planet(s). The file will be loaded both during the `data-final-fixes` stage as well as at the start of my `control` script in the runtime stage.
 2. In your `settings-update.lua` or `settings-final-fixes.lua` file call the following function: `canex_settings_register_config_file("your_mod_name", "path.to.the.config.file")`
 
 And that's it. No need to add a mod dependency or anything.
 
-I use this interface to register the vanilla planets as well. You can look at the implementation of this to get an example if it isn't entirely clear yet.
+I use this interface to register the vanilla planets as well. You can look at [the implementation of this](https://github.com/jurgyy/Factorio-Canal-Excavator/blob/master/settings/registerVanillaPlanetConfig.lua) to get an example if it isn't entirely clear yet.
 
 **Modifying config of existing planets**
 
-If you want to modify the config of an existing planet. For instance, you want to change the mining result on Nauvis from stone to iron ore, you can do the same as above, but instead return [`table<string, CanexPlanetOverwriteConfig>`](https://github.com/jurgyy/Factorio-Canal-Excavator/blob/master/planetConfig.lua#L12) but make sure your mod gets loaded after mine (or if you want to modify a third party planet, load after that mod) but setting an (optional) mod dependency on it.
+If you want to modify the config of an existing planet. For instance, you want to change the mining result on Nauvis from stone to iron ore, you can do the same as above, but instead return [`table<string, CanexPlanetOverwriteConfig>`](https://github.com/jurgyy/Factorio-Canal-Excavator/blob/master/settings/vanillaPlanetConfig.lua#L9) but make sure your mod gets loaded after mine (or if you want to modify a third party planet, load after that mod) but setting an (optional) mod dependency on it.
 
 Do you add a planet _and_ modify another planet, you can of course return a mix of the two config types: `table<string, CanexPlanetConfig|CanexPlanetOverwriteConfig>`.
 

@@ -92,7 +92,7 @@ function util.surface_is_valid(surface)
 end
 
 ---Draw text
----@param text string
+---@param text string|string[]
 ---@param surface LuaSurface
 ---@param position MapPosition
 function util.show_error(text, surface, position)

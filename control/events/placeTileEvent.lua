@@ -4,7 +4,7 @@ local ore_manager = require("control.oreManager")
 local dig_manager = require("control.digManager")
 
 local tile_mined_event = require("control.events.tileMinedEvent")
-local util = require("util")
+local canex_util = require("canex-util")
 local dugTileName = require("prototypes.getTileNames").dug
 
 
@@ -71,7 +71,7 @@ end
 ---@param event EventData.on_robot_built_tile
 local function place_tile_as_robot(event)
     local surface = game.surfaces[event.surface_index]
-    local valid = util.surface_is_valid(surface)
+    local valid = canex_util.surface_is_valid(surface)
     local radius = prototypes.entity["canex-excavator"].mining_drill_radius - 1
     local shown_error = false
 
@@ -80,12 +80,12 @@ local function place_tile_as_robot(event)
         if not valid then
             undo_set_tile(surface, tile, event.item.name)
             if not shown_error then
-                util.show_error({"story.canex-invalid-surface"}, surface, {tile.position.x + 0.65, tile.position.y + 0.40})
+                canex_util.show_error({"story.canex-invalid-surface"}, surface, {tile.position.x + 0.65, tile.position.y + 0.40})
                 shown_error = true
             end
         elseif dig_manager.is_dug(surface, tile.position) then
             undo_set_tile(surface, tile, event.item.name)
-            util.show_error({"story.canex-already-dug"}, surface, {tile.position.x + 0.65, tile.position.y + 0.40})
+            canex_util.show_error({"story.canex-already-dug"}, surface, {tile.position.x + 0.65, tile.position.y + 0.40})
         else
             local ore = ore_manager.create_ore(surface, position)
             if ore == nil then
@@ -127,7 +127,7 @@ end
 ---@param event EventData.script_raised_set_tiles
 local function place_tile_as_script(event)
     local surface = game.surfaces[event.surface_index]
-    local valid = util.surface_is_valid(surface)
+    local valid = canex_util.surface_is_valid(surface)
     local radius = prototypes.entity["canex-excavator"].mining_drill_radius - 1
     local shown_error = false
 
@@ -142,12 +142,12 @@ local function place_tile_as_script(event)
             if not valid then
                 undo_set_tile(surface, tile, item_name)
                 if not shown_error then
-                    util.show_error({"story.canex-invalid-surface"}, surface, {tile.position.x + 0.65, tile.position.y + 0.40})
+                    canex_util.show_error({"story.canex-invalid-surface"}, surface, {tile.position.x + 0.65, tile.position.y + 0.40})
                     shown_error = true
                 end
             elseif is_dug then
                 undo_set_tile(surface, tile, item_name)
-                util.show_error({"story.canex-already-dug"}, surface, {tile.position.x + 0.65, tile.position.y + 0.40})
+                canex_util.show_error({"story.canex-already-dug"}, surface, {tile.position.x + 0.65, tile.position.y + 0.40})
             else
                 local ore = ore_manager.create_ore(surface, position)
                 if ore == nil then
@@ -206,7 +206,7 @@ end
 ---@param event EventData.on_player_built_tile
 local function place_tile_as_player(event)
     local surface = game.surfaces[event.surface_index]
-    local valid = util.surface_is_valid(surface)
+    local valid = canex_util.surface_is_valid(surface)
     local player = game.players[event.player_index]
     local radius = prototypes.entity["canex-excavator"].mining_drill_radius - 1
     local shown_error = false
@@ -216,15 +216,15 @@ local function place_tile_as_player(event)
         if not valid then
             player_undo_set_tile(player, surface, lua_tile)
             if not shown_error then
-                util.show_error({"story.canex-invalid-surface"}, surface, {tile.position.x + 0.65, tile.position.y + 0.40})
+                canex_util.show_error({"story.canex-invalid-surface"}, surface, {tile.position.x + 0.65, tile.position.y + 0.40})
                 shown_error = true
             end
-        elseif util.is_position_landfilled(surface, tile.position) then
+        elseif canex_util.is_position_landfilled(surface, tile.position) then
             player_undo_set_tile(player, surface, lua_tile)
-            util.show_error({"story.canex-not-on-landfill"}, surface, {tile.position.x + 0.65, tile.position.y + 0.40})
+            canex_util.show_error({"story.canex-not-on-landfill"}, surface, {tile.position.x + 0.65, tile.position.y + 0.40})
         elseif dig_manager.is_dug(surface, tile.position) then
             player_undo_set_tile(player, surface, lua_tile)
-            util.show_error({"story.canex-already-dug"}, surface, {tile.position.x + 0.65, tile.position.y + 0.40})
+            canex_util.show_error({"story.canex-already-dug"}, surface, {tile.position.x + 0.65, tile.position.y + 0.40})
         else
             local position = tile.position --[[@as MapPosition]]
             local ore = ore_manager.create_ore(surface, position)

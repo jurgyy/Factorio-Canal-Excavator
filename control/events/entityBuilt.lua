@@ -1,7 +1,7 @@
 local dig_manager = require("control.digManager")
 local ore_manager = require("control.oreManager")
 local digableTileName = require("prototypes.getTileNames").digable
-local util = require("util")
+local canex_util = require("canex-util")
 
 local function is_excavator(entity)
   return entity.name == "canex-excavator"
@@ -66,25 +66,25 @@ end
 local function handle_ghost_digable_tile(event)
   local entity = event.entity
   local surface = entity.surface
-  local valid = util.surface_is_valid(surface)
+  local valid = canex_util.surface_is_valid(surface)
   local undone = false
   local position = entity.position
 
   if not valid then
-    util.show_error({"story.canex-invalid-surface"}, surface, {entity.position.x + 0.65, entity.position.y + 0.40})
+    canex_util.show_error({"story.canex-invalid-surface"}, surface, {entity.position.x + 0.65, entity.position.y + 0.40})
     remove_ghosts_tiles_at_entity(surface, entity)
     undone = true
   else
-    if util.is_position_landfilled(surface, entity.position) then
-      util.show_error({"story.canex-not-on-landfill"}, surface, {entity.position.x + 0.65, entity.position.y + 0.40})
+    if canex_util.is_position_landfilled(surface, entity.position) then
+      canex_util.show_error({"story.canex-not-on-landfill"}, surface, {entity.position.x + 0.65, entity.position.y + 0.40})
       entity.destroy()
       undone = true
     elseif is_on_ghost_landfill(surface, entity) then
-      util.show_error({"story.canex-not-in-water"}, surface, {entity.position.x + 0.65, entity.position.y + 0.40})
+      canex_util.show_error({"story.canex-not-in-water"}, surface, {entity.position.x + 0.65, entity.position.y + 0.40})
       remove_ghosts_tiles_at_entity(surface, entity)
       undone = true
     elseif dig_manager.is_dug(entity.surface, entity.position) then
-      util.show_error({"story.canex-already-dug"}, surface, {entity.position.x + 0.65, entity.position.y + 0.40})
+      canex_util.show_error({"story.canex-already-dug"}, surface, {entity.position.x + 0.65, entity.position.y + 0.40})
       entity.destroy()
       undone = true
     elseif event.player_index and settings.get_player_settings(event.player_index)["auto-deconstruct"].value then
