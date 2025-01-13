@@ -1,3 +1,5 @@
+[![Release](https://github.com/jurgyy/Factorio-Canal-Excavator/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/jurgyy/Factorio-Canal-Excavator/actions/workflows/release.yml)
+
 # Canal Excavator Mod
 The Canal Excavator Mod is a mod for the game Factorio. This mod introduces a way for players to dig canals. Contrary to previous water mods, the canal excavator mod can only create water nearby other bodies of water. Bringing water to a desert will be a large undertaking.
 
