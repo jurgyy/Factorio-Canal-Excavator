@@ -3,7 +3,7 @@ return
     type = "tile",
     name = "canex-digable",
     order = "e[canal][digable]",
-    collision_mask = {layers = {ground_tile = true}},
+    collision_mask = {layers = {ground_tile = true, cliff = true}},
     layer = 100,
     variants = data.raw.tile["dirt-5"].variants,
     transitions = data.raw.tile["dirt-5"].transitions,

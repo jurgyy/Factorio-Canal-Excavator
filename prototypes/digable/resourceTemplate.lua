@@ -10,6 +10,8 @@ local template = {
     highlight = false,
     minimum = 0,
     normal = 1,
+    collision_mask = {layers = {ground_tile = true}},
+    cliff_removal_probability = 0,
     walking_sound = sound_variations("__base__/sound/walking/resources/ore", 10, 0.7)[1],
     minable =
     {
