@@ -27,13 +27,23 @@ local template = {
     map_color = { r = 0.181, g = 0.104, b = 0.075},
     mining_visualisation_tint = {r = 0.490, g = 0.304, b = 0.5245, a = 1.000},
 
-    stages = table.deepcopy(data.raw.resource["stone"].stages),
+    stages =
+    {
+      sheet =
+      {
+        filename = "__canal-excavator-graphics__/graphics/resource.png",
+        priority = "extra-high",
+        size = 128,
+        frame_count = 8,
+        variation_count = 8,
+        scale = 0.5
+      }
+    },
     stage_counts = data.raw.resource["stone"].stage_counts,
 }
 
 local tint = { r = 0.1, g = 0.1, b = 0.1, a = 0.5 }
 template.stages.sheet.tint = tint
-template.stages.sheet.filename = "__canal-excavator-graphics__/graphics/resource.png"
 
 template.icons = {{
   icon = "__canal-excavator-graphics__/graphics/icons/resource.png"
