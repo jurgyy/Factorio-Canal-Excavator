@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.3.4
+Date: 2025-05-06
+  Bugfixes:
+    - Fixed bug introduced in previous patch where construction robots were not being able to mine excavatable tiles.
+---------------------------------------------------------------------------------------------------
 Version: 1.3.3
 Date: 2025-05-03
   Bugfixes:
