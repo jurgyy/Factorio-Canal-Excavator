@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.4.0
+Date: 2025-07-20
+  Features:
+    - Moved graphics definition from main mod to graphics mod.
+    - Simplified the modding interface from using hidden settings to the new mod_data prototypes.
+---------------------------------------------------------------------------------------------------
 Version: 1.3.5
 Date: 2025-05-10
   Bugfixes:
