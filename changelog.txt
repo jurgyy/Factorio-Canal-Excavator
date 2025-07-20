@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.3.5
+Date: 2025-05-10
+  Bugfixes:
+    - Fixed startup crash with Factorio HD Age due to modified base game resource prototype
+---------------------------------------------------------------------------------------------------
 Version: 1.3.4
 Date: 2025-05-06
   Bugfixes:
