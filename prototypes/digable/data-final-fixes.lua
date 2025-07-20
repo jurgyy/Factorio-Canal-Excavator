@@ -1,7 +1,5 @@
-local planet_registrar = require("global.planetConfigRegistrar")
-
-planet_registrar.load_configs_from_settings()
-local configs = planet_registrar.get_all_planets_config()
+local planet_config_helper = require("global.planetConfigHelper")
+local configs = planet_config_helper.get_all_planets_config()
 
 local template = require("prototypes.digable.resourceTemplate")
 

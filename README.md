@@ -45,22 +45,5 @@ This mod should be compatible with most other mods since it only adds new object
 If you do encounter any issue, due to mod compatibility or otherwise, please open an issue [on the Github page](https://github.com/jurgyy/Factorio-Canal-Excavator/issues) or if you don't have Github account or if you have a suggestion for new features and such, please open a thread [on the mod's discussion page](https://mods.factorio.com/mod/canal-excavator/discussion). Want to help translating, please open a pull request with the added locale files.
 
 ## Modding Interface
-This mod has an interface modders can use to modify the configuration of existing planets or add support for their new planets.
-
-**Supporting a new planet**
-
-Adding support for a new planet:
-
-1. Anywhere in your mod folder create a new file that returns a [`table<string, CanexPlanetConfig>`](https://github.com/jurgyy/Factorio-Canal-Excavator/blob/master/settings/vanillaPlanetConfig.lua#L3) table where the keys are the `PlanetPrototype.name` of your planet(s). The file will be loaded both during the `data-final-fixes` stage as well as at the start of my `control` script in the runtime stage.
-2. In your `settings-update.lua` or `settings-final-fixes.lua` file call the following function: `canex_settings_register_config_file("your_mod_name", "path.to.the.config.file")`
-
-And that's it. No need to add a mod dependency or anything.
-
-I use this interface to register the vanilla planets as well. You can look at [the implementation of this](https://github.com/jurgyy/Factorio-Canal-Excavator/blob/master/settings/registerVanillaPlanetConfig.lua) to get an example if it isn't entirely clear yet.
-
-**Modifying config of existing planets**
-
-If you want to modify the config of an existing planet. For instance, you want to change the mining result on Nauvis from stone to iron ore, you can do the same as above, but instead return [`table<string, CanexPlanetOverwriteConfig>`](https://github.com/jurgyy/Factorio-Canal-Excavator/blob/master/settings/vanillaPlanetConfig.lua#L9) but make sure your mod gets loaded after mine (or if you want to modify a third party planet, load after that mod) but setting an (optional) mod dependency on it.
-
-Do you add a planet _and_ modify another planet, you can of course return a mix of the two config types: `table<string, CanexPlanetConfig|CanexPlanetOverwriteConfig>`.
+Planets aren't excavatable by default. To add support for a new planet simple add a register a `mod_data` prototype with the structure of [`CanexPlanetConfigModData`](https://github.com/jurgyy/Factorio-Canal-Excavator/blob/master/global/planetConfigHelper.lua) somewhere in the data, or data-updates stage. Modifying or removing configuration of existing planets works similar, just by modifying the objects in `data.raw["mod-data"]`. Need an example? You can find [my configuration of the vanilla planets here](https://github.com/jurgyy/Factorio-Canal-Excavator/blob/master/prototypes/planetConfig.lua).
 

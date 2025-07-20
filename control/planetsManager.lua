@@ -1,7 +1,6 @@
-local planet_registrar = require("global.planetConfigRegistrar")
-planet_registrar.load_configs_from_settings()
+local planet_config_helper = require("global.planetConfigHelper")
 
-local planetConfigs = planet_registrar.get_all_planets_config()
+local planetConfigs = planet_config_helper.get_all_planets_config()
 
 ---@type CanexPlanetConfig
 local defaultConfig = nil
@@ -85,7 +84,7 @@ planetsManager.get_planet_config_name = function(surface)
             end
         end
     end
-    
+
     error("No default planet configured")
 end
 
