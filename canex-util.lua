@@ -78,6 +78,7 @@ function util.canalDebug(command)
             game.player.create_local_flying_text{text = {"story.canex-dug", tick - game.tick}, position = position, speed = 0, time_to_live = 300}
         end
     end
+    game.print("resources: " .. helpers.table_to_json(storage.resources))
 end
 
 

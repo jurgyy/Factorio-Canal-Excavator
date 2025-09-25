@@ -45,6 +45,7 @@ commands.add_command("canex-transition-dug", {"command.canex-transition-dug"}, d
 commands.add_command("canex-reset-partially-dug", {"command.canex-reset-partially-dug"}, ore_manager.clear_stored_ore_amount)
 commands.add_command("canex-debug", {"command.canex-debug"}, canex_util.canalDebug)
 commands.add_command("canex-show-planet-config", {"command.canex-show-planet-config"}, planet_config_helper.dump_planet_config )
+commands.add_command("canex-remove-floating-resources", {"commands.canax-remove-floating"}, ore_manager.remove_floating)
 
 script.on_event(defines.events.on_resource_depleted, dig_manager.resource_depleted_event)
 

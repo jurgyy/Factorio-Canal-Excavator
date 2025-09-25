@@ -1,5 +1,6 @@
 local flib_bounding_box = require("__flib__/bounding-box")
 local planets_manager = require("control.planetsManager")
+local digableTileName = require("prototypes.getTileNames").digable
 
 local ore_manager = {}
 
@@ -102,6 +103,26 @@ end
 function ore_manager.delete_ore(entity)
   if entity.valid then
     entity.destroy()
+  end
+end
+
+function ore_manager.remove_floating()
+  for uid, entity in pairs(storage.resources) do
+    if entity and entity.valid then
+      local surface = entity.surface
+      local tile = surface.get_tile(entity.position.x, entity.position.y)
+      if tile.name ~= digableTileName then
+        storage.resources[uid] = nil
+        local remaining_surface = storage.remaining_ore[surface.index]
+        if remaining_surface then
+          local remaining_x = remaining_surface[entity.position.x]
+          if remaining_x then
+            remaining_x[entity.position.y] = nil
+          end
+        end
+        entity.destroy()
+      end
+    end
   end
 end
 
