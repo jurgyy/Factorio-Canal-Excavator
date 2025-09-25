@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.5.0
+Date: 2025-09-25
+  Bugfixes:
+    - Fixed crash on startup when Space Exploration is installed.
+  Features:
+    - [Known Issue] Space Exploration automatically removes the "Digable" tiles on space surfaces like asteroids without notifying my mod which means I can't remove the ores that are placed with them. If you ever encounter this issue use the new console command /canex-remove-floating-resources which should remove them.
+    - Moved Excavator tech earlier in the tech tree when Space Exploration is installed. It is now behind Big Electrical Engines and Concret and requires Chemical Science instead of Rocket Science.
+---------------------------------------------------------------------------------------------------
 Version: 1.4.0
 Date: 2025-07-20
   Features:
