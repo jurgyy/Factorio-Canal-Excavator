@@ -28,14 +28,13 @@ local tech = {
 }
 
 if mods["space-exploration"] then
-    tech.prerequisites = { "se-rocket-science-pack" }
+    tech.prerequisites = { "electric-engine", "concrete" }
     tech.unit = {
-        count = 150,
+        count = 200,
         ingredients = {
             {"automation-science-pack", 1},
             {"logistic-science-pack", 1},
             {"chemical-science-pack", 1},
-            {"se-rocket-science-pack", 1}
         },
         time = 30
     }
