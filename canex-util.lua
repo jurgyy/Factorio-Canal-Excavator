@@ -86,9 +86,6 @@ end
 ---@param surface LuaSurface
 ---@return boolean
 function util.surface_is_valid(surface)
-    if not script.active_mods["space-age"] then
-        return true
-    end
     return planets_manager.is_surface_configured(surface)
 end
 
