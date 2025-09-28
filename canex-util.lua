@@ -1,5 +1,5 @@
 local flib_bounding_box = require("__flib__/bounding-box")
-local planets_manager = require("control.planetsManager")
+local surfaces_manager = require("control.surfacesManager")
 
 local util = {}
 
@@ -82,11 +82,11 @@ function util.canalDebug(command)
 end
 
 
----Is the surface on a configured planet? Returns true if space age isn't installed
+---Is the surface configured? Returns true if space age isn't installed
 ---@param surface LuaSurface
 ---@return boolean
 function util.surface_is_valid(surface)
-    return planets_manager.is_surface_configured(surface)
+    return surfaces_manager.is_surface_configured(surface)
 end
 
 ---Draw text

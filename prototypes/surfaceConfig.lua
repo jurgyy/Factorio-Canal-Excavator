@@ -1,19 +1,19 @@
-local planet_config_helper = require("global.planetConfigHelper")
+local surface_config_helper = require("global.surfaceConfigHelper")
 
----@param planetName string PlanetPrototype.name
----@param config CanexPlanetConfig
----@return CanexPlanetConfigModData
-local function create_planet_mod_data(planetName, config)
+---@param config CanexSurfaceConfig
+---@return CanexSurfaceConfigModData
+local function create_surface_mod_data(config)
   return {
     type = "mod-data",
-    name = planet_config_helper.get_mod_data_name(planetName),
-    data_type = "canex-planet-config",
+    name = surface_config_helper.get_mod_data_name(config.surfaceName),
+    data_type = "canex-surface-config",
     data = config
-  } --[[@as CanexPlanetConfigModData]]
+  } --[[@as CanexSurfaceConfigModData]]
 end
 
 data:extend{
-  create_planet_mod_data("nauvis", {
+  create_surface_mod_data({
+        surfaceName = "nauvis",
         mineResult = "stone",
         oreStartingAmount = 10,
         tint = {r = 102, g = 78, b = 6},
@@ -23,22 +23,26 @@ data:extend{
 
 if mods["space-age"] then
   data:extend{
-    create_planet_mod_data("vulcanus", {
+    create_surface_mod_data({
+        surfaceName = "vulcanus",
         mineResult = "stone",
         oreStartingAmount = 40,
         tint = {r = 120, g = 120, b = 120}
     }),
-    create_planet_mod_data("fulgora", {
+    create_surface_mod_data({
+        surfaceName = "fulgora",
         mineResult = "scrap",
         oreStartingAmount = 10,
         tint = {r = 173, g = 94, b = 72}
     }),
-    create_planet_mod_data("gleba", {
+    create_surface_mod_data({
+        surfaceName = "gleba",
         mineResult = "spoilage",
         oreStartingAmount = 50,
         tint = {r = 186, g = 196, b = 149}
     }),
-    create_planet_mod_data("aquilo", {
+    create_surface_mod_data({
+        surfaceName = "aquilo",
         mineResult = "ice",
         oreStartingAmount = 50,
         tint = {r = 159, g = 193, b = 222}

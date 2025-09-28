@@ -1,4 +1,4 @@
-require("prototypes.planetConfig")
+require("prototypes.surfaceConfig")
 
 require("prototypes.excavator.data")
 require("prototypes.digable.data")
