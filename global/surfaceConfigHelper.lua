@@ -51,14 +51,6 @@ local function get_all_surface_config()
       -- resource_names[prototype.data.surfaceName] = "canex-rsc-digable-" .. prototype.data.surfaceName
     end
   end
-
-  if storage and storage.runtime_surface_config then
-    for surfaceName, surface_template in pairs(storage.runtime_surface_config) do
-      ---@cast surface_template CanexSurfaceTemplate
-      -- resource_names[surfaceName] = "canex-rsc-digable-" .. surface_template.name
-    end
-  end
-
   return surface_config_cache
 end
 
