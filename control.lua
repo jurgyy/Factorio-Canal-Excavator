@@ -1,5 +1,7 @@
 local dig_manager = require("control.digManager")
 local ore_manager = require("control.oreManager")
+local surface_manager = require("control.surfacesManager")
+
 local surface_config_helper = require("global.surfaceConfigHelper")
 
 local canex_util = require("canex-util")
@@ -39,7 +41,41 @@ script.on_init(function()
   storage.remaining_ore = {} --[[@as table<surfaceIndex, table<xPosition, table<yPosition, integer>>>]]
   -- List of all placed resources. Indexed by the entity's on_object_destroyed registration_number
   storage.resources = {}     --[[@as table<registrationNumber, LuaEntity>]]
+
+  storage.runtime_surface_config = {} --[[@as table<string, CanexSurfaceTemplate>]]
 end)
+
+script.on_load(function()
+  surface_manager.load_stored_config()
+end)
+
+if script.active_mods["space-exploration"] then
+  ---@param event EventData.on_surface_created
+  local function se_runtime_add_surface_event(event)
+    local surface = game.surfaces[event.surface_index]
+    local zone = remote.call("space-exploration", "get_zone_from_name", {zone_name = surface.name})
+
+    ---@diagnostic disable: undefined-field
+    if not zone or not zone.tags then return end
+    local tags = zone.tags
+    if not tags["water"] or tags["water"] == "water_none" then return end
+
+    local primary_resource = zone.primary_resourcewd
+    ---@diagnostic enable: undefined-field
+
+    if tags["temperature"] and tags["temperature"] == "temperature_frozen" then
+      surface_manager.add_surface_config(surface.name, "canex-se-ice-template")
+      return
+    end
+    if primary_resource == "se-vitamelange" then
+      surface_manager.add_surface_config(surface.name, "canex-se-vitamelange-template")
+      return
+    end
+    surface_manager.add_surface_config(surface.name, "canex-se-stone-template")
+  end
+
+  script.on_event(defines.events.on_surface_created, se_runtime_add_surface_event)
+end
 
 commands.add_command("canex-transition-dug", {"command.canex-transition-dug"}, dig_manager.transition_dug)
 commands.add_command("canex-reset-partially-dug", {"command.canex-reset-partially-dug"}, ore_manager.clear_stored_ore_amount)

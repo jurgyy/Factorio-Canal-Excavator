@@ -79,6 +79,8 @@ function util.canalDebug(command)
         end
     end
     game.print("resources: " .. helpers.table_to_json(storage.resources))
+
+    game.print("Storage configs: " .. helpers.table_to_json(storage.runtime_surface_config))
 end
 
 

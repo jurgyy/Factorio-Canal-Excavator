@@ -13,11 +13,12 @@ end
 
 data:extend{
   create_surface_mod_data({
-        surfaceName = "nauvis",
-        mineResult = "stone",
-        oreStartingAmount = 10,
-        tint = {r = 102, g = 78, b = 6},
-        isDefault = true
+    surfaceName = "nauvis",
+    localisation = {"space-location-name.nauvis"},
+    mineResult = "stone",
+    oreStartingAmount = 10,
+    tint = {r = 102, g = 78, b = 6},
+    isDefault = true
   })
 }
 
@@ -48,4 +49,8 @@ if mods["space-age"] then
         tint = {r = 159, g = 193, b = 222}
     })
   }
+end
+
+if mods["space-exploration"] then
+  require("prototypes.compatability.space-exploration")
 end

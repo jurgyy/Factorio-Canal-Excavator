@@ -6,9 +6,9 @@ local ore_manager = {}
 
 ---Get the name of the resource entity that should be placed on a given surface
 ---@param surface LuaSurface
----@return string resource_entity_name
+---@return string? resource_entity_name
 local function get_resource_entity_name(surface)
-  return "canex-rsc-digable-" .. surface.name
+  return surfaces_manager.resource_names[surface.name]
 end
 
 ---@param resource_name string Name of a resource entity

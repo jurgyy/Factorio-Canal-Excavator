@@ -6,20 +6,63 @@
 ---@field data_type "canex-surface-config"
 ---@field data CanexSurfaceConfig
 
----@class CanexSurfaceConfig
----@field surfaceName string
+---@class CanexConfigBase
+---@field localisation LocalisedString? Localised name to use for the resource: "Excavatable resource {localisation}". Expected to be lower case except for proper nouns.
 ---@field mineResult string Mine result item
----@field isDefault boolean? Fallback config for surfaces without a planet. Only one config can be the default TODO still required?
 ---@field oreStartingAmount integer Amount of ore that should be placed when placing a excavatable tile
 ---@field tint Color Tint for the dust, rocks and resource
 
+---@class CanexSurfaceConfig : CanexConfigBase
+---@field surfaceName string
+---@field isDefault boolean? Fallback config for surfaces without a planet. Only one config can be the default TODO still required?
 
-local surfaceConfigHelper = {}
+---@class CanexSurfaceTemplateModData : data.ModData
+---@field data_type "canex-surface-template"
+---@field data CanexSurfaceTemplate
+
+---@class LuaCanexSurfaceTemplateModData : LuaModData
+---@field data_type "canex-surface-template"
+---@field data CanexSurfaceTemplate
+
+---@class CanexSurfaceTemplate : CanexConfigBase
+---@field icon table?
+---@field name string name of the parent object. Will be set in Canex data-final-fixes.
+
+
 
 ---@type table<string, CanexSurfaceConfig>
 local surface_config_cache = {}
-local all_cached = false
-local surface_config_data_type = "canex-surface-config"
+
+local surfaceConfigHelper = {}
+surfaceConfigHelper.surface_config_data_type = "canex-surface-config"
+surfaceConfigHelper.surface_template_data_type = "canex-surface-template"
+
+local function get_all_surface_config()
+  local iterator = nil
+  if script then
+    iterator = prototypes.mod_data
+  else
+    iterator = data.raw["mod-data"]
+  end
+
+  for _, prototype in pairs(iterator) do
+    if prototype.data_type == surfaceConfigHelper.surface_config_data_type then
+      surface_config_cache[prototype.data.surfaceName] = prototype.data
+      -- resource_names[prototype.data.surfaceName] = "canex-rsc-digable-" .. prototype.data.surfaceName
+    end
+  end
+
+  if storage and storage.runtime_surface_config then
+    for surfaceName, surface_template in pairs(storage.runtime_surface_config) do
+      ---@cast surface_template CanexSurfaceTemplate
+      -- resource_names[surfaceName] = "canex-rsc-digable-" .. surface_template.name
+    end
+  end
+
+  return surface_config_cache
+end
+
+get_all_surface_config()
 
 ---@param surfaceName string SurfacePrototype.name
 ---@return string mod_data_name
@@ -46,7 +89,7 @@ surfaceConfigHelper.get_mod_data = function(surfaceName)
   end
 
   if not mod_data then return nil end
-  if mod_data.data_type ~= surface_config_data_type then error("Retrieved mod_data object of unexpected type: " .. mod_data.data_type) end
+  if mod_data.data_type ~= surfaceConfigHelper.surface_config_data_type then error("Retrieved mod_data object of unexpected type: " .. mod_data.data_type) end
 
   surface_config_cache[surfaceName] = mod_data.data
   return mod_data.data
@@ -67,7 +110,7 @@ surfaceConfigHelper.get_all_surface_config = function()
   end
 
   for _, prototype in pairs(iterator) do
-    if prototype.data_type == surface_config_data_type then
+    if prototype.data_type == surfaceConfigHelper.surface_config_data_type then
       surface_config_cache[prototype.data.surfaceName] = prototype.data
     end
   end
