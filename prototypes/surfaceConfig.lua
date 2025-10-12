@@ -50,7 +50,3 @@ if mods["space-age"] then
     })
   }
 end
-
-if mods["space-exploration"] then
-  require("prototypes.compatability.space-exploration")
-end

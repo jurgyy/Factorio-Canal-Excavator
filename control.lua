@@ -10,7 +10,9 @@ local entity_built = require("control.events.entityBuilt")
 local place_tile_events = require("control.events.placeTileEvent")
 local tile_mined_event = require("control.events.tileMinedEvent")
 local entity_destroyed_event = require("control.events.entityDestroyedEvent")
+local surface_created_event = require("control.events.surfaceCreatedEvent")
 local surface_deleted_event = require("control.events.surfaceDeletedEvent")
+local pre_surface_deleted_event = require("control.events.preSurfaceDeletedEvent")
 
 -- Place markers to mark where to dig
 -- Place excavators to dig the area
@@ -49,34 +51,6 @@ script.on_load(function()
   surface_manager.load_stored_config()
 end)
 
-if script.active_mods["space-exploration"] then
-  ---@param event EventData.on_surface_created
-  local function se_runtime_add_surface_event(event)
-    local surface = game.surfaces[event.surface_index]
-    local zone = remote.call("space-exploration", "get_zone_from_name", {zone_name = surface.name})
-
-    ---@diagnostic disable: undefined-field
-    if not zone or not zone.tags then return end
-    local tags = zone.tags
-    if not tags["water"] or tags["water"] == "water_none" then return end
-
-    local primary_resource = zone.primary_resourcewd
-    ---@diagnostic enable: undefined-field
-
-    if tags["temperature"] and tags["temperature"] == "temperature_frozen" then
-      surface_manager.add_surface_config(surface.name, "canex-se-ice-template")
-      return
-    end
-    if primary_resource == "se-vitamelange" then
-      surface_manager.add_surface_config(surface.name, "canex-se-vitamelange-template")
-      return
-    end
-    surface_manager.add_surface_config(surface.name, "canex-se-stone-template")
-  end
-
-  script.on_event(defines.events.on_surface_created, se_runtime_add_surface_event)
-end
-
 commands.add_command("canex-transition-dug", {"command.canex-transition-dug"}, dig_manager.transition_dug)
 commands.add_command("canex-reset-partially-dug", {"command.canex-reset-partially-dug"}, ore_manager.clear_stored_ore_amount)
 commands.add_command("canex-debug", {"command.canex-debug"}, canex_util.canalDebug)
@@ -98,7 +72,8 @@ script.on_event(defines.events.script_raised_built, entity_built.event, entity_b
 script.on_event(defines.events.script_raised_revive, entity_built.event, entity_built.filter)
 
 script.on_event(defines.events.on_object_destroyed, entity_destroyed_event)
+script.on_event(defines.events.on_surface_created, surface_created_event)
 script.on_event(defines.events.on_surface_deleted, surface_deleted_event)
+script.on_event(defines.events.on_pre_surface_deleted, pre_surface_deleted_event)
 
 script.on_nth_tick(dig_manager.check_interval, dig_manager.periodic_check_dug_event)
-

@@ -44,14 +44,15 @@ surfacesManager.get_surface_config = function(surface)
   return surfaceConfigs[name]
 end
 
----@param surfaceName string SurfacePrototype.name
+---@param surface LuaSurface
 ---@param surfaceTemplateName string CanexSurfaceTemplate.name
-surfacesManager.add_surface_config = function(surfaceName, surfaceTemplateName)
+surfacesManager.add_surface_config = function(surface, surfaceTemplateName)
   if not storage.runtime_surface_config then
     storage.runtime_surface_config = {}
   end
+  local surfaceName = surface.name
   if storage.runtime_surface_config[surfaceName] then
-    error("Surface " .. surfaceName .. " already configured")
+    error("Surface " .. surface.name .. " already configured")
   end
   local mod_data = prototypes.mod_data[surfaceTemplateName]
   if not mod_data then

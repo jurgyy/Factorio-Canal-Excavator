@@ -8,7 +8,7 @@ local icon = {
 }
 
 data:extend({
-  -- Example for a "fixed" zone:
+  ---- Example for a surface with a fixed configuration:
   -- {
   --   type = "mod-data",
   --   name = "canex-se-glacier-config",
@@ -21,7 +21,7 @@ data:extend({
   --     tint = {r = 159, g = 193, b = 222}
   --   }
   -- },
-  -- Any Vitamelange zone:
+  -- Or a template that can be used by multiple surfaces, but that requires compatabillity scripting:
   {
     type = "mod-data",
     name = "canex-se-vitamelange-template",
