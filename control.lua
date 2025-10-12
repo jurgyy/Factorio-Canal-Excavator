@@ -1,6 +1,8 @@
 local dig_manager = require("control.digManager")
 local ore_manager = require("control.oreManager")
-local planet_config_helper = require("global.planetConfigHelper")
+local surface_manager = require("control.surfacesManager")
+
+local surface_config_helper = require("global.surfaceConfigHelper")
 
 local canex_util = require("canex-util")
 
@@ -8,7 +10,9 @@ local entity_built = require("control.events.entityBuilt")
 local place_tile_events = require("control.events.placeTileEvent")
 local tile_mined_event = require("control.events.tileMinedEvent")
 local entity_destroyed_event = require("control.events.entityDestroyedEvent")
+local surface_created_event = require("control.events.surfaceCreatedEvent")
 local surface_deleted_event = require("control.events.surfaceDeletedEvent")
+local pre_surface_deleted_event = require("control.events.preSurfaceDeletedEvent")
 
 -- Place markers to mark where to dig
 -- Place excavators to dig the area
@@ -39,12 +43,18 @@ script.on_init(function()
   storage.remaining_ore = {} --[[@as table<surfaceIndex, table<xPosition, table<yPosition, integer>>>]]
   -- List of all placed resources. Indexed by the entity's on_object_destroyed registration_number
   storage.resources = {}     --[[@as table<registrationNumber, LuaEntity>]]
+
+  storage.runtime_surface_config = {} --[[@as table<string, CanexSurfaceTemplate>]]
+end)
+
+script.on_load(function()
+  surface_manager.load_stored_config()
 end)
 
 commands.add_command("canex-transition-dug", {"command.canex-transition-dug"}, dig_manager.transition_dug)
 commands.add_command("canex-reset-partially-dug", {"command.canex-reset-partially-dug"}, ore_manager.clear_stored_ore_amount)
 commands.add_command("canex-debug", {"command.canex-debug"}, canex_util.canalDebug)
-commands.add_command("canex-show-planet-config", {"command.canex-show-planet-config"}, planet_config_helper.dump_planet_config )
+commands.add_command("canex-show-surface-config", {"command.canex-show-surface-config"}, surface_config_helper.dump_surface_config )
 commands.add_command("canex-remove-floating-resources", {"commands.canax-remove-floating"}, ore_manager.remove_floating)
 
 script.on_event(defines.events.on_resource_depleted, dig_manager.resource_depleted_event)
@@ -62,7 +72,8 @@ script.on_event(defines.events.script_raised_built, entity_built.event, entity_b
 script.on_event(defines.events.script_raised_revive, entity_built.event, entity_built.filter)
 
 script.on_event(defines.events.on_object_destroyed, entity_destroyed_event)
+script.on_event(defines.events.on_surface_created, surface_created_event)
 script.on_event(defines.events.on_surface_deleted, surface_deleted_event)
+script.on_event(defines.events.on_pre_surface_deleted, pre_surface_deleted_event)
 
 script.on_nth_tick(dig_manager.check_interval, dig_manager.periodic_check_dug_event)
-
