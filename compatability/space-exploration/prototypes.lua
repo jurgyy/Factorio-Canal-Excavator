@@ -11,17 +11,18 @@ data:extend({
   ---- Example for a surface with a fixed configuration:
   -- {
   --   type = "mod-data",
-  --   name = "canex-se-glacier-config",
+  --   name = "canex-se-hermes-config",
   --   data_type = "canex-surface-config",
   --   data = {
-  --     surfaceName = "Glacier",
-  --     localisation = "Glacier",
+  --     surfaceName = "Hermes",
+  --     localisation = "Hermes",
   --     mineResult = "se-water-ice",
   --     oreStartingAmount = 50,
   --     tint = {r = 159, g = 193, b = 222}
   --   }
   -- },
-  -- Or a template that can be used by multiple surfaces, but that requires compatabillity scripting:
+  ---- Or templates that can be used by multiple surfaces, but that requires compatabillity scripting.
+  ---- See compatability/space-exploration/control.lua
   {
     type = "mod-data",
     name = "canex-se-vitamelange-template",
