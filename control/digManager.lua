@@ -72,21 +72,19 @@ end
 ---@param surface LuaSurface
 ---@param position MapPosition
 local function set_dug(surface, position)
-  if storage.dug[surface.index] == nil then
-    storage.dug[surface.index] = {}
-  end
- 
-  local xfloor = math.floor(position.x)
-  local yfloor = math.floor(position.y)
-  if storage.dug[surface.index][xfloor] == nil then
-    storage.dug[surface.index][xfloor] = {}
-  end
+    if storage.dug[surface.index] == nil then
+        storage.dug[surface.index] = {}
+    end
 
-  storage.dug[surface.index][xfloor][yfloor] = true
+    local xfloor = math.floor(position.x)
+    local yfloor = math.floor(position.y)
+    if storage.dug[surface.index][xfloor] == nil then
+        storage.dug[surface.index][xfloor] = {}
+    end
 
-  surface.set_tiles({
-    {name=dug_tile_name, position={position.x, position.y}},
-  })
+    storage.dug[surface.index][xfloor][yfloor] = true
+
+    surface.set_tiles({{name=dug_tile_name, position=position}}, nil, nil, nil, true)
 end
 
 --- Find the nearest center tile position by checking in a spiral pattern that doesn't collide with the given entity
@@ -167,7 +165,7 @@ function dig_manager.set_water(surface, position, water_tile_name)
     if prototypes.tile[water_tile_name].collision_mask["layers"]["player"] then
         move_players(surface, flib_bounding_box.from_dimensions(position, 1.5, 1.5))
     end
-    surface.set_tiles({{name=water_tile_name, position=position}})
+    surface.set_tiles({{name=water_tile_name, position=position}}, nil, nil, nil, true)
 end
 
 --- Is the tile registered as dug
