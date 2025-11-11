@@ -125,7 +125,7 @@ local story_table =
 
         if fuel then
           for _, entity in pairs (surface.find_entities_filtered{area = {{-5.5, -3.5}, {5.5, 1.5}}, name="canex-excavator"}) do
-              entity.insert{name=fuel, count=1}
+            entity.insert{name=fuel, count=1}
           end
         end
         player.insert({name="canex-digable", count=70})

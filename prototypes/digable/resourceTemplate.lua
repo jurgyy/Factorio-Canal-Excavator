@@ -1,7 +1,8 @@
 local template = {
     type = "resource",
     name = "canex-rsc-digable-",
-    localised_name  = {"entity-name.canex-rsc-digable"},
+    localised_name = {"entity-name.canex-rsc-digable"},
+    localised_description = {"entity-description.canex-rsc-digable"},
     icon = "__canal-excavator-graphics__/graphics/icons/marker.png",
     icon_size = 32,
     flags = {"placeable-player", "player-creation", "not-repairable", "not-flammable"},
