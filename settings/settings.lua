@@ -1,5 +1,6 @@
 data:extend({
     {
+        -- Deprecated
         name = "no-tiles",
         type = "bool-setting",
         setting_type = "startup",
