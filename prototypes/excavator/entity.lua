@@ -103,6 +103,11 @@ local entity = {
       },
       rotate = false,
       orientation_to_variation = true
+    },
+    factoriopedia_simulation = {
+        mods = {"canal-excavator"},
+        game_view_settings = { default_show_value = false, update_entity_selection = true },
+        init_file = "__canal-excavator__/prototypes/tips-and-tricks/factoriopedia-sim-excavator.lua"
     }
 }
 

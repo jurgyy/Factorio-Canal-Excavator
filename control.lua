@@ -1,3 +1,4 @@
+require("control.remote")
 local dig_manager = require("control.digManager")
 local ore_manager = require("control.oreManager")
 local surface_manager = require("control.surfacesManager")

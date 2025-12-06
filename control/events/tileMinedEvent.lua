@@ -5,6 +5,7 @@ local surfaces_manager = require("control.surfacesManager")
 local digableTileName = require("prototypes.getTileNames").digable
 
 
+--- @param event EventData.on_player_mined_tile|EventData.on_robot_mined_tile
 local function tile_mined_event(event)
   local surface = game.surfaces[event.surface_index]
   if not canex_util.surface_is_valid(surface) then return end

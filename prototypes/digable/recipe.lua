@@ -11,5 +11,5 @@ return
         {type = "fluid", name = "water", amount = 25}
     },
     results = {{type ="item", name = "canex-digable", amount = 1}},
-    order = "c[landfill]-b[canal]",
+    order = "c[landfill]-b[canal]"
 }

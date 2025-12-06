@@ -1,4 +1,24 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.8.0
+Date: 2025-12-06
+  Features:
+    - Removed no-tiles setting since it wasn't needed anymore since 2.0. If you used it and you encounter any issues _don't_ save the game, roll back this mod and send me the save file. ([#10](https://github.com/jurgyy/Factorio-Canal-Excavator/issues/10))
+---------------------------------------------------------------------------------------------------
+Version: 1.7.0
+Date: 2025-11-11
+  Features:
+    - Added Factoriopedia simulations to the digable tiles and the excavator.
+---------------------------------------------------------------------------------------------------
+Version: 1.6.0
+Date: 2025-11-10
+  Features:
+    - Added tips and tricks simulations to show how to use the mod
+---------------------------------------------------------------------------------------------------
+Version: 1.5.1
+Date: 2025-10-28
+  Bugfixes:
+    - Now raises set_tile events when placing dug tiles and water
+---------------------------------------------------------------------------------------------------
 Version: 1.5.0
 Date: 2025-09-25
   Bugfixes:
