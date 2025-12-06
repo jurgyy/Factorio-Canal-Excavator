@@ -1,23 +1,23 @@
 local surface_config_helper = require("global.surfaceConfigHelper")
-local configs = surface_config_helper.get_all_surface_config()
+local surface_configs = surface_config_helper.get_all_surface_config()
 
 local resourceTemplate = require("prototypes.digable.resourceTemplate")
 
-for _, config in pairs(configs) do
-  log("Adding Canex config for surface " .. config.surfaceName)
+for _, surface_config in pairs(surface_configs) do
+  log("Adding Canex config for surface " .. surface_config.surfaceName)
 
   local resource = table.deepcopy(resourceTemplate)
-  resource.name = resource.name .. config.surfaceName
-  resource.minable.results[1].name = config.mineResult
-  resource.map_color = config.tint
-  resource.mining_visualisation_tint = config.tint
-  resource.stages.sheet.tint = config.tint
-  resource.icons[1].tint = config.tint
+  resource.name = resource.name .. surface_config.surfaceName
+  resource.minable.results[1].name = surface_config.mineResult
+  resource.map_color = surface_config.tint
+  resource.mining_visualisation_tint = surface_config.tint
+  resource.stages.sheet.tint = surface_config.tint
+  resource.icons[1].tint = surface_config.tint
 
   if mods["space-age"] then
-    local planet = data.raw["planet"][config.surfaceName]
+    local planet = data.raw["planet"][surface_config.surfaceName]
     if planet then
-      local planet_localisation = planet.localised_name or ("space-location-name." .. config.surfaceName)
+      local planet_localisation = planet.localised_name or ("space-location-name." .. surface_config.surfaceName)
       resource.localised_name = {"entity-name.canex-rsc-digable-surface", {planet_localisation}}
 
       resource.icons[2] = resource.icons[1]
@@ -33,8 +33,9 @@ for _, config in pairs(configs) do
     end
   end
 
-  if config.localisation then
-    resource.localised_name =  {"entity-name.canex-rsc-digable-surface", config.localisation}
+  if surface_config.localisation then
+    resource.localised_name =  {"entity-name.canex-rsc-digable-surface", {"entity-description.canex-on", surface_config.localisation}}
+    resource.localised_description = {"entity-description.canex-rsc-digable-surface", {"entity-description.canex-on", surface_config.localisation}}
   end
 
   data:extend({resource})
@@ -44,21 +45,22 @@ for name, mod_data in pairs(data.raw["mod-data"]) do
   if mod_data.data_type == surface_config_helper.surface_template_data_type then
     ---@cast mod_data CanexSurfaceTemplateModData
 
-    local config = mod_data.data
+    local template_config = mod_data.data
     -- config.name = mod_data.name
     data.raw["mod-data"][name].data.name = name
     local resource = table.deepcopy(resourceTemplate)
     resource.name = resource.name .. mod_data.name
-    if config.localisation then
-      resource.localised_name = {"entity-name.canex-rsc-digable-surface", config.localisation}
+    if template_config.localisation then
+      resource.localised_name = {"entity-name.canex-rsc-digable-surface", {"entity-description.canex-in", template_config.localisation}}
+      resource.localised_description = {"entity-description.canex-rsc-digable-surface", {"entity-description.canex-in", template_config.localisation}}
     end
-    resource.minable.results[1].name = config.mineResult
-    resource.map_color = config.tint
-    resource.mining_visualisation_tint = config.tint
-    resource.stages.sheet.tint = config.tint
-    resource.icons[1].tint = config.tint
+    resource.minable.results[1].name = template_config.mineResult
+    resource.map_color = template_config.tint
+    resource.mining_visualisation_tint = template_config.tint
+    resource.stages.sheet.tint = template_config.tint
+    resource.icons[1].tint = template_config.tint
 
-    local icon = config.icon
+    local icon = template_config.icon
     if icon then
       if (icon.type) then
         local prototype = data.raw[icon.type][icon.name]
