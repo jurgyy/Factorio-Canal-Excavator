@@ -1,9 +1,11 @@
 data:extend({
     {
+        -- Deprecated
         name = "no-tiles",
         type = "bool-setting",
         setting_type = "startup",
-        default_value = false
+        default_value = false,
+        hidden = true
     },
     {
         name = "auto-deconstruct",
