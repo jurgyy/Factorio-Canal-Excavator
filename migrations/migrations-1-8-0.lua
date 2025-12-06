@@ -7,7 +7,7 @@ local planetsManager = require("control.planetsManager")
 for _, surface in pairs(game.surfaces) do
   local tiles = surface.find_tiles_filtered{name="yellow-refined-concrete"}
   if not planetsManager.is_surface_configured(surface) then
-    log("Canal Excavator: Skipping migration on surface \"" .. surface.name .. "\" as its planet is not configured in Canal Excavator.")
+    log("Canal Excavator: Skipping 1.8 migration on surface \"" .. surface.name .. "\" as its planet is not configured in Canal Excavator.")
     goto continue
   end
 
@@ -29,8 +29,3 @@ for _, surface in pairs(game.surfaces) do
 
   ::continue::
 end
-
-game.print("Canal Excavator: Executed migration to remove the no-tiles setting.")
-game.print("Please check your excavators to see if all \"diggable\" and \"dug\" tiles are still as expected.")
-game.print("If you encounter any issues, please [font=default-bold]don't[/font] save your game, roll back Canal Excavator to version 1.7 and share your save file with the mod creator.")
-
