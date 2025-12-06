@@ -2,7 +2,7 @@ local remotes_manager = require("control.remoteManager")
 local surface_manager = require("control.surfacesManager")
 
 ---Ask all registered remotes for the created surface's CanexSurfaceTemplate.
----If one is found, add register it with the surface manager.
+---If one is found, register it with the surface manager.
 ---@param event EventData.on_surface_created
 local function surface_created_event(event)
   local surface = game.surfaces[event.surface_index]

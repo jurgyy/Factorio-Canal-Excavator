@@ -5,22 +5,31 @@ remote.add_interface("canal-excavator",
   ---@param surface LuaSurface
   ---@return string? CanexSurfaceTemplate.name?
   se_get_zone_template = function(surface)
+    -- SE specific implementation
     local zone = remote.call("space-exploration", "get_zone_from_name", {zone_name = surface.name})
 
     ---@diagnostic disable: undefined-field
+    -- No information about this zone
     if not zone or not zone.tags then return end
+
     local tags = zone.tags
+    -- No water, no excavation
     if not tags["water"] or tags["water"] == "water_none" then return end
 
     local primary_resource = zone.primary_resource
     ---@diagnostic enable: undefined-field
 
+    -- Frozen zones yield ice
     if tags["temperature"] and tags["temperature"] == "temperature_frozen" then
       return "canex-se-ice-template"
     end
+
+    -- Vita zones yield vitamelange
     if primary_resource == "se-vitamelange" then
       return "canex-se-vitamelange-template"
     end
+
+    -- All other zones yield stone
     return "canex-se-stone-template"
   end,
 

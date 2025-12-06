@@ -1,7 +1,7 @@
----@type SurfaceCreatedRemote[]
+---@type CanexSurfaceCreatedRemote[]
 local remotes_cache = {}
 
----@return SurfaceCreatedRemote[]
+---@return CanexSurfaceCreatedRemote[]
 local function get_surface_created_remotes()
   local remotes = {}
   for _, prototype in pairs(prototypes.mod_data) do

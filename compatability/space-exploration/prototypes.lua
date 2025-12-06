@@ -23,8 +23,9 @@ data:extend({
   -- },
   ---- Here the surface called "Hermes" would yield se-water-ice.
   ---- If surfaces are dynamically created you can also register templates.
-  ---- This requires something compatabillity scripting via remote infaces.
+  ---- This requires some compatabillity scripting via remote interfaces.
   ---- See the registration of the remote at the bottom of this file and the remote interface in control/remote.lua
+  ---- And how the registrations are used in control/events/surfaceCreatedEvent.lua
   {
     type = "mod-data",
     name = "canex-se-vitamelange-template",

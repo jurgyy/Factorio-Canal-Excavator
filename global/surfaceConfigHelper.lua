@@ -1,9 +1,9 @@
 --- Surface Config
----@class CanexSurfaceConfigModData : data.ModData
+---@class CanexSurfaceConfigModData : data.ModData The data stage mod-data type for `CanexSurfaceConfig`
 ---@field data_type "canex-surface-config"
 ---@field data CanexSurfaceConfig
 
----@class LuaCanexSurfaceConfigModData : LuaModData
+---@class LuaCanexSurfaceConfigModData : LuaModData The runtime mod-data type for `CanexSurfaceConfig`
 ---@field data_type "canex-surface-config"
 ---@field data CanexSurfaceConfig
 
@@ -19,11 +19,11 @@
 
 --------------------------------
 --- Surface Template
----@class CanexSurfaceTemplateModData : data.ModData
+---@class CanexSurfaceTemplateModData : data.ModData The data stage mod-data type for `CanexSurfaceTemplate`
 ---@field data_type "canex-surface-template"
 ---@field data CanexSurfaceTemplate
 
----@class LuaCanexSurfaceTemplateModData : LuaModData
+---@class LuaCanexSurfaceTemplateModData : LuaModData The runtime stage mod-data type for `CanexSurfaceTemplate`
 ---@field data_type "canex-surface-template"
 ---@field data CanexSurfaceTemplate
 
@@ -34,15 +34,15 @@
 
 --------------------------------
 --- Remote for surface created event handler
----@class SurfaceCreatedRemoteModData : data.ModData
+---@class CanexSurfaceCreatedRemoteModData : data.ModData The data stage mod-data type for `CanexSurfaceCreatedRemote`
 ---@field data_type "canex-surface-created-remote"
----@field data SurfaceCreatedRemote
+---@field data CanexSurfaceCreatedRemote
 
----@class LuaSurfaceCreatedRemoteModData : LuaModData
+---@class LuaCanexSurfaceCreatedRemoteModData : LuaModData The runtime mod-data type for `CanexSurfaceCreatedRemote`
 ---@field data_type "canex-surface-created-remote"
----@field data SurfaceCreatedRemote
+---@field data CanexSurfaceCreatedRemote
 
----@class SurfaceCreatedRemote
+---@class CanexSurfaceCreatedRemote
 ---@field interface string Remote interface to call `get_surface_template_function` on
 ---@field get_surface_template_function string Remote function that takes a LuaSurface and returns the CanexSurfaceTemplate.name associated with the surface or nil
 
