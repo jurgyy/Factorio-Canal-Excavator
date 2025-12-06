@@ -3,19 +3,6 @@ local surface_config_helper = require("global.surfaceConfigHelper")
 local surfaceConfigs = surface_config_helper.get_all_surface_config()
 local resource_names = {}
 
----@type CanexSurfaceConfig
-local defaultConfig = nil
-for name, config in pairs(surfaceConfigs) do
-  resource_names[name] = "canex-rsc-digable-" .. config.surfaceName
-  if config.isDefault then
-    if defaultConfig ~= nil then
-      error(name .. " is already configured as default")
-    end
-    defaultConfig = config
-  end
-end
-if not defaultConfig then error("No default surface configured") end
-
 surfacesManager = {}
 
 surfacesManager.resource_names = resource_names

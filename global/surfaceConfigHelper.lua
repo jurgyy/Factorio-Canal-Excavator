@@ -1,10 +1,3 @@
----@class CanexConfigBase Base class for both SurfaceConfig as well as SurfaceTemplates
----@field localisation LocalisedString? Localised name to use for the resource: "Excavatable resource {localisation}". Expected to be lower case except for proper nouns.
----@field mineResult string Mine result item
----@field oreStartingAmount integer Amount of ore that should be placed when placing a excavatable tile
----@field tint Color Tint for the dust, rocks and resource
-
---------------------------------
 --- Surface Config
 ---@class CanexSurfaceConfigModData : data.ModData
 ---@field data_type "canex-surface-config"
@@ -14,9 +7,15 @@
 ---@field data_type "canex-surface-config"
 ---@field data CanexSurfaceConfig
 
+---@class CanexConfigBase Base class for both SurfaceConfig as well as SurfaceTemplates
+---@field localisation LocalisedString? Localised name to use for the resource: "Excavatable resource {localisation}". Expected to be lower case except for proper nouns.
+---@field mineResult string Mine result item
+---@field oreStartingAmount integer Amount of ore that should be placed when placing a excavatable tile
+---@field tint Color Tint for the dust, rocks and resource
+
 ---@class CanexSurfaceConfig : CanexConfigBase
 ---@field surfaceName string
----@field isDefault boolean? Fallback config for surfaces without a planet. Only one config can be the default TODO still required?
+-- Also contains fields of CanexConfigBase (see above)
 
 --------------------------------
 --- Surface Template
@@ -31,6 +30,7 @@
 ---@class CanexSurfaceTemplate : CanexConfigBase
 ---@field icon table?
 ---@field name string name of the parent object. Will be set in Canex data-final-fixes.
+-- Also contains fields of CanexConfigBase (see above)
 
 --------------------------------
 --- Remote for surface created event handler

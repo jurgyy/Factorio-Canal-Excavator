@@ -17,8 +17,7 @@ data:extend{
     localisation = {"space-location-name.nauvis"},
     mineResult = "stone",
     oreStartingAmount = 10,
-    tint = {r = 102, g = 78, b = 6},
-    isDefault = true
+    tint = {r = 102, g = 78, b = 6}
   })
 }
 
