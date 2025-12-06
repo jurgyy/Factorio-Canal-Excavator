@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.8.0
+Date: 2025-12-06
+  Features:
+    - Removed no-tiles setting since it wasn't needed anymore since 2.0. If you used it and you encounter any issues _don't_ save the game, roll back this mod and send me the save file. ([#10](https://github.com/jurgyy/Factorio-Canal-Excavator/issues/10))
+---------------------------------------------------------------------------------------------------
 Version: 1.7.0
 Date: 2025-11-11
   Features:
