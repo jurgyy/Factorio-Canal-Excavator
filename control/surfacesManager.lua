@@ -3,15 +3,19 @@ local surface_config_helper = require("global.surfaceConfigHelper")
 local surfaceConfigs = surface_config_helper.get_all_surface_config()
 local resource_names = {}
 
+for name, config in pairs(surfaceConfigs) do
+  resource_names[name] = "canex-rsc-digable-" .. config.surfaceName
+end
+
 surfacesManager = {}
 
 surfacesManager.resource_names = resource_names
 
 surfacesManager.load_stored_config = function()
   ---@cast surfaceConfigs +table<string, CanexSurfaceTemplate>
-  for surfaceName, surfaceConfig in pairs(storage.runtime_surface_config or {}) do
-    surfaceConfigs[surfaceName] = surfaceConfig
-    resource_names[surfaceName] = "canex-rsc-digable-" .. surfaceConfig.name
+  for surfaceName, surfaceTemplate in pairs(storage.runtime_surface_config or {}) do
+    surfaceConfigs[surfaceName] = surfaceTemplate
+    resource_names[surfaceName] = "canex-rsc-digable-" .. surfaceTemplate.name
   end
 end
 

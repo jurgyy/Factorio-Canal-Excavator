@@ -6,6 +6,9 @@ local surface_manager = require("control.surfacesManager")
 ---@param event EventData.on_surface_created
 local function surface_created_event(event)
   local surface = game.surfaces[event.surface_index]
+  if surface_manager.get_surface_config(surface) then
+    return
+  end
   local surface_template = nil
 
   for _, sc_remote in pairs(remotes_manager.surface_created_remotes) do
