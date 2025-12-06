@@ -10,6 +10,7 @@
   "dependencies": [
     "base",
     "? space-age",
+    "? space-exploration",
     "flib >= 0.15.0",
     "canal-excavator-graphics >= 1.3.0"
   ]

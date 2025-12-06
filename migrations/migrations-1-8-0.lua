@@ -2,11 +2,11 @@ if not settings.startup["no-tiles"].value then
   return
 end
 
-local planetsManager = require("control.planetsManager")
+local surfacesManager = require("control.surfacesManager")
 
 for _, surface in pairs(game.surfaces) do
   local tiles = surface.find_tiles_filtered{name="yellow-refined-concrete"}
-  if not planetsManager.is_surface_configured(surface) then
+  if not surfacesManager.is_surface_configured(surface) then
     log("Canal Excavator: Skipping 1.8 migration on surface \"" .. surface.name .. "\" as its planet is not configured in Canal Excavator.")
     goto continue
   end
