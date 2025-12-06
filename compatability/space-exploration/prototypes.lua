@@ -21,8 +21,10 @@ data:extend({
   --     tint = {r = 159, g = 193, b = 222}
   --   }
   -- },
-  ---- Or templates that can be used by multiple surfaces, but that requires compatabillity scripting.
-  ---- See compatability/space-exploration/control.lua
+  ---- Here the surface called "Hermes" would yield se-water-ice.
+  ---- If surfaces are dynamically created you can also register templates.
+  ---- This requires something compatabillity scripting via remote infaces.
+  ---- See the registration of the remote at the bottom of this file and the remote interface in control/remote.lua
   {
     type = "mod-data",
     name = "canex-se-vitamelange-template",
@@ -57,6 +59,16 @@ data:extend({
       mineResult = "stone",
       oreStartingAmount = 10,
       tint = {r = 102, g = 78, b = 6},
+    }
+  },
+  -- Register the remote
+  {
+    type = "mod-data",
+    name = "canex-se-surface-created-remote",
+    data_type = "canex-surface-created-remote",
+    data = {
+      interface = "canal-excavator", -- Since I've implemented the remote for SE myself, this is set to this mod's remote interface, but I generally expect your remote interface here.
+      get_surface_template_function = "se_get_zone_template"
     }
   }
 })
