@@ -2,11 +2,6 @@
 Version: 1.9.0
 Date: 2025-12-07
   Features:
-    - Added modding interface for surface templates
----------------------------------------------------------------------------------------------------
-Version: 1.9.0
-Date: 2025-12-07
-  Features:
     - A surface is no long excavatable by default when Space Age isn't enabled.
     - Improved support for Space Age. Icy planets now yield ice and vitamelange planets yield vitamelange.
   Balancing:
