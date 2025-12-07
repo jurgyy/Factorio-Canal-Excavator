@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.9.0
+Date: 2025-12-07
+  Features:
+    - A surface is no long excavatable by default when Space Age isn't enabled.
+    - Improved support for Space Age. Icy planets now yield ice and vitamelange planets yield vitamelange.
+  Balancing:
+    - The excavator no longer benefits from productivity bonuses. 
+  Modding:
+    - Now supports any surface to be excavatable instead of just planet surfaces.
+    - Added support for templating configuration and surfaces generated during runtime. See the modding section on the readme page.
+---------------------------------------------------------------------------------------------------
 Version: 1.8.0
 Date: 2025-12-06
   Features:
