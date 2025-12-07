@@ -59,6 +59,7 @@ local entity = {
     integration_patch = nil,
 
     mining_speed = 0.5,
+    uses_force_mining_productivity_bonus = false,
     energy_source =
     {
       type = "electric",

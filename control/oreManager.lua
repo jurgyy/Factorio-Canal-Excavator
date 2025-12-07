@@ -1,15 +1,14 @@
 local flib_bounding_box = require("__flib__/bounding-box")
-local planets_manager = require("control.planetsManager")
+local surfaces_manager = require("control.surfacesManager")
 local digableTileName = require("prototypes.getTileNames").digable
 
 local ore_manager = {}
 
 ---Get the name of the resource entity that should be placed on a given surface
 ---@param surface LuaSurface
----@return string resource_entity_name
+---@return string? resource_entity_name
 local function get_resource_entity_name(surface)
-  local planet_name = planets_manager.get_planet_config_name(surface)
-  return "canex-rsc-digable-" .. planet_name
+  return surfaces_manager.resource_names[surface.name]
 end
 
 ---@param resource_name string Name of a resource entity
@@ -41,8 +40,9 @@ function ore_manager.pop_stored_ore_amount(surface, position)
     return pop_stored_ore_amount(surface, x, y)
   end
 
-  local planet_config = planets_manager.get_planet_config(surface)
-  return planet_config.oreStartingAmount
+  local surface_config = surfaces_manager.get_surface_config(surface)
+  if not surface_config then error("Trying to retrieve ore starting amount from unconfigured surface") end
+  return surface_config.oreStartingAmount
 end
 
 function ore_manager.insert_stored_ore_amount(surface, position, amount)

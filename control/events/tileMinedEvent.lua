@@ -1,7 +1,7 @@
 local canex_util = require("canex-util")
 local ore_manager = require("control.oreManager")
 local dig_manager = require("control.digManager")
-local planets_manager = require("control.planetsManager")
+local surfaces_manager = require("control.surfacesManager")
 local digableTileName = require("prototypes.getTileNames").digable
 
 
@@ -10,21 +10,22 @@ local function tile_mined_event(event)
   local surface = game.surfaces[event.surface_index]
   if not canex_util.surface_is_valid(surface) then return end
 
-  local planet_config = planets_manager.get_planet_config(surface)
+  local surface_config = surfaces_manager.get_surface_config(surface)
+  if surface_config == nil then error("Trying to retrieve config of unconfigured surface") end
 
   for _, tile in ipairs(event.tiles) do
     if tile.old_tile.name == digableTileName then
       local ores = surface.find_entities_filtered{
         position = {x = tile.position.x + 0.5, y = tile.position.y + 0.5},
         type = "resource",
-        name = planets_manager.resource_names
+        name = surfaces_manager.resource_names
       }
       
       --game.print("tile mined")
       for _, ore in pairs(ores) do
         -- TODO all entities are at the same pos so in the case of multiple entities they overwrite eachother
         -- Does that ever happen? Will trigger print in insert function.
-        if ore.amount < planet_config.oreStartingAmount then
+        if ore.amount < surface_config.oreStartingAmount then
           ore_manager.insert_stored_ore_amount(surface, tile.position, ore.amount)
         end
 
