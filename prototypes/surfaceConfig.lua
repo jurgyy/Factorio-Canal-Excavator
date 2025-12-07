@@ -25,24 +25,28 @@ if mods["space-age"] then
   data:extend{
     create_surface_mod_data({
         surfaceName = "vulcanus",
+        localisation = {"space-location-name.vulcanus"},
         mineResult = "stone",
         oreStartingAmount = 40,
         tint = {r = 120, g = 120, b = 120}
     }),
     create_surface_mod_data({
         surfaceName = "fulgora",
+        localisation = {"space-location-name.fulgora"},
         mineResult = "scrap",
         oreStartingAmount = 10,
         tint = {r = 173, g = 94, b = 72}
     }),
     create_surface_mod_data({
         surfaceName = "gleba",
+        localisation = {"space-location-name.gleba"},
         mineResult = "spoilage",
         oreStartingAmount = 50,
         tint = {r = 186, g = 196, b = 149}
     }),
     create_surface_mod_data({
         surfaceName = "aquilo",
+        localisation = {"space-location-name.aquilo"},
         mineResult = "ice",
         oreStartingAmount = 50,
         tint = {r = 159, g = 193, b = 222}

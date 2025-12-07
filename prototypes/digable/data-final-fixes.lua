@@ -17,9 +17,6 @@ for _, surface_config in pairs(surface_configs) do
   if mods["space-age"] then
     local planet = data.raw["planet"][surface_config.surfaceName]
     if planet then
-      local planet_localisation = planet.localised_name or ("space-location-name." .. surface_config.surfaceName)
-      resource.localised_name = {"entity-name.canex-rsc-digable-surface", {planet_localisation}}
-
       resource.icons[2] = resource.icons[1]
       if planet.icons then
         resource.icons[1] = planet.icons[1]
