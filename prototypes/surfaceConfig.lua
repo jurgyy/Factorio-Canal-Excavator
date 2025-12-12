@@ -52,6 +52,7 @@ if mods["space-age"] then
         localisation = {"space-location-name.aquilo"},
         mineResult = "ice",
         oreStartingAmount = 50,
+        mining_time = 2,
         tint = {r = 159, g = 193, b = 222}
     })
   }
