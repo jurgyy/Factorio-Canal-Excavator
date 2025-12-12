@@ -44,6 +44,7 @@ if mods["space-age"] then
         localisation = {"space-location-name.gleba"},
         mineResult = "spoilage",
         oreStartingAmount = 50,
+        mining_time = 0.5,
         tint = {r = 186, g = 196, b = 149}
     }),
     create_surface_mod_data({
