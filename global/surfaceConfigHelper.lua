@@ -12,6 +12,7 @@
 ---@field mineResult string Mine result item
 ---@field oreStartingAmount integer Amount of ore that should be placed when placing a excavatable tile
 ---@field tint Color Tint for the dust, rocks and resource
+---@field icon_data CanexIconData? Optional icon data. Only used for the Factoriopedia icon of the resources. With Space Age defaults to the icon of the planet with the same name as surfaceName.
 
 ---@class CanexSurfaceConfig : CanexConfigBase
 ---@field surfaceName string
@@ -28,7 +29,6 @@
 ---@field data CanexSurfaceTemplate
 
 ---@class CanexSurfaceTemplate : CanexConfigBase
----@field icon table?
 ---@field name string name of the parent object. Will be set in Canex data-final-fixes.
 -- Also contains fields of CanexConfigBase (see above)
 
@@ -46,6 +46,14 @@
 ---@field interface string Remote interface to call `get_surface_template_function` on
 ---@field get_surface_template_function string Remote function that takes a LuaSurface and returns the CanexSurfaceTemplate.name associated with the surface or nil
 
+--------------------------------
+--- Optional Icon data
+---@class CanexIconData Only used for the Factoriopedia icon of the resources. If unset it uses the planet's icon if Space Age is installed, otherwise it shows just the resource icon.
+---@field filename string? Filename of the icon.
+---@field icons data.IconData[]? List of icons. Ignored if filename is set.
+---@field icon_size integer? Size of the icon. Defaults to the icon size of icon_source or 64.
+---@field icon_source_type string? Prototype type with an icon or icons to copy from. Ignored if filename or icons are set. If unset and Space Age is installed, uses "planet".
+---@field icon_source_name string? Prototype name with an icon or icons to copy from. Ignored if filename or icons are set. Defaults to CanexSurfaceConfig.name
 
 ---@type table<string, CanexSurfaceConfig>
 local surface_config_cache = {}
