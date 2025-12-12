@@ -27,7 +27,8 @@ if mods["space-age"] then
         surfaceName = "vulcanus",
         localisation = {"space-location-name.vulcanus"},
         mineResult = "stone",
-        oreStartingAmount = 40,
+        oreStartingAmount = 20,
+        mining_time = 4,
         tint = {r = 120, g = 120, b = 120}
     }),
     create_surface_mod_data({
