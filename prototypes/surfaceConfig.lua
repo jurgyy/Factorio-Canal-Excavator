@@ -36,6 +36,7 @@ if mods["space-age"] then
         localisation = {"space-location-name.fulgora"},
         mineResult = "scrap",
         oreStartingAmount = 10,
+        mining_time = 1.5,
         tint = {r = 173, g = 94, b = 72}
     }),
     create_surface_mod_data({
