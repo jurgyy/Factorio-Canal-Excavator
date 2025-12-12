@@ -60,6 +60,7 @@ local function create_resource_copy(config)
   resource.mining_visualisation_tint = config.tint
   resource.stages.sheet.tint = config.tint
   resource.icons[1].tint = config.tint
+  resource.minable.mining_time = config.mining_time or resource.minable.mining_time or 1
 
   handle_icons(resource, config)
   if config.localisation then

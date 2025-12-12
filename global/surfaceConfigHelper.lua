@@ -13,6 +13,7 @@
 ---@field oreStartingAmount integer Amount of ore that should be placed when placing a excavatable tile
 ---@field tint Color Tint for the dust, rocks and resource
 ---@field icon_data CanexIconData? Optional icon data. Only used for the Factoriopedia icon of the resources. With Space Age defaults to the icon of the planet with the same name as surfaceName.
+---@field mining_time double? How many seconds are required to mine this object at 1 mining speed. Defaults to 1.
 
 ---@class CanexSurfaceConfig : CanexConfigBase
 ---@field surfaceName string
