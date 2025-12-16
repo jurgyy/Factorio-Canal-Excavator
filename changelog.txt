@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.12.0
+Date: 2025-12-16
+  Bugfixes:
+    - Fixed small localisation error
+  Features:
+    - Added support for other types of canal excavators
+    - Added support to the excavatable resource to yield multiple different kind of items when mined
+    - Added support to use a different resource category on a surface which allows them to require a specific excavator.
+---------------------------------------------------------------------------------------------------
 Version: 1.11.0
 Date: 2025-12-12
   Features:
