@@ -84,8 +84,13 @@ local function create_resource_copy(config)
 
   handle_icons(resource, config)
   if config.localisation then
-    resource.localised_name = {"entity-name.canex-rsc-digable-surface", {"entity-description.canex-in", config.localisation}}
-    resource.localised_description = {"entity-description.canex-rsc-digable-surface", {"entity-description.canex-in", config.localisation}}
+    local preposition = "entity-description.canex-on"
+    if config.name then
+      -- SurfaceTemplates
+      preposition = "entity-description.canex-in"
+    end
+    resource.localised_name = {"entity-name.canex-rsc-digable-surface", {preposition, config.localisation}}
+    resource.localised_description = {"entity-description.canex-rsc-digable-surface", {preposition, config.localisation}}
   end
   return resource
 end
