@@ -14,6 +14,7 @@
 ---@field tint Color Tint for the dust, rocks and resource
 ---@field icon_data CanexIconData? Optional icon data. Only used for the Factoriopedia icon of the resources. With Space Age defaults to the icon of the planet with the same name as surfaceName.
 ---@field mining_time double? How many seconds are required to mine this object at 1 mining speed. Defaults to 1.
+---@field custom_resource_category string? Custom resource category to use. If unset, uses "canex-rsc-cat-digable". Set only if you also add a CanexExcavatorConfig with this custom_resource_category.
 
 ---@class CanexSurfaceConfig : CanexConfigBase
 ---@field surfaceName string
@@ -55,6 +56,21 @@
 ---@field icon_size integer? Size of the icon. Defaults to the icon size of icon_source or 64.
 ---@field icon_source_type string? Prototype type with an icon or icons to copy from. Ignored if filename or icons are set. If unset and Space Age is installed, uses "planet".
 ---@field icon_source_name string? Prototype name with an icon or icons to copy from. Ignored if filename or icons are set. Defaults to CanexSurfaceConfig.name
+
+--------------------------------
+--- Excavator Config for when you want to create custom canal excavators
+---@class CanexExcavatorConfigModData : data.ModData The data stage mod-data type for `CanexExcavatorConfig`
+---@field data_type "canex-excavator-config"
+---@field data CanexExcavatorConfig
+
+---@class LuaCanexExcavatorConfigModData : LuaModData The runtime mod-data type for `CanexExcavatorConfig`
+---@field data_type "canex-excavator-config"
+---@field data CanexExcavatorConfig
+
+---@class CanexExcavatorConfig Config for each mining drill that should be able to mine excavatable tiles. Is used to add the resource category and during runtime events.
+---@field entity_name string Name of the excavator entity
+---@field item_name string Name of the excavator item
+---@field custom_resource_category string? Custom resource category to use. If unset, uses "canex-rsc-cat-digable"
 
 ---@type table<string, CanexSurfaceConfig>
 local surface_config_cache = {}
