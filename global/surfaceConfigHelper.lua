@@ -9,7 +9,7 @@
 
 ---@class CanexConfigBase Base class for both SurfaceConfig as well as SurfaceTemplates
 ---@field localisation LocalisedString? Localised name to use for the resource: "Excavatable resource {localisation}". Expected to be lower case except for proper nouns.
----@field mineResult string Mine result item
+---@field mineResult string|data.ItemProductPrototype[] Mine result(s) of the item
 ---@field oreStartingAmount integer Amount of ore that should be placed when placing a excavatable tile
 ---@field tint Color Tint for the dust, rocks and resource
 ---@field icon_data CanexIconData? Optional icon data. Only used for the Factoriopedia icon of the resources. With Space Age defaults to the icon of the planet with the same name as surfaceName.
