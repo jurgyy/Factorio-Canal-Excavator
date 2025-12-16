@@ -1,6 +1,7 @@
 local flib_bounding_box = require("__flib__/bounding-box")
 local surfaces_manager = require("control.surfacesManager")
 local digableTileName = require("prototypes.getTileNames").digable
+local excavatorUtil = require("control.excavatorUtil")
 
 local ore_manager = {}
 
@@ -135,7 +136,7 @@ function ore_manager.get_colliding_entities(surface, position)
 
   return surface.find_entities_filtered{
     area = area,
-    name = {"canex-excavator"},
+    name = excavatorUtil.excavator_entity_names,
     invert = true
   }
 end

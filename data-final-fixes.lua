@@ -1,1 +1,1 @@
-require("prototypes.digable.data-final-fixes")
+require("prototypes.mod-data-final-fixes")

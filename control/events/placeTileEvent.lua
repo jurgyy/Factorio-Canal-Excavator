@@ -6,13 +6,14 @@ local dig_manager = require("control.digManager")
 local tile_mined_event = require("control.events.tileMinedEvent")
 local canex_util = require("canex-util")
 local dugTileName = require("prototypes.getTileNames").dug
+local excavatorUtil = require("control.excavatorUtil")
 
 
 --- Return all entities of a certain name in an area given a position, radius. The function will center the position on a tile
 ---@param surface LuaSurface
 ---@param position MapPosition
 ---@param radius number
----@param name string
+---@param name string|string[]
 ---@return LuaEntity[]
 local function find_entities_in_radius(surface, position, radius, name)
     -- Calculate the center position by adding 0.5 to both x and y floor
@@ -43,7 +44,7 @@ end
 ---@param position MapPosition
 ---@param radius number
 local function wake_up_excavators(surface, position, radius)
-    local excavators = find_entities_in_radius(surface, position, radius, "canex-excavator")
+    local excavators = find_entities_in_radius(surface, position, radius, excavatorUtil.excavator_entity_names)
     for _, excavator in ipairs(excavators) do
         excavator.update_connections()
     end
@@ -72,7 +73,7 @@ end
 local function place_tile_as_robot(event)
     local surface = game.surfaces[event.surface_index]
     local valid = canex_util.surface_is_valid(surface)
-    local radius = prototypes.entity["canex-excavator"].mining_drill_radius - 1
+    local radius = excavatorUtil.max_mining_radius - 1
     local shown_error = false
 
     for _, tile in ipairs(event.tiles) do
@@ -128,7 +129,7 @@ end
 local function place_tile_as_script(event)
     local surface = game.surfaces[event.surface_index]
     local valid = canex_util.surface_is_valid(surface)
-    local radius = prototypes.entity["canex-excavator"].mining_drill_radius - 1
+    local radius = excavatorUtil.max_mining_radius - 1
     local shown_error = false
 
     for _, tile in ipairs(event.tiles) do
@@ -208,7 +209,7 @@ local function place_tile_as_player(event)
     local surface = game.surfaces[event.surface_index]
     local valid = canex_util.surface_is_valid(surface)
     local player = game.players[event.player_index]
-    local radius = prototypes.entity["canex-excavator"].mining_drill_radius - 1
+    local radius = excavatorUtil.max_mining_radius - 1
     local shown_error = false
 
     for _, tile in ipairs(event.tiles) do

@@ -2,10 +2,11 @@ local dig_manager = require("control.digManager")
 local ore_manager = require("control.oreManager")
 local digableTileName = require("prototypes.getTileNames").digable
 local canex_util = require("canex-util")
+local excavatorUtil = require("control.excavatorUtil")
 
 local function is_excavator(entity)
-  return entity.name == "canex-excavator"
-  or entity.is_registered_for_construction() and entity.ghost_prototype.name == "canex-excavator"
+  return excavatorUtil.is_excavator_entity(entity.name)
+  or entity.is_registered_for_construction() and excavatorUtil.is_excavator_entity(entity.ghost_prototype.name)
 end
 
 local function is_digable(entity)
@@ -126,18 +127,22 @@ local function entity_built_event(event)
   end
 end
 
+local filter ={
+  {filter = "name", name = "entity-ghost"},
+  {filter = "type", type = "entity-ghost", mode = "and"},
+
+  {filter = "name", name = "tile-ghost", mode = "or"},
+  {filter = "type", type = "tile-ghost", mode = "and"},
+  {filter = "ghost_name", name = digableTileName, mode = "and"},
+  {filter = "ghost_type", type = "tile", mode = "and"}
+}
+
+for _, excavator_name in pairs(excavatorUtil.excavator_entity_names) do
+  table.insert(filter, {filter = "name", name = excavator_name, mode = "or"})
+  table.insert(filter, {filter = "type", type = "mining-drill", mode = "and"})
+end
+
 return {
   event = entity_built_event,
-  filter = {
-    {filter = "name", name = "canex-excavator"},
-    {filter = "type", type = "mining-drill", mode = "and"},
-  
-    {filter = "name", name = "entity-ghost", mode = "or"},
-    {filter = "type", type = "entity-ghost", mode = "and"},
-    
-    {filter = "name", name = "tile-ghost", mode = "or"},
-    {filter = "type", type = "tile-ghost", mode = "and"},
-    {filter = "ghost_name", name = digableTileName, mode = "and"},
-    {filter = "ghost_type", type = "tile", mode = "and"}
-  }
+  filter = filter
 }
