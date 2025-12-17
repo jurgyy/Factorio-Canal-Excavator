@@ -26,7 +26,7 @@ local entity = {
         result = "canex-excavator"
     },
     max_health = 500,
-    --resource_categories = {"canex-rsc-cat-digable"}, -- Is set in data-final-fixes. Possible to change default value by creating a CanexExcavatorConfig for the excavator.
+    resource_categories = {"canex-rsc-cat-digable"}, -- Possible to change default value by creating a CanexExcavatorConfig for the excavator.
     corpse = "electric-mining-drill-remnants", -- TODO
     dying_explosion = "electric-mining-drill-explosion",
     
