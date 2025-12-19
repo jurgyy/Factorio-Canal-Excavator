@@ -15,6 +15,7 @@ return
     decorative_removal_probability = 1,
     walking_speed_modifier = 0.6,
     tint = { r = 0.300, g = 0.300, b = 0.200,   a = 0.25 },
+    subgroup = "artificial-tiles",
     factoriopedia_simulation = {
         mods = {"canal-excavator"},
         game_view_settings = { default_show_value = false, update_entity_selection = true },
