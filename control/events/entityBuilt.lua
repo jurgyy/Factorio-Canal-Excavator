@@ -130,6 +130,7 @@ end
 local filter ={
   {filter = "name", name = "entity-ghost"},
   {filter = "type", type = "entity-ghost", mode = "and"},
+  {filter = "ghost_type", type = "mining-drill", mode = "and"},
 
   {filter = "name", name = "tile-ghost", mode = "or"},
   {filter = "type", type = "tile-ghost", mode = "and"},
