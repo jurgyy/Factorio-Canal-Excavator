@@ -1,6 +1,6 @@
 local hit_effects = require ("__base__.prototypes.entity.hit-effects")
 local sounds = require("__base__.prototypes.entity.sounds")
-local graphicsFunc = require ("__canal-excavator-graphics__/animations")
+local graphics = require ("__canal-excavator-graphics__/animations")
 
 ---@diagnostic disable: undefined-global
 circuit_connector_definitions["canex-excavator"] = circuit_connector_definitions.create_vector
@@ -27,7 +27,7 @@ local entity = {
     },
     max_health = 500,
     resource_categories = {"canex-rsc-cat-digable"}, -- Possible to change default value by creating a CanexExcavatorConfig for the excavator.
-    corpse = "electric-mining-drill-remnants", -- TODO
+    corpse = nil,
     dying_explosion = "electric-mining-drill-explosion",
     
     collision_mask = {layers = {train = true, object = true}},
@@ -54,9 +54,9 @@ local entity = {
     open_sound = sounds.machine_open,
     close_sound = sounds.machine_close,
 
-    graphics_set = graphicsFunc(),
+    graphics_set = graphics.graphics_set,
+    integration_patch = graphics.integration,
     wet_mining_graphics_set = nil,
-    integration_patch = nil,
 
     mining_speed = 0.5,
     uses_force_mining_productivity_bonus = false,

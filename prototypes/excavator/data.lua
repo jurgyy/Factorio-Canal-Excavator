@@ -9,7 +9,8 @@ local mod_data = {
         item_name = item.name
     }
 }
-
+local corpse = require("__canal-excavator__/prototypes/excavator/corpse")
+entity.corpse = corpse.name
 
 local recipe
 if mods["space-exploration"] then
@@ -18,4 +19,4 @@ else
     recipe = require("__canal-excavator__/prototypes/excavator/recipe")
 end
 
-data:extend{entity, item, recipe, mod_data}
+data:extend{entity, item, recipe, mod_data, corpse}
