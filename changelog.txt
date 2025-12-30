@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.13.0
+Date: 2025-12-30
+  Bugfixes:
+    - Fixed entity built event firing for all entity ghosts instead of just for mining drills.
+  Features:
+    - Added Excavator remnant and ground integration
+---------------------------------------------------------------------------------------------------
 Version: 1.12.2
 Date: 2025-12-19
   Bugfixes:
