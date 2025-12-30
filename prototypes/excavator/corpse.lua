@@ -18,6 +18,7 @@ local corpse = {
   time_before_removed = 54000, -- 15 minutes
   collision_box = {{ -1.29, -5.39}, {1.29, 1.49}},
   selection_box = {{ -1.5, -5.5}, {1.5, 1.5}},
+  collision_mask = {layers = {}},
   animation = {
     layers = {{
       filename = "__canal-excavator-graphics__/graphics/remnant/destruct.png",
