@@ -40,7 +40,7 @@ local template = {
         scale = 0.5
       }
     },
-    stage_counts = data.raw.resource["stone"].stage_counts,
+    stage_counts = { 150, 100, 75, 50, 30, 20, 10, 5},
 }
 
 local tint = { r = 0.1, g = 0.1, b = 0.1, a = 0.5 }
