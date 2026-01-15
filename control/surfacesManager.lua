@@ -3,8 +3,11 @@ local surface_config_helper = require("global.surfaceConfigHelper")
 local surfaceConfigs = surface_config_helper.get_all_surface_config()
 local resource_names = {}
 
-for name, config in pairs(surfaceConfigs) do
-  resource_names[name] = "canex-rsc-digable-" .. config.surfaceName
+for surface_name, config in pairs(surfaceConfigs) do
+  local resource_name = "canex-rsc-digable-" .. config.surfaceName
+  if prototypes.entity[resource_name] then
+    resource_names[surface_name] = resource_name
+  end
 end
 
 surfacesManager = {}

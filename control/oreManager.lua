@@ -9,7 +9,12 @@ local ore_manager = {}
 ---@param surface LuaSurface
 ---@return string? resource_entity_name
 local function get_resource_entity_name(surface)
-  return surfaces_manager.resource_names[surface.name]
+  local name = surfaces_manager.resource_names[surface.name]
+  if not prototypes.entity[name] then
+    game.print("Error: No resource entity defined for surface '" .. surface.name .. "'. Please notify the mod creator of this surface that their canex-config mod-data object should be added before the data-final-fixes stage.")
+    return nil
+  end
+  return name
 end
 
 ---@param resource_name string Name of a resource entity
@@ -84,6 +89,9 @@ end
 ---@return LuaEntity | nil
 function ore_manager.create_ore(surface, position)
   local name = get_resource_entity_name(surface)
+  if not name then
+    return
+  end
   local resource = surface.create_entity{name=name, position=position, force=game.forces.player}
 
   if not resource or not resource.valid then
