@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.13.3
+Date: 2026-01-15
+  Bugfixes:
+    - Fixed crash when another mod added their canex-config mod-data object in the data-final-fixes stage when the mod is loaded after this mod. Instead of crashing it now prints a message instructing the other mod dev how to fix it.
+---------------------------------------------------------------------------------------------------
 Version: 1.13.2
 Date: 2026-01-12
   Bugfixes:
