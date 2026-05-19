@@ -53,12 +53,18 @@ local function undo_last_create_digable_ghost(player, position)
   local x = math.floor(position.x)
   local y = math.floor(position.y)
 
-  for index = #undo_items, 1, -1 do
-    local undo_item = undo_items[index]
+  -- Storing the keys in a separate table first to fix for when get_undo_items returns an array with holes for some reason
+  local keys = {}
+  for key, _ in pairs(undo_items) do
+    keys[#keys+1] = key
+  end
+  for key_index = #keys, 1, -1 do
+    local item_index = keys[key_index]
+    local undo_item = undo_items[item_index]
     if undo_item.type == "built-tile"
     and undo_item.position.x == x
     and undo_item.position.y == y then
-      undo_redo_stack.remove_undo_action(1, index)
+      undo_redo_stack.remove_undo_action(1, item_index)
     end
   end
 end
