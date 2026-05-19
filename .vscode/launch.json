@@ -2,6 +2,12 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "factoriomod",
+            "request": "launch",
+            "name": "Factorio Mod Debug",
+            "modsPath": "C:/Users/Jurgen/AppData/Roaming/Factorio/mods-canex/"
+        },
+        {
             "name": "Python Debugger: Reflection",
             "type": "debugpy",
             "request": "launch",
