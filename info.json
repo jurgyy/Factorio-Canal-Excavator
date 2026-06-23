@@ -12,6 +12,6 @@
     "? space-age",
     "? space-exploration",
     "flib >= 0.15.0",
-    "canal-excavator-graphics >= 2.0.0"
+    "canal-excavator-graphics >= 1.7.0"
   ]
 }
