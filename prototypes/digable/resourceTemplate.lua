@@ -19,7 +19,7 @@ local template = {
       results = {{
         type = "item",
         name = "stone",
-        probability = 1,
+        independent_probability = 1,
         amount = 1
       }}
     },

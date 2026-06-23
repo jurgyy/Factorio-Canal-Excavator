@@ -12,9 +12,9 @@ player.force.research_all_technologies()
 game.simulation.camera_player = player
 game.simulation.camera_position = {0, 0.5}
 game.simulation.camera_player_cursor_position = player.position
-player.set_quick_bar_slot(1, "canex-digable")
-player.set_quick_bar_slot(2, "canex-excavator")
-player.set_quick_bar_slot(3, "transport-belt")
+player.set_quick_bar_slot(1, 1, "canex-digable")
+player.set_quick_bar_slot(1, 2, "canex-excavator")
+player.set_quick_bar_slot(1, 3, "transport-belt")
 
 local surface = game.surfaces[1]
 
@@ -79,11 +79,11 @@ local prototype = get_first_fuel()
 if prototype then
   fuel = prototype.name
   bp = "0eNqVlduKgzAQht9lrmMxHtrqq5RFPIzdgEZJYlm3+O4bW7qF2sKMN5LM5PtF/ZgrVN2Eo1HaQX4FVQ/aQn66glVnXXbrni57hBycKbUdB+OCCjsHiwClG/yBXC5fAlA75RTez94Wc6GnvkLjG8SDgR3Wzqg6QI3mPAc+FU1b1ggCxsF6wqDXSE8NIgGzv8mDT2qU8QdvxURANbUtmsKqX8+U4f+1iE10JD48/jYv3aX3xHiXvkS+Acd0cMICJ3RwzAKndHDEAu/pYMkCH+jgkAU+ksE8bkbm8l6EDMlg3qeTkgzm/WySLh5PD0kXjye0pIu354Hp4h14YLp4Rx6YLl7GAz/F64ay8VtbMeQnngA3j+tRpcdpnT9b/NM/pVulfS2ov9G+8+/Fk0d/YdE5pc927TPYDxcsJl/r/JzCplAOe19yZsJlnXrr2qc9R6iACxp7y0n3UZZkWXqUcZaFybL8AXF+bvU="
-  player.set_quick_bar_slot(4, fuel)
+  player.set_quick_bar_slot(1, 4, fuel)
   slot = slot + 1
 end
 
-player.set_quick_bar_slot(slot, "speed-module")
+player.set_quick_bar_slot(1, slot, "speed-module")
 surface.create_entities_from_blueprint_string
 {
   string = bp,

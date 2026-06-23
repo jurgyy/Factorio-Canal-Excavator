@@ -12,9 +12,9 @@ player.force.research_all_technologies()
 game.simulation.camera_player = player
 game.simulation.camera_position = {0, 0.5}
 game.simulation.camera_player_cursor_position = player.position
-player.set_quick_bar_slot(1, "canex-digable")
-player.set_quick_bar_slot(2, "canex-excavator")
-player.set_quick_bar_slot(3, "transport-belt")
+player.set_quick_bar_slot(1, 1, "canex-digable")
+player.set_quick_bar_slot(1, 2, "canex-excavator")
+player.set_quick_bar_slot(1, 3, "transport-belt")
 
 local surface = game.surfaces[1]
 
@@ -45,7 +45,7 @@ local prototype = get_first_fuel()
 if prototype then
   fuel = prototype.name
   fuel_stack_size = prototype.stack_size
-  player.set_quick_bar_slot(4, fuel)
+  player.set_quick_bar_slot(1, 4, fuel)
   bp = "0eNqVk9tugzAMQP/Fz6Eqt7bhV6oJcTGdJTAoCdUY4t9nqNZtLdVaXiJ8OceRnBHyusfOEDtIRqCiZQvJcQRLJ87qOcZZg5AA1lg4Q4WHjOY0eNKBpsoKhEkBcYkfkPiTWul0JmPbtcZ5OdbuV3kwvSlAduQIL9blZ0i5b3I0wlP/2xV0rRVCy7NSqJ50DfMh00BJRhqXZKQg76sKTWrpU5j+9vrNY9+oA/Vg/DvffhMvwmAT3whXsOHTWP0KNnoae3gFGz+N9bevcHdXLnFFLCmveEe7xg3/cL/LU4vOEZ/sXGawac+Y9pKrZSuwTMlhIylnepxW9Purvm6zUiL32uDBZRS4obsM3vWyy7LAs0wCP+9IwRmNXerjXaAjreODH2q9jabpC7RMJWM="
 end
 
@@ -197,7 +197,7 @@ local story_table =
         action = player.clear_cursor()
       end
     },
-    { condition = function() return game.simulation.move_cursor({position = {0, 4}}) end},
+    { condition = function() return game.simulation.move_cursor({position = {0, 4.5}}) end},
     {
       condition = story_elapsed_check(3),
       action = function()

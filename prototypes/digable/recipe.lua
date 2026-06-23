@@ -2,7 +2,7 @@ return
 {
     type = "recipe",
     name = "canex-digable",
-    category = "crafting-with-fluid",
+    categories = {"crafting-with-fluid"},
     enabled = false,
     energy_required = 0.5,
     ingredients =
