@@ -73,7 +73,7 @@ local story_table =
     },
     {
       condition = function()
-        local target = game.simulation.get_widget_position({type = "quickbar-slot", data = "canex-digable"})
+        local target = game.simulation.get_widget_position({type = "quickbar-slot", filter = {name = "canex-digable", quality = "normal"}})
         ---@cast target -?
         return game.simulation.move_cursor({position = target})
       end
@@ -142,7 +142,7 @@ local story_table =
     },
     {
       condition = function()
-        local target = game.simulation.get_widget_position({type = "quickbar-slot", data = fuel})
+        local target = game.simulation.get_widget_position({type = "quickbar-slot", filter = {name = fuel, quality = "normal"}})
         ---@cast target -?
         return game.simulation.move_cursor({position = target})
       end
@@ -167,7 +167,7 @@ local story_table =
     {
       name = "after-fuel",
       condition = function()
-        local target = game.simulation.get_widget_position({type = "quickbar-slot", data = "transport-belt"})
+        local target = game.simulation.get_widget_position({type = "quickbar-slot", filter = {name = "transport-belt", quality = "normal"}})
         ---@cast target -?
         return game.simulation.move_cursor({position = target})
       end

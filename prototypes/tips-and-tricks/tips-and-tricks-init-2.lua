@@ -137,7 +137,7 @@ local story_table =
     { condition = story_elapsed_check(1.5) },
     {
       condition = function()
-        local target = game.simulation.get_widget_position({type = "quickbar-slot", data = "speed-module"})
+        local target = game.simulation.get_widget_position({type = "quickbar-slot", filter = {name = "speed-module", quality = "normal"}})
         ---@cast target -?
         return game.simulation.move_cursor({position = target})
       end
