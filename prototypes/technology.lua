@@ -13,7 +13,7 @@ local tech = {
             recipe = "canex-digable"
         }
     },
-    prerequisites = {"utility-science-pack"},
+    prerequisites = {"utility-science-pack", "concrete"},
     unit = {
         count = 250,
         ingredients = {
