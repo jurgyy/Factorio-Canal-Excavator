@@ -1,12 +1,16 @@
 ---@diagnostic disable: undefined-global
+---@diagnostic disable-next-line: unresolved-require
 require("__core__/lualib/story")
+local tile = require("canal-excavator.prototypes.dug.tile")
 
 ---@diagnostic disable-next-line: unknown-cast-variable
 ---@cast game LuaGameScript
 
 game.simulation.active_quickbars = 1
 local player = game.simulation.create_test_player{name = "big K"}
+---@cast player.character -?
 player.character.teleport{0, 4}
+---@diagnostic disable-next-line: need-check-nil
 player.force.research_all_technologies()
 
 game.simulation.camera_player = player
@@ -35,24 +39,15 @@ local function set_tiles(water_tile, surfaceName)
     end
   end
 
-  surface.set_tiles(tiles, false, true, true, true)
+  surface.set_tiles(tiles, false, true, true, false)
   for x = -6, 3, 1 do
-    local a = 1
-    if x == -4 then a = 2 end
-
     for y = -4, -2 , 1 do
-      local entity = surface.find_entity("canex-rsc-digable-nauvis", {x = x + .5, y = y + .5})
-      if entity then
-        if surfaceName ~= "nauvis" then
-          local position = entity.position
-          entity.destroy()
-          entity = surface.create_entity{name="canex-rsc-digable-" .. surfaceName, position=position, force=player.force}
-          remote.call("canal-excavator", "register_resource", entity)
-        end
-        entity.amount = a
-      else
-        error("Could not find resource at " .. x .. ", " .. y)
+      local position = {x + .5, y + .5}
+      local entity = surface.create_entity{name="canex-rsc-digable-" .. surfaceName, position=position, force=player.force, amount = 1}
+      if not entity then
+        error("Could not create resource at " .. x .. ", " .. y)
       end
+      remote.call("canal-excavator", "register_resource", entity)
     end
   end
 end
@@ -90,10 +85,11 @@ surface.create_entities_from_blueprint_string
   position = {4, -4}
 }
 
+---@type {[1]: string, [2]: string}[]
 local tile_resources = {
   {"water", "nauvis"},
-  {"lava", "vulcanus"},
   {"oil-ocean-shallow", "fulgora"},
+  {"lava", "vulcanus"},
   {"wetland-pink-tentacle", "gleba"},
   {"water-shallow", "nauvis"},
   {"brash-ice", "aquilo"}
@@ -107,6 +103,27 @@ for _, t in pairs(tile_resources) do
 end
 local i = 0
 
+---@param position MapPosition
+---@param this_story_name string
+local function wait_for_resources(position, this_story_name)
+  local excavator = surface.find_entity("canex-excavator", position)
+  if not excavator then
+    error("Could not find excavator at " .. (position[1] or position.x) .. ", " .. (position[2] or position.y))
+  end
+  local area = excavator.mining_area
+  ---@cast area.left_top MapPosition.struct
+  ---@cast area.right_bottom MapPosition.struct
+
+  local resources = surface.find_entities_filtered{
+    area = {{area.left_top.x, area.left_top.y}, {area.right_bottom.x, area.right_bottom.y}},
+    type = "resource"
+  }
+  if #resources > 0 then
+    story_jump_to(storage.story, this_story_name)
+    return
+  end
+end
+
 local story_table =
 {
   {
@@ -115,6 +132,9 @@ local story_table =
       condition = story_elapsed_check(0),
       action = function()
         local tile_resource = water_tiles[(i % #water_tiles) + 1]
+        if not tile_resource then
+          error("No tile resource found for index " .. i)
+        end
         set_tiles(tile_resource[1], tile_resource[2])
         i = i + 1
         surface.create_entities_from_blueprint_string
@@ -163,10 +183,17 @@ local story_table =
       action = function() player.clear_cursor() end
     },
     {
-      condition = function() return game.simulation.move_cursor({position = {0, 4}}) end,
+      condition = function() return game.simulation.move_cursor({position = {0, 4.1}}) end,
     },
     {
-      condition = story_elapsed_check(3)
+      name = "wait-1",
+      condition = story_elapsed_check(0.1),
+    },
+    {
+      condition = story_elapsed_check(0.1),
+      action = function()
+        wait_for_resources({4.5, 0.5}, "wait-1")
+      end
     },
     { condition = function() return game.simulation.move_cursor({position = {4.5, 0.5}}) end},
     {
@@ -175,7 +202,16 @@ local story_table =
         game.simulation.control_press{control = "mine", notify = false}
       end
     },
-    { condition = story_elapsed_check(1) },
+    {
+      name = "wait-2",
+      condition = story_elapsed_check(0.1)
+    },
+    {
+      condition = story_elapsed_check(0.1),
+      action = function()
+        wait_for_resources({1.5, 0.5}, "wait-2")
+      end
+    },
     { condition = function() return game.simulation.move_cursor({position = {1.5, 0.5}}) end},
     {
       condition = story_elapsed_check(0.25),
@@ -183,7 +219,16 @@ local story_table =
         game.simulation.control_press{control = "mine", notify = false}
       end
     },
-    { condition = story_elapsed_check(0.5) },
+    {
+      name = "wait-3",
+      condition = story_elapsed_check(0.1)
+    },
+    {
+      condition = story_elapsed_check(0.1),
+      action = function()
+        wait_for_resources({-1.5, 0.5}, "wait-3")
+      end
+    },
     { condition = function() return game.simulation.move_cursor({position = {-1.5, 0.5}}) end},
     {
       condition = story_elapsed_check(0.25),
@@ -191,7 +236,16 @@ local story_table =
         game.simulation.control_press{control = "mine", notify = false}
       end
     },
-    { condition = story_elapsed_check(0.5) },
+    {
+      name = "wait-4",
+      condition = story_elapsed_check(0.1)
+    },
+    {
+      condition = story_elapsed_check(0.1),
+      action = function()
+        wait_for_resources({-4.5, 0.5}, "wait-4")
+      end
+    },
     { condition = function() return game.simulation.move_cursor({position = {-4.5, 0.5}}) end},
     {
       condition = story_elapsed_check(0.25),
