@@ -1,7 +1,6 @@
 ---@diagnostic disable: undefined-global
 ---@diagnostic disable-next-line: unresolved-require
 require("__core__/lualib/story")
-local tile = require("canal-excavator.prototypes.dug.tile")
 
 ---@diagnostic disable-next-line: unknown-cast-variable
 ---@cast game LuaGameScript
