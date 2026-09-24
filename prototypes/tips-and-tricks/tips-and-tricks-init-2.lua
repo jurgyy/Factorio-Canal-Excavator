@@ -51,27 +51,33 @@ local function set_tiles(water_tile, surfaceName)
   end
 end
 
+
+local burner_prototype = prototypes.entity["canex-excavator"].burner_prototype
 function get_first_fuel()
-  local burner_prototype = prototypes.entity["canex-excavator"].burner_prototype
   if burner_prototype then
     for _, prototype in pairs(prototypes.item) do
+      if not prototype.fuel_categories then goto continue end
+
       local cat = next(burner_prototype.fuel_categories)
-      if prototype.fuel_category == cat then
-        return prototype
+      for _, fuel_category in pairs(prototype.fuel_categories) do
+        if fuel_category == cat then
+          return prototype
+        end
       end
+      ::continue::
     end
   end
   return nil
 end
-
 local bp = "0eNqV1duKgzAQBuB3metYjNW2+irLIh7GbkCj5FDWLb77Ju62hdrCxBuJSb6R6M9coe4tTkpIA8UVRDNKDcXHFbQ4y6r3z2Q1IBRgVCX1NCoT1dgbWBgI2eI3FHz5ZIDSCCPwb+86mEtphxqVW8BuBvbYGCWaCCWq8xy5qqi6qkFgMI3aCaP0JZ0auV2zv2WuUiuU27hOpgxq23WoSi1+nMnj+7WwTenkXlrbWptqNd7XipcXxp69OYKtk+6yf2n3/Nov4JQO74PgjA4nQfCBDvMg+EiH4yD4RIbD3Jzshh0Ej8lw2KfjnAyH/Ww8IcNh8eD04GVhMD14hzCYHrxjGEwP3ikMpgcvD4PpweNhyeOP6PVj1bpHWzF55zEw8+S3CjlZ38S2HeMRQCE7Id1c1HyhfvXiT0G5rS81GiPkWft1CofxgqV1c71rdtiWwuDgpoyyuPjW6ceu2qMPM7ig0mud7JDkaZ5nJ77P8zhdll+Bq4VP"
 
 local slot = 4
 
 local fuel = nil
-local prototype = get_first_fuel()
-if prototype then
-  fuel = prototype.name
+local fuel_prototype = get_first_fuel()
+if fuel_prototype then
+  fuel = fuel_prototype.name
+  log("Canal Excavator uses fuel: " .. fuel)
   bp = "0eNqVlduKgzAQht9lrmMxHtrqq5RFPIzdgEZJYlm3+O4bW7qF2sKMN5LM5PtF/ZgrVN2Eo1HaQX4FVQ/aQn66glVnXXbrni57hBycKbUdB+OCCjsHiwClG/yBXC5fAlA75RTez94Wc6GnvkLjG8SDgR3Wzqg6QI3mPAc+FU1b1ggCxsF6wqDXSE8NIgGzv8mDT2qU8QdvxURANbUtmsKqX8+U4f+1iE10JD48/jYv3aX3xHiXvkS+Acd0cMICJ3RwzAKndHDEAu/pYMkCH+jgkAU+ksE8bkbm8l6EDMlg3qeTkgzm/WySLh5PD0kXjye0pIu354Hp4h14YLp4Rx6YLl7GAz/F64ay8VtbMeQnngA3j+tRpcdpnT9b/NM/pVulfS2ov9G+8+/Fk0d/YdE5pc927TPYDxcsJl/r/JzCplAOe19yZsJlnXrr2qc9R6iACxp7y0n3UZZkWXqUcZaFybL8AXF+bvU="
   player.set_quick_bar_slot(1, 4, fuel)
   slot = slot + 1
@@ -142,9 +148,9 @@ local story_table =
           position = {0, -3}
         }
 
-        if fuel then
+        if fuel_prototype and burner_prototype then
           for _, entity in pairs (surface.find_entities_filtered{area = {{-5.5, -3.5}, {5.5, 1.5}}, name="canex-excavator"}) do
-            entity.insert{name=fuel, count=1}
+            entity.insert{name=fuel_prototype.name, count=fuel_prototype.stack_size * burner_prototype.fuel_inventory_size}
           end
         end
         player.insert({name="canex-digable", count=70})

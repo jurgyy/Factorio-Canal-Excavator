@@ -43,10 +43,15 @@ function get_first_fuel()
   local burner_prototype = prototypes.entity["canex-excavator"].burner_prototype
   if burner_prototype then
     for _, prototype in pairs(prototypes.item) do
+      if not prototype.fuel_categories then goto continue end
+
       local cat = next(burner_prototype.fuel_categories)
-      if prototype.fuel_category == cat then
-        return prototype
+      for _, fuel_category in pairs(prototype.fuel_categories) do
+        if fuel_category == cat then
+          return prototype
+        end
       end
+      ::continue::
     end
   end
   return nil
